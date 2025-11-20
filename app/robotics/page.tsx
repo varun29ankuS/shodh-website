@@ -133,7 +133,7 @@ export default function Robotics() {
 
             {/* Technical detail for credibility */}
             <p className="text-base text-slate-500 dark:text-slate-500 mb-12 max-w-2xl mx-auto">
-              <strong className="text-primary">Technical:</strong> Shodh RAG + Zenoh = Embodied AI with 50-80ms query latency and real-time fleet coordination
+              <strong className="text-primary">Integrations:</strong> ROS2, Zenoh, REST API, gRPC • Works with your existing robot stack
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -144,15 +144,127 @@ export default function Robotics() {
                 Try RAG Demo
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <a
-                href="https://zenoh.io"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/docs"
                 className="px-8 py-4 border-2 border-slate-300 dark:border-slate-700 rounded-lg font-semibold hover:border-primary dark:hover:border-primary transition-colors text-slate-900 dark:text-white"
               >
-                Learn About Zenoh
-              </a>
+                Integration Docs
+              </Link>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Integration Options - NEW SECTION */}
+      <section className="relative py-16 bg-white dark:bg-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
+              Works With Your Robot Stack
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Shodh integrates with industry-standard robotics frameworks and protocols
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-slate-900 hover:border-primary transition-all"
+            >
+              <div className="text-3xl mb-3">🤖</div>
+              <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">ROS2</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                Native ROS2 integration via topics and services. Drop into existing robot stacks.
+              </p>
+              <div className="text-xs text-primary font-semibold">
+                → Most widely used in industry
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all"
+            >
+              <div className="text-3xl mb-3">⚡</div>
+              <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">REST API</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                Standard HTTP/JSON APIs for custom robot controllers and legacy systems.
+              </p>
+              <div className="text-xs text-primary font-semibold">
+                → Easy integration anywhere
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all"
+            >
+              <div className="text-3xl mb-3">📡</div>
+              <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">gRPC</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                High-performance bi-directional streaming for real-time robot communication.
+              </p>
+              <div className="text-xs text-primary font-semibold">
+                → Low latency, high throughput
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all"
+            >
+              <div className="text-3xl mb-3">🌐</div>
+              <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">Zenoh</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                Next-gen pub/sub for multi-robot fleets and edge deployments.
+              </p>
+              <div className="text-xs text-primary font-semibold">
+                → Advanced fleet coordination
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Code Example */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto mt-12 p-6 bg-slate-900 dark:bg-slate-950 rounded-xl border border-slate-700"
+          >
+            <div className="flex items-center gap-2 mb-4 text-slate-400">
+              <Code className="w-4 h-4" />
+              <span className="text-sm font-semibold">Quick Integration Example (Python)</span>
+            </div>
+            <pre className="text-slate-100 font-mono text-xs overflow-x-auto">
+{`# ROS2 Integration
+import rclpy
+from shodh_ros2 import ShodhRAG
+
+rag = ShodhRAG()
+response = rag.query("Find assembly procedure for part X123")
+
+# REST API Integration
+import requests
+response = requests.post('http://robot-controller:8080/rag/query',
+    json={'query': 'Navigate to warehouse section B3'})
+
+# gRPC Integration
+from shodh_grpc import ShodhRAGClient
+client = ShodhRAGClient('robot-controller:50051')
+response = client.query("Safety protocol for hazmat handling")`}
+            </pre>
           </motion.div>
         </div>
       </section>
@@ -400,17 +512,16 @@ export default function Robotics() {
         </div>
       </section>
 
-      {/* Why Zenoh */}
+      {/* Communication Protocols */}
       <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
         <div className="absolute inset-0 bg-grid-slate opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Why Zenoh for Robotics?
+              Choose Your Communication Layer
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              Zenoh is a next-generation pub/sub protocol designed for robotics, IoT, and edge computing.
-              It's what makes RAG-powered robots possible.
+              Shodh works with ROS2 (industry standard), Zenoh (next-gen fleet coordination), or direct API integration
             </p>
           </div>
 
@@ -433,24 +544,44 @@ export default function Robotics() {
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto p-8 rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20"
-          >
-            <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-3">
-              <Cpu className="w-8 h-8 text-primary" />
-              Zenoh vs. Traditional Middleware (ROS, MQTT, DDS)
-            </h3>
-            <div className="space-y-3 text-slate-700 dark:text-slate-300">
-              <p><strong className="text-primary">10-100x lower latency:</strong> Zero-copy shared memory transport</p>
-              <p><strong className="text-primary">Mesh networking:</strong> No central broker, automatic peer discovery</p>
-              <p><strong className="text-primary">Edge-first:</strong> Runs on microcontrollers with &lt;64KB RAM</p>
-              <p><strong className="text-primary">Multi-protocol:</strong> TCP, UDP, QUIC, WebSockets, shared memory - use what you need</p>
-              <p><strong className="text-primary">ROS2 compatible:</strong> Drop-in replacement for DDS, works with existing ROS2 code</p>
-            </div>
-          </motion.div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20"
+            >
+              <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-3">
+                <Cpu className="w-8 h-8 text-primary" />
+                ROS2 (Industry Standard)
+              </h3>
+              <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                <p><strong className="text-primary">✓ Mature ecosystem:</strong> Vast library of packages and tools</p>
+                <p><strong className="text-primary">✓ Industry adoption:</strong> Used by most commercial robot companies</p>
+                <p><strong className="text-primary">✓ DDS protocol:</strong> Proven real-time communication</p>
+                <p><strong className="text-primary">✓ Shodh integration:</strong> Native ROS2 nodes for query/response</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl border-2 border-secondary/20 bg-gradient-to-br from-secondary/5 to-secondary/10 dark:from-secondary/10 dark:to-secondary/20"
+            >
+              <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-3">
+                <Network className="w-8 h-8 text-secondary" />
+                Zenoh (Next-Gen Fleet)
+              </h3>
+              <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                <p><strong className="text-secondary">✓ 10-100x lower latency:</strong> Zero-copy shared memory</p>
+                <p><strong className="text-secondary">✓ Mesh networking:</strong> Automatic peer discovery, no broker</p>
+                <p><strong className="text-secondary">✓ Edge-optimized:</strong> Runs on microcontrollers (&lt;64KB RAM)</p>
+                <p><strong className="text-secondary">✓ ROS2 compatible:</strong> Works alongside existing ROS2 stacks</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
