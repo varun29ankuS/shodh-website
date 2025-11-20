@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Brain, Cloud, DollarSign, Lock, Zap, Code, Database, Shield,
   BarChart3, FileText, Search, GitBranch, MessageSquare, Workflow,
-  Layers, RefreshCw, Globe, Cpu
+  Layers, RefreshCw, Globe, Cpu, Server, Laptop, Network
 } from 'lucide-react'
 
 export default function Features() {
@@ -181,6 +181,115 @@ export default function Features() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Deployment Architectures - NEW SECTION */}
+        <div className="mt-32">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
+              Flexible Deployment Options
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Deploy Shodh your way - full-stack local, hybrid architecture, or distributed fleet
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-slate-900 hover:border-primary transition-all"
+            >
+              <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+                <Server className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
+                Full-Stack Local
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 mb-4">
+                Complete RAG pipeline with local LLM. Maximum privacy, zero cloud dependency.
+              </p>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Recommended: 16GB+ RAM</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">4+ CPU cores</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Use case: Enterprise, data sovereignty</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl border-2 border-secondary/30 bg-gradient-to-br from-secondary/5 to-white dark:from-secondary/10 dark:to-slate-900 hover:border-secondary transition-all"
+            >
+              <div className="w-16 h-16 bg-secondary/10 dark:bg-secondary/20 rounded-xl flex items-center justify-center mb-6">
+                <Laptop className="w-8 h-8 text-secondary" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
+                Hybrid Architecture
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 mb-4">
+                Local retrieval with cloud/API LLM integration. Flexible and cost-effective.
+              </p>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Works on edge devices</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Cloud LLM when needed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Use case: Drones, IoT, mobile</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl border-2 border-destructive/30 bg-gradient-to-br from-destructive/5 to-white dark:from-destructive/10 dark:to-slate-900 hover:border-destructive transition-all"
+            >
+              <div className="w-16 h-16 bg-destructive/10 dark:bg-destructive/20 rounded-xl flex items-center justify-center mb-6">
+                <Network className="w-8 h-8 text-destructive" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
+                Distributed Fleet
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 mb-4">
+                Centralized RAG with Zenoh mesh networking. Fleet-wide knowledge sharing.
+              </p>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-destructive rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Ground station: 16GB+ RAM</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-destructive rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Edge nodes: Lightweight clients</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-destructive rounded-full"></div>
+                  <span className="text-slate-700 dark:text-slate-300">Use case: Multi-robot fleets</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
         {/* CTA */}
