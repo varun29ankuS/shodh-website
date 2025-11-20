@@ -15,18 +15,18 @@ export default function Home() {
   const features = [
     {
       icon: Brain,
-      title: 'Runs on Existing Hardware',
-      description: '500-1000 docs on 16GB laptop. No GPU, no new infrastructure needed',
+      title: 'Enterprise-Grade Performance',
+      description: 'Optimized for 16GB+ systems. Index 1000 docs, deploy 190MB lightweight vector store',
     },
     {
       icon: Cloud,
-      title: 'Index Locally, Search Forever',
-      description: 'One-time indexing (overnight). Data never leaves your device',
+      title: 'Advanced Document Processing',
+      description: 'OCR, intelligent extraction. Index once on workstation, deploy anywhere',
     },
     {
       icon: DollarSign,
-      title: 'LLM Flexibility',
-      description: 'Free local models (llama.cpp) OR pay-per-use APIs (GPT-4, Claude)',
+      title: 'Flexible Deployment',
+      description: 'Full local stack, hybrid architecture, or cloud integration. Your choice',
     },
     {
       icon: Lock,
@@ -46,10 +46,10 @@ export default function Home() {
   ]
 
   const stats = [
-    { value: '1000', label: 'Documents on Laptop' },
-    { value: '50-80ms', label: 'Query Latency' },
+    { value: '1000+', label: 'Documents Indexed' },
+    { value: '50ms', label: 'Retrieval Speed' },
     { value: '90%', label: 'Cost Savings' },
-    { value: '100%', label: 'Data Privacy' },
+    { value: '190MB', label: 'Deployed Index' },
   ]
 
   const useCases = [
@@ -186,16 +186,16 @@ export default function Home() {
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 dark:text-white">
-              Production RAG on
+              Enterprise RAG
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-destructive mt-2">
-                Your Existing Laptop
+                That Runs On-Premise
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-12 max-w-3xl mx-auto">
-              Index locally once (overnight), search privately forever.
-              Choose your LLM: free local models or pay-per-use APIs.
-              90% cost savings. Zero new infrastructure.
+              Advanced document processing with OCR and intelligent extraction.
+              Deploy full-stack on 16GB+ systems or hybrid architectures.
+              90% cost savings vs cloud RAG. Complete data sovereignty.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
