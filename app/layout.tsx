@@ -7,7 +7,7 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  metadataBase: new URL('https://shodh.ai'),
+  metadataBase: new URL('https://shodhrag.com'),
   title: {
     default: 'Shodh RAG - Production RAG on Your Existing Laptop | Local Vector Database',
     template: '%s | Shodh RAG',
@@ -23,7 +23,7 @@ export const metadata = {
     'cost-effective AI', 'no cloud dependency', 'data sovereignty',
     'Vamana', 'BM25', 'hybrid search', 'CPU-optimized AI'
   ],
-  authors: [{ name: 'Shodh Team', url: 'https://shodh.ai' }],
+  authors: [{ name: 'Shodh Team', url: 'https://shodhrag.com' }],
   creator: 'Shodh',
   publisher: 'Shodh',
   formatDetection: {
@@ -34,7 +34,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://shodh.ai',
+    url: 'https://shodhrag.com',
     title: 'Shodh RAG - Production RAG on Your Laptop | 90% Cost Savings',
     description: 'Index 1000 docs on 16GB laptop. 50-80ms queries. Free local LLMs or paid APIs. No cloud needed. Built for India with Hindi support.',
     siteName: 'Shodh',

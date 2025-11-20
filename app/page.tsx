@@ -94,7 +94,57 @@ export default function Home() {
     ],
   }
 
+  // JSON-LD structured data for SEO
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Shodh RAG',
+    description: 'Production RAG system that runs on your existing laptop. Index 1000 documents locally, search in 50-80ms, with 90% cost savings vs cloud solutions.',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Windows, macOS, Linux',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      description: 'Free tier available with paid enterprise options',
+    },
+    featureList: [
+      'Runs on 16GB laptop',
+      '50-80ms query latency',
+      '90% cost savings',
+      'Hybrid search (Vamana + BM25)',
+      'Multi-language support',
+      'LLM flexibility',
+    ],
+    author: {
+      '@type': 'Organization',
+      name: 'Shodh',
+      url: 'https://shodhrag.com',
+    },
+  }
+
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Shodh',
+    url: 'https://shodhrag.com',
+    logo: 'https://shodhrag.com/logo.png',
+    description: 'Building privacy-first RAG infrastructure for enterprise document intelligence',
+    sameAs: [
+      'https://twitter.com/shodhAI',
+    ],
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
     <main className="min-h-screen overflow-hidden">
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-hidden">
@@ -308,5 +358,6 @@ export default function Home() {
         </div>
       </section>
     </main>
+    </>
   )
 }

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: [],
     },
-    sitemap: 'https://shodh.ai/sitemap.xml',
+    sitemap: 'https://shodhrag.com/sitemap.xml',
   }
 }

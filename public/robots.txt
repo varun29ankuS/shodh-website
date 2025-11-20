@@ -1,6 +1,7 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt for shodhrag.com
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /_next/
 
-Sitemap: https://shodh.ai/sitemap.xml
+Sitemap: https://shodhrag.com/sitemap.xml
