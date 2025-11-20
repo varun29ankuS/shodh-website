@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import {
   ArrowRight, Bot, Cpu, Database, GitBranch, Network,
-  Radio, Zap, Shield, Brain, Workflow, MessageSquare, Factory, Package, Sprout
+  Radio, Zap, Shield, Brain, Workflow, MessageSquare, Factory, Package, Sprout, Code
 } from 'lucide-react'
 import Link from 'next/link'
 
