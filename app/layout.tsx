@@ -13,6 +13,11 @@ export const metadata = {
     default: 'Shodh RAG - Production RAG on Your Existing Laptop | Local Vector Database',
     template: '%s | Shodh RAG',
   },
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
   description: 'Run production RAG on your existing laptop. Index 1000 documents locally, search in 50-80ms, choose LLM flexibility (free local or paid APIs). 90% cost savings vs cloud. No GPU required. Built for India.',
   keywords: [
     'RAG', 'local RAG', 'on-premise RAG', 'laptop RAG', 'offline RAG',
