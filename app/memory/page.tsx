@@ -49,44 +49,45 @@ export default function Memory() {
 
   const useCases = [
     {
-      icon: MessageSquare,
-      title: 'AI Chatbots & Agents',
-      plainEnglish: 'Give your AI persistent memory',
-      description: 'Remember user preferences, conversation history, learned facts across sessions',
-      example: 'Chatbot recalls "User prefers Python" from 3 months ago',
-    },
-    {
       icon: Bot,
-      title: 'Robotics & IoT',
-      plainEnglish: 'Robots that remember and learn',
-      description: 'Navigation memory, sensor data tracking, experience accumulation for edge devices',
-      example: 'Drone remembers obstacle locations, warehouse robot recalls optimal paths',
+      title: 'Autonomous Drones',
+      plainEnglish: 'Drones that learn from every flight',
+      description: 'Store obstacle maps, terrain data, mission parameters—no internet needed in remote areas',
+      example: 'Agricultural drone surveying fields remembers crop patterns, irrigation issues from previous flights. Works in areas with zero connectivity.',
     },
     {
-      icon: FileText,
-      title: 'Research & Knowledge Management',
-      plainEnglish: 'Build knowledge graphs from documents',
-      description: 'Extract entities, relationships, and insights from papers, docs, conversations',
-      example: 'Research assistant tracks papers, authors, concepts, and their relationships',
+      icon: Shield,
+      title: 'Defence & Military Systems',
+      plainEnglish: 'Mission-critical memory for secure operations',
+      description: 'Air-gapped deployment, classified data stays on-device, complete audit trail for compliance',
+      example: 'Reconnaissance drone stores mission data locally. Tactical robots remember terrain, threats, patrol routes—all offline and secure.',
     },
     {
-      icon: Users,
-      title: 'Personal AI Assistants',
-      plainEnglish: 'Privacy-first personal memory',
-      description: 'Store personal notes, meetings, tasks with complete privacy and offline access',
-      example: 'Remember birthdays, project details, personal preferences—all stored locally',
+      icon: Cpu,
+      title: 'Industrial Robotics',
+      plainEnglish: 'Factory robots with persistent knowledge',
+      description: 'Assembly procedures, quality checks, maintenance logs—all stored locally on robot controllers',
+      example: 'Manufacturing robot recalls "Part X123 requires 45° angle, torque 12Nm" from assembly manual. Warehouse robot optimizes paths based on stored floor layouts.',
+    },
+    {
+      icon: Network,
+      title: 'IoT & Smart Devices',
+      plainEnglish: 'Edge intelligence without cloud',
+      description: 'Smart city sensors, medical devices, surveillance systems—process and remember locally',
+      example: 'Smart city traffic sensor builds knowledge graph of congestion patterns. Medical IoT device stores patient context privately without cloud transmission.',
     },
   ]
 
   const comparisonData = [
     { feature: 'Speed (add memory)', shodh: '<1ms', mem0: '5-10ms', zep: '10-20ms' },
     { feature: 'Speed (semantic search)', shodh: '10-20ms', mem0: '100-200ms', zep: '50-100ms' },
-    { feature: 'Deployment', shodh: '100% Offline', mem0: 'Cloud-based', zep: 'Hybrid' },
-    { feature: 'Pricing', shodh: 'Free Forever', mem0: '$50-200/mo', zep: 'Enterprise' },
+    { feature: 'Deployment', shodh: '100% Edge/Offline', mem0: 'Cloud-only', zep: 'Hybrid' },
+    { feature: 'Connectivity', shodh: 'Works Offline', mem0: 'Requires Internet', zep: 'Requires Internet' },
     { feature: 'Memory Hierarchy', shodh: '3-Tier (Unique)', mem0: 'Single-tier', zep: 'Single-tier' },
     { feature: 'Knowledge Graph', shodh: 'Yes (Graphiti)', mem0: 'No', zep: 'Yes (Graphiti)' },
     { feature: 'Language', shodh: 'Rust', mem0: 'Python', zep: 'TypeScript' },
     { feature: 'Binary Size', shodh: '4MB', mem0: '200MB+', zep: '50MB+' },
+    { feature: 'Air-Gapped Support', shodh: 'Yes', mem0: 'No', zep: 'No' },
   ]
 
   const roadmap = [
@@ -143,26 +144,26 @@ export default function Memory() {
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-8"
             >
               <Brain className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Local Memory System • 100% Private</span>
+              <span className="text-sm font-semibold text-primary">Edge AI Memory • For Robots, Drones & IoT</span>
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 dark:text-white">
-              Give Your AI Agents a Brain
+              AI Memory for the Edge
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-destructive mt-2">
-                That Never Forgets
+                Private, Fast, Offline
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
-              Shodh Memory is the local solution for AI memory—persistent, intelligent, and completely offline.
-              No cloud APIs, no subscriptions, no data leaving your machine.
+              Bring persistent memory to robots, drones, IoT devices, and defence systems—running entirely on-device.
+              No cloud latency, no connectivity required, no data leaving your edge.
             </p>
 
             {/* Technical detail for credibility */}
             <p className="text-base text-slate-500 dark:text-slate-500 mb-12 max-w-2xl mx-auto">
-              <strong className="text-primary">Stack:</strong> Rust + RocksDB + Custom Vamana HNSW •
-              <strong className="text-primary ml-2">Memory:</strong> 3-Tier Hierarchy + Knowledge Graph •
-              <strong className="text-primary ml-2">Speed:</strong> 10x faster than Python alternatives
+              <strong className="text-primary">Edge-Native:</strong> 4MB binary, <100ms retrieval, works offline •
+              <strong className="text-primary ml-2">Stack:</strong> Rust + RocksDB + Vamana HNSW •
+              <strong className="text-primary ml-2">Targets:</strong> Drones, Robots, Industrial IoT, Defence
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -216,8 +217,8 @@ export default function Memory() {
                 transition={{ delay: 0.6 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">Free</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Forever</div>
+                <div className="text-2xl font-bold text-primary">28</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">REST APIs</div>
               </motion.div>
             </div>
           </motion.div>
@@ -230,10 +231,10 @@ export default function Memory() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Why AI Needs Persistent Memory
+              Why Edge Devices Need Local Memory
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              LLMs are stateless. Every conversation starts from zero. Shodh Memory changes that.
+              Robots, drones, and IoT devices can't wait for cloud APIs. They need instant, offline intelligence.
             </p>
           </div>
 
@@ -249,35 +250,35 @@ export default function Memory() {
                 <div className="w-12 h-12 bg-destructive/20 rounded-lg flex items-center justify-center">
                   <MessageSquare className="w-6 h-6 text-destructive" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Without Memory</h3>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Cloud-Dependent Systems</h3>
               </div>
               <div className="space-y-4 text-sm">
                 <div className="flex items-start gap-3">
                   <span className="text-destructive font-bold text-lg">❌</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Conversations Reset</div>
-                    <div className="text-slate-600 dark:text-slate-400">AI forgets everything when session ends</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Network Latency</div>
+                    <div className="text-slate-600 dark:text-slate-400">200-500ms API roundtrip kills real-time decisions</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-destructive font-bold text-lg">❌</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">No Context Accumulation</div>
-                    <div className="text-slate-600 dark:text-slate-400">Can't learn user preferences over time</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Connectivity Required</div>
+                    <div className="text-slate-600 dark:text-slate-400">Drone in remote field, robot in factory dead zone = system stops</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-destructive font-bold text-lg">❌</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Limited Context Window</div>
-                    <div className="text-slate-600 dark:text-slate-400">128K tokens = expensive + slow</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Data Transmission Risk</div>
+                    <div className="text-slate-600 dark:text-slate-400">Sensitive defence/industrial data sent to cloud servers</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-destructive font-bold text-lg">❌</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Cloud Dependency</div>
-                    <div className="text-slate-600 dark:text-slate-400">mem0: $200/month, API calls, data privacy concerns</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Per-API Costs</div>
+                    <div className="text-slate-600 dark:text-slate-400">1000 robots × 10K queries/day = ₹4L+/month cloud bills</div>
                   </div>
                 </div>
               </div>
@@ -300,29 +301,29 @@ export default function Memory() {
                 <div className="flex items-start gap-3">
                   <span className="text-primary font-bold text-lg">✓</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Persistent Memory</div>
-                    <div className="text-slate-600 dark:text-slate-400">Remember conversations across sessions, forever</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Sub-100ms Response</div>
+                    <div className="text-slate-600 dark:text-slate-400">Local RocksDB + Vamana index = real-time decisions</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-primary font-bold text-lg">✓</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Knowledge Graph</div>
-                    <div className="text-slate-600 dark:text-slate-400">Track entities, relationships, temporal patterns</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">100% Offline Operation</div>
+                    <div className="text-slate-600 dark:text-slate-400">Works in remote fields, factory floors, military zones—no internet needed</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-primary font-bold text-lg">✓</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Unlimited Storage</div>
-                    <div className="text-slate-600 dark:text-slate-400">No token limits, auto-compression for efficiency</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Air-Gapped Deployment</div>
+                    <div className="text-slate-600 dark:text-slate-400">Classified defence data, sensitive industrial IP—stays on your edge devices</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-primary font-bold text-lg">✓</span>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">100% Local & Free</div>
-                    <div className="text-slate-600 dark:text-slate-400">No cloud, no subscriptions, your data stays private</div>
+                    <div className="font-semibold text-slate-900 dark:text-white mb-1">4MB Binary, Low Power</div>
+                    <div className="text-slate-600 dark:text-slate-400">Rust efficiency = runs on resource-constrained edge devices</div>
                   </div>
                 </div>
               </div>
@@ -593,7 +594,7 @@ graph = memory.traverse_graph(
               Why Choose Shodh Memory?
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              Free, offline alternative to mem0 ($24M funding) and Zep (Graphiti)
+              Edge-native, offline alternative to cloud-based mem0 ($24M funding) and Zep (Graphiti)
             </p>
           </div>
 
@@ -715,11 +716,10 @@ graph = memory.traverse_graph(
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">
-              Start Building Memory-Enabled AI Today
+              Bring Intelligence to the Edge
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
-              Shodh Memory is production-ready, 100% free, and runs completely offline.
-              Give your AI agents the gift of memory.
+              Deploy Shodh Memory on your robots, drones, and IoT devices. Production-ready, runs completely offline, no cloud required.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
