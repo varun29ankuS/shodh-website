@@ -161,7 +161,7 @@ export default function Memory() {
 
             {/* Technical detail for credibility */}
             <p className="text-base text-slate-500 dark:text-slate-500 mb-12 max-w-2xl mx-auto">
-              <strong className="text-primary">Edge-Native:</strong> 4MB binary, <100ms retrieval, works offline •
+              <strong className="text-primary">Edge-Native:</strong> 4MB binary, &lt;100ms retrieval, works offline •
               <strong className="text-primary ml-2">Stack:</strong> Rust + RocksDB + Vamana HNSW •
               <strong className="text-primary ml-2">Targets:</strong> Drones, Robots, Industrial IoT, Defence
             </p>
