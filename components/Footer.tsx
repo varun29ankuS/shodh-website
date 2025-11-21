@@ -9,8 +9,9 @@ export default function Footer() {
     product: [
       { name: 'Features', href: '/features' },
       { name: 'Pricing', href: '/pricing' },
+      { name: 'Robotics', href: '/robotics' },
+      { name: 'Memory', href: '/memory' },
       { name: 'Demo', href: '/demo' },
-      { name: 'Roadmap', href: '#' },
     ],
     resources: [
       { name: 'Documentation', href: '/docs' },

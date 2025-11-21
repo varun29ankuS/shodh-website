@@ -17,6 +17,7 @@ export default function Navigation() {
     { name: 'Features', href: '/features' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Robotics', href: '/robotics' },
+    { name: 'Memory', href: '/memory' },
     { name: 'Getting Started', href: '/getting-started' },
     { name: 'Docs', href: '/docs' },
   ]
