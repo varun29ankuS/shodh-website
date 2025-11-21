@@ -167,12 +167,10 @@ export default function Memory() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link
-                href="https://github.com/roshera"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/getting-started"
                 className="group px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center gap-2"
               >
-                View on GitHub
+                Join Beta Program
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
@@ -725,12 +723,10 @@ graph = memory.traverse_graph(
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="https://github.com/roshera"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/getting-started"
                 className="group px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center gap-2"
               >
-                View on GitHub
+                Join Beta Program
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
