@@ -10,13 +10,8 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   metadataBase: new URL('https://shodhrag.com'),
   title: {
-    default: 'Shodh RAG - Production RAG on Your Existing Laptop | Local Vector Database',
+    default: 'Production RAG on your laptop | AI memory engine',
     template: '%s | Shodh RAG',
-  },
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/logo.png',
   },
   description: 'Run production RAG on your existing laptop. Index 1000 documents locally, search in 50-80ms, choose LLM flexibility (free local or paid APIs). 90% cost savings vs cloud. No GPU required. Built for India.',
   keywords: [
