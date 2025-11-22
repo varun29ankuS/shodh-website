@@ -14,8 +14,8 @@ export const metadata = {
     template: '%s | Shodh RAG',
   },
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
     apple: '/logo.png',
   },
   description: 'Run production RAG on your existing laptop. Index 1000 documents locally, search in 50-80ms, choose LLM flexibility (free local or paid APIs). 90% cost savings vs cloud. No GPU required. Built for India.',
