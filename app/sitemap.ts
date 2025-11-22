@@ -43,14 +43,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/robotics`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
+      changeFrequency: 'weekly',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/memory`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      changeFrequency: 'weekly',
+      priority: 0.95,
     },
   ]
 }

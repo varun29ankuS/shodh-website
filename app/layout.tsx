@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import StructuredData from '@/components/StructuredData'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -80,6 +81,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <StructuredData />
+      </head>
       <body className={inter.className}>
         <ThemeProvider>
           <Navigation />
