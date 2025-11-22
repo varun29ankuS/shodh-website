@@ -9,7 +9,7 @@ import { Analytics } from '@vercel/analytics/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  metadataBase: new URL('https://shodhrag.com'),
+  metadataBase: new URL('https://shodh-rag.com'),
   title: {
     default: 'Production RAG on your laptop | AI memory engine',
     template: '%s | Shodh RAG',
@@ -25,7 +25,7 @@ export const metadata = {
     'cost-effective AI', 'no cloud dependency', 'data sovereignty',
     'Vamana', 'BM25', 'hybrid search', 'CPU-optimized AI'
   ],
-  authors: [{ name: 'Shodh Team', url: 'https://shodhrag.com' }],
+  authors: [{ name: 'Shodh Team', url: 'https://shodh-rag.com' }],
   creator: 'Shodh',
   publisher: 'Shodh',
   formatDetection: {
@@ -36,7 +36,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://shodhrag.com',
+    url: 'https://shodh-rag.com',
     title: 'Shodh RAG - Production RAG on Your Laptop | 90% Cost Savings',
     description: 'Index 1000 docs on 16GB laptop. 50-80ms queries. Free local LLMs or paid APIs. No cloud needed. Built for India with Hindi support.',
     siteName: 'Shodh',

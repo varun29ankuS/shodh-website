@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: 'RAG for Robotics - Local AI Brain for Robots & Drones',
     description: '50ms response time, 100% offline operation. Shodh RAG gives robots context-aware intelligence without cloud dependency. ROS2 + Zenoh integration.',
     type: 'website',
-    url: 'https://shodhrag.com/robotics',
+    url: 'https://shodh-rag.com/robotics',
     images: [
       {
         url: '/og-image.png',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://shodhrag.com/robotics',
+    canonical: 'https://shodh-rag.com/robotics',
   },
 }
 

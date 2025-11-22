@@ -119,7 +119,7 @@ export default function Home() {
     author: {
       '@type': 'Organization',
       name: 'Shodh',
-      url: 'https://shodhrag.com',
+      url: 'https://shodh-rag.com',
     },
   }
 
@@ -127,8 +127,8 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Shodh',
-    url: 'https://shodhrag.com',
-    logo: 'https://shodhrag.com/logo.png',
+    url: 'https://shodh-rag.com',
+    logo: 'https://shodh-rag.com/logo.png',
     description: 'Building privacy-first RAG infrastructure for enterprise document intelligence',
     sameAs: [
       'https://twitter.com/shodhAI',

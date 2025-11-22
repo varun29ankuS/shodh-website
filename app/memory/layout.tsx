@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'AI Memory for Edge Devices - Robots, Drones & IoT',
     description: '100% offline AI memory for robots and drones. 4MB binary, <100ms retrieval, works without internet. Perfect for defence, agriculture, and industrial automation.',
     type: 'website',
-    url: 'https://shodhrag.com/memory',
+    url: 'https://shodh-rag.com/memory',
     images: [
       {
         url: '/og-image.png',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://shodhrag.com/memory',
+    canonical: 'https://shodh-rag.com/memory',
   },
 }
 

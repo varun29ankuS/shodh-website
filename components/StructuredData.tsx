@@ -4,8 +4,8 @@ export default function StructuredData() {
     '@type': 'Organization',
     name: 'Shodh',
     alternateName: 'Shodh RAG',
-    url: 'https://shodhrag.com',
-    logo: 'https://shodhrag.com/logo.png',
+    url: 'https://shodh-rag.com',
+    logo: 'https://shodh-rag.com/logo.png',
     description: 'Production-grade RAG system that runs on your laptop. AI memory engine for edge devices, robots, drones, and IoT.',
     sameAs: [
       'https://twitter.com/shodhAI',
@@ -35,7 +35,7 @@ export default function StructuredData() {
       'Knowledge graph support',
     ],
     softwareRequirements: '16GB RAM, 4 CPU cores recommended',
-    screenshot: 'https://shodhrag.com/og-image.png',
+    screenshot: 'https://shodh-rag.com/og-image.png',
   }
 
   const productSchema = {

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'Shodh RAG Features - Production-Grade Local RAG',
     description: '97% citation accuracy, <10ms queries, on-premise deployment. Enterprise features for teams who need RAG without cloud dependency.',
     type: 'website',
-    url: 'https://shodhrag.com/features',
+    url: 'https://shodh-rag.com/features',
     images: [
       {
         url: '/og-image.png',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://shodhrag.com/features',
+    canonical: 'https://shodh-rag.com/features',
   },
 }
 
