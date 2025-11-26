@@ -37,7 +37,7 @@ export default function Memory() {
       icon: Search,
       title: 'Multi-Modal Retrieval',
       description: '5 search modes: Similarity, Temporal, Causal, Associative, Hybrid',
-      detail: 'Model-agnostic embeddings (384, 512, 768, 1024, 1536 dimensions)',
+      detail: 'ONNX Runtime + llama.cpp - bring your own embedding models',
     },
     {
       icon: Shield,
@@ -92,25 +92,31 @@ export default function Memory() {
 
   const roadmap = [
     {
-      year: 'Q1 2025',
+      year: 'Q1-Q3 2025',
+      title: 'Native Python SDK',
+      description: 'PyO3 bindings completed - zero IPC overhead, 5-10ms faster than REST API',
+      status: 'Completed',
+    },
+    {
+      year: 'Q4 2025',
       title: 'Production Launch',
-      description: 'Complete Python SDK, JavaScript/TypeScript SDK, comprehensive documentation',
+      description: 'JavaScript/TypeScript SDK, comprehensive documentation, ROS2 integration examples',
       status: 'In Progress',
     },
     {
-      year: 'Q2 2025',
+      year: 'Q1 2026',
       title: 'Advanced Features',
-      description: 'GraphQL API, Prometheus metrics, advanced compression algorithms',
+      description: 'GraphQL API, Prometheus metrics, distributed tracing, advanced compression',
       status: 'Planned',
     },
     {
-      year: 'Q3 2025',
+      year: 'Q2 2026',
       title: 'Distributed Mode',
-      description: 'Multi-node synchronization for distributed AI agent fleets',
+      description: 'Multi-node synchronization for distributed AI agent fleets via Zenoh',
       status: 'Planned',
     },
     {
-      year: 'Q4 2025+',
+      year: 'Q3 2026+',
       title: 'Multi-Modal Memory',
       description: 'Image, audio, video embeddings for complete multi-modal memory systems',
       status: 'Vision',
@@ -162,7 +168,7 @@ export default function Memory() {
             {/* Technical detail for credibility */}
             <p className="text-base text-slate-500 dark:text-slate-500 mb-12 max-w-2xl mx-auto">
               <strong className="text-primary">Edge-Native:</strong> 4MB binary, &lt;100ms retrieval, works offline •
-              <strong className="text-primary ml-2">Stack:</strong> Rust + RocksDB + Vamana HNSW •
+              <strong className="text-primary ml-2">Stack:</strong> Rust + RocksDB + Vamana HNSW + ONNX Runtime + llama.cpp •
               <strong className="text-primary ml-2">Targets:</strong> Drones, Robots, Industrial IoT, Defence
             </p>
 
@@ -387,49 +393,64 @@ export default function Memory() {
           >
             <div className="flex items-center gap-2 mb-6 text-slate-400">
               <Code className="w-5 h-5" />
-              <span className="text-sm font-semibold">Python Quick Start</span>
+              <span className="text-sm font-semibold">Native Python SDK (PyO3) - Zero IPC Overhead</span>
             </div>
             <pre className="text-slate-100 font-mono text-sm overflow-x-auto mb-6">
 {`# Install
-pip install shodh-memory  # Coming soon - currently run from source
+pip install shodh-memory  # Coming soon
 
-# Use (2 lines!)
-from shodh_memory import Memory
-memory = Memory(user_id="alice", auto_start=True)
+# Import and initialize (native PyO3 bindings)
+import shodh_memory
 
-# Add memories
-memory.add(
-    "User prefers concise explanations with code examples",
-    experience_type="learning"
+memory = shodh_memory.MemorySystem(storage_path="./my_memory")
+
+# Record experiences
+memory.record(
+    content="User prefers concise explanations with code examples",
+    experience_type="learning",
+    entities=["user", "preferences"]
 )
 
-memory.add(
-    "John Smith works at OpenAI on GPT-4 development",
-    experience_type="discovery"
+memory.record(
+    content="John Smith works at OpenAI on GPT-4 development",
+    experience_type="discovery",
+    entities=["John Smith", "OpenAI", "GPT-4"]
 )
 
-# Search semantically
-results = memory.search(
+# Semantic search (hybrid mode)
+results = memory.retrieve(
     query="user preferences for documentation",
-    max_results=5
+    max_results=5,
+    mode="hybrid"  # semantic, temporal, or hybrid
 )
 
-# Knowledge graph traversal
-graph = memory.traverse_graph(
-    entity_name="John Smith",
-    max_depth=2
-)
-# Returns: John Smith → WorksAt → OpenAI → Develops → GPT-4`}
+# Access results
+for mem in results:
+    print(f"{mem['content']} (importance: {mem['importance']:.2f})")
+
+# Flush to disk before shutdown
+memory.flush()`}
             </pre>
 
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="mt-4 p-4 bg-primary/10 dark:bg-primary/20 rounded-lg border-l-4 border-primary">
+              <p className="text-xs text-slate-300 mb-2">
+                <strong className="text-primary">⚡ Native Performance:</strong> PyO3 Rust bindings -
+                5-10ms faster than REST API, zero IPC overhead, single process deployment.
+              </p>
+              <p className="text-xs text-slate-300">
+                <strong className="text-primary">🔧 Flexible:</strong> Bring your own embedding models via ONNX Runtime.
+                Works with llama.cpp for local LLM inference.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4 mt-6">
+              <div className="p-4 bg-slate-800 rounded-lg">
+                <div className="text-primary font-semibold mb-1 text-sm">Python SDK</div>
+                <code className="text-xs text-slate-300">pip install shodh-memory</code>
+              </div>
               <div className="p-4 bg-slate-800 rounded-lg">
                 <div className="text-primary font-semibold mb-1 text-sm">Docker</div>
                 <code className="text-xs text-slate-300">docker-compose up</code>
-              </div>
-              <div className="p-4 bg-slate-800 rounded-lg">
-                <div className="text-primary font-semibold mb-1 text-sm">Rust Binary</div>
-                <code className="text-xs text-slate-300">cargo run --release</code>
               </div>
               <div className="p-4 bg-slate-800 rounded-lg">
                 <div className="text-primary font-semibold mb-1 text-sm">REST API</div>
@@ -544,9 +565,9 @@ graph = memory.traverse_graph(
 │                                                              │
 │  ┌────────────────────────────────────────────────────────┐  │
 │  │         VECTOR INDEX (Custom Vamana HNSW)              │  │
-│  │  • 384-dim embeddings (MiniLM-L6-v2)                   │  │
+│  │  • ONNX Runtime for embeddings (any model)             │  │
 │  │  • Cosine similarity search                            │  │
-│  │  • Model-agnostic (bring your own embeddings)          │  │
+│  │  • Model-agnostic (384, 512, 768, 1024, 1536 dims)     │  │
 │  └────────────────────────────────────────────────────────┘  │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
@@ -683,7 +704,9 @@ graph = memory.traverse_graph(
                       {phase.year}
                     </span>
                     <span className={`text-xs px-2 py-1 rounded-full ${
-                      phase.status === 'In Progress'
+                      phase.status === 'Completed'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : phase.status === 'In Progress'
                         ? 'bg-secondary/10 text-secondary'
                         : phase.status === 'Planned'
                         ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'

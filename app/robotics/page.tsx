@@ -174,6 +174,23 @@ export default function Robotics() {
               viewport={{ once: true }}
               className="p-6 rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-slate-900 hover:border-primary transition-all"
             >
+              <div className="text-3xl mb-3">🐍</div>
+              <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">Python SDK</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                Native PyO3 bindings. Zero IPC overhead. Perfect for ROS2, drones, and robotics.
+              </p>
+              <div className="text-xs text-primary font-semibold">
+                → 5-10ms faster than REST API
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all"
+            >
               <div className="text-3xl mb-3">🤖</div>
               <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">ROS2</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
@@ -187,7 +204,7 @@ export default function Robotics() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.2 }}
               viewport={{ once: true }}
               className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all"
             >
@@ -198,23 +215,6 @@ export default function Robotics() {
               </p>
               <div className="text-xs text-primary font-semibold">
                 → Easy integration anywhere
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all"
-            >
-              <div className="text-3xl mb-3">📡</div>
-              <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">gRPC</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
-                High-performance bi-directional streaming for real-time robot communication.
-              </p>
-              <div className="text-xs text-primary font-semibold">
-                → Low latency, high throughput
               </div>
             </motion.div>
 
@@ -245,26 +245,56 @@ export default function Robotics() {
           >
             <div className="flex items-center gap-2 mb-4 text-slate-400">
               <Code className="w-4 h-4" />
-              <span className="text-sm font-semibold">Quick Integration Example (Python)</span>
+              <span className="text-sm font-semibold">Native Python SDK (PyO3) - Zero IPC Overhead</span>
             </div>
             <pre className="text-slate-100 font-mono text-xs overflow-x-auto">
-{`# ROS2 Integration
+{`# Install: pip install shodh-memory
+import shodh_memory
+
+# Initialize local memory system (fully offline)
+memory = shodh_memory.MemorySystem(storage_path="./robot_memory")
+
+# Record robot observations
+memory.record(
+    content="Detected obstacle at grid (10, 20) in zone A",
+    experience_type="observation",
+    entities=["obstacle_147", "zone_a"]
+)
+
+# Query for relevant memories (hybrid semantic + temporal search)
+results = memory.retrieve(
+    query="obstacles in zone A",
+    max_results=5,
+    mode="hybrid"  # semantic, temporal, or hybrid
+)
+
+for mem in results:
+    print(f"{mem['content']} (importance: {mem['importance']:.2f})")
+
+# Flush to disk before shutdown
+memory.flush()
+
+# ROS2 node integration example
 import rclpy
-from shodh_ros2 import ShodhRAG
+from rclpy.node import Node
 
-rag = ShodhRAG()
-response = rag.query("Find assembly procedure for part X123")
+class RobotMemoryNode(Node):
+    def __init__(self):
+        super().__init__('memory_node')
+        self.memory = shodh_memory.MemorySystem("./ros2_memory")
 
-# REST API Integration
-import requests
-response = requests.post('http://robot-controller:8080/rag/query',
-    json={'query': 'Navigate to warehouse section B3'})
-
-# gRPC Integration
-from shodh_grpc import ShodhRAGClient
-client = ShodhRAGClient('robot-controller:50051')
-response = client.query("Safety protocol for hazmat handling")`}
+    def observation_callback(self, msg):
+        # Direct in-process calls (no HTTP/IPC overhead)
+        self.memory.record(content=msg.data, experience_type="observation")
+        results = self.memory.retrieve(query=msg.data, max_results=3)`}
             </pre>
+            <div className="mt-4 p-3 bg-primary/10 dark:bg-primary/20 rounded-lg border-l-4 border-primary">
+              <p className="text-xs text-slate-300">
+                <strong className="text-primary">⚡ Performance:</strong> Native Rust bindings via PyO3 -
+                5-10ms faster than REST API, zero serialization overhead, single process deployment.
+                ONNX Runtime for embeddings (bring your own model) + llama.cpp for local LLM inference.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
