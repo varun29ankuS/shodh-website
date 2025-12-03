@@ -51,16 +51,16 @@ export default function Footer() {
               Enterprise RAG with 97% citation accuracy. Run on your infrastructure. No API lock-in.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+              <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                 <Github className="w-5 h-5" />
               </a>
-              <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+              <a href="https://twitter.com/shodhAI" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+              <a href="https://www.linkedin.com/company/shodh-rag/" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+              <a href="mailto:contact@shodh-rag.com" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
