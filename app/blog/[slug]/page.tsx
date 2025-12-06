@@ -769,11 +769,3 @@ export default function BlogPostPage() {
     </div>
   );
 }
-
-// Generate static params for all posts
-export function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
