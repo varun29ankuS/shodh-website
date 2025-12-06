@@ -15,9 +15,9 @@ export default function Footer() {
     ],
     resources: [
       { name: 'Documentation', href: '/docs' },
-      { name: 'API Reference', href: '#' },
-      { name: 'Guides', href: '#' },
-      { name: 'Blog', href: '#' },
+      { name: 'API Reference', href: '/docs' },
+      { name: 'Blog', href: '/blog' },
+      { name: 'Getting Started', href: '/getting-started' },
     ],
     company: [
       { name: 'About', href: '#' },
