@@ -8,7 +8,644 @@ import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import { formatDate, getCategoryColor } from '@/lib/blog';
 import CodeBlock from '@/components/CodeBlock';
 
+function ArticleStructuredData({ post }: { post: ReturnType<typeof getPostBySlug> }) {
+  if (!post) return null;
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: post.title,
+    description: post.description,
+    image: 'https://shodh-rag.com/og-image.png',
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Organization',
+      name: post.author.name,
+      url: 'https://shodh-rag.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Shodh',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://shodh-rag.com/logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://shodh-rag.com/blog/${post.slug}`,
+    },
+    keywords: post.tags.join(', '),
+    articleSection: post.category,
+    wordCount: post.readingTime.includes('min')
+      ? parseInt(post.readingTime) * 200
+      : 2000,
+    proficiencyLevel: 'Beginner',
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://shodh-rag.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://shodh-rag.com/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://shodh-rag.com/blog/${post.slug}`,
+      },
+    ],
+  };
+
+  const howToSchema = post.category === 'Tutorial' ? {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: post.title,
+    description: post.description,
+    image: 'https://shodh-rag.com/og-image.png',
+    totalTime: post.readingTime,
+    tool: [
+      { '@type': 'HowToTool', name: 'Claude Code CLI' },
+      { '@type': 'HowToTool', name: 'Node.js 18+' },
+      { '@type': 'HowToTool', name: 'Terminal' },
+    ],
+    step: [
+      {
+        '@type': 'HowToStep',
+        name: 'Install Prerequisites',
+        text: 'Install Claude Code and Node.js 18+',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Configure MCP Server',
+        text: 'Add MCP server to settings.json or use claude mcp add command',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Start the Server',
+        text: 'Start your MCP server (e.g., Shodh Memory server)',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Restart Claude Code',
+        text: 'Restart Claude Code to load the new MCP server',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Test the Tools',
+        text: 'Verify the MCP tools are available and working',
+      },
+    ],
+  } : null;
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {howToSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        />
+      )}
+    </>
+  );
+}
+
 // Blog post content components
+function ClaudeCodeMCPSetupPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        Claude Code is Anthropic's powerful CLI tool that brings Claude directly into your terminal.
+        But its true power unlocks when you connect it to MCP (Model Context Protocol) servers—giving
+        Claude access to external tools, databases, and services. This guide walks you through
+        setting up MCP servers from scratch, with a practical example using Shodh Memory for
+        persistent AI memory.
+      </p>
+
+      <h2>What is MCP (Model Context Protocol)?</h2>
+      <p>
+        MCP is an open protocol that allows AI assistants like Claude to securely connect to
+        external data sources and tools. Think of it as a USB standard for AI—a universal way
+        to plug capabilities into your AI assistant.
+      </p>
+      <p>
+        With MCP servers, Claude Code can:
+      </p>
+      <ul>
+        <li><strong>Remember across sessions</strong> — Store and recall information persistently</li>
+        <li><strong>Access databases</strong> — Query PostgreSQL, MongoDB, or custom data stores</li>
+        <li><strong>Integrate with APIs</strong> — Connect to GitHub, Linear, Slack, and more</li>
+        <li><strong>Execute specialized tools</strong> — Run domain-specific operations</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <p>Before starting, ensure you have:</p>
+      <ul>
+        <li>Claude Code installed (<code>npm install -g @anthropic-ai/claude-code</code>)</li>
+        <li>Node.js 18+ (for running MCP servers)</li>
+        <li>A working terminal (macOS, Linux, or Windows with WSL)</li>
+      </ul>
+
+      <h2>Understanding MCP Configuration</h2>
+      <p>
+        Claude Code uses a JSON configuration file to know which MCP servers to connect to.
+        The location depends on your platform:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Configuration Locations"
+        code={`# macOS
+~/.config/claude-code/settings.json
+
+# Linux
+~/.config/claude-code/settings.json
+
+# Windows
+%APPDATA%\\claude-code\\settings.json
+
+# Project-specific (any platform)
+./.mcp.json  (in your project root)`}
+      />
+
+      <h2>Method 1: Using the CLI (Recommended)</h2>
+      <p>
+        The easiest way to add MCP servers is through Claude Code's built-in commands:
+      </p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# Add an MCP server from npm
+claude mcp add @shodh/memory-mcp
+
+# Add with custom configuration
+claude mcp add @shodh/memory-mcp --env SHODH_API_URL=http://localhost:3030
+
+# List configured servers
+claude mcp list
+
+# Remove a server
+claude mcp remove @shodh/memory-mcp`}
+      />
+
+      <p>
+        When you run <code>claude mcp add</code>, Claude Code automatically:
+      </p>
+      <ol>
+        <li>Creates the configuration file if it doesn't exist</li>
+        <li>Adds the server entry with the correct format</li>
+        <li>Validates the server can be started</li>
+      </ol>
+
+      <h2>Method 2: Manual Configuration</h2>
+      <p>
+        For more control, you can edit the configuration file directly. Here's the
+        complete structure:
+      </p>
+
+      <CodeBlock
+        language="json"
+        filename="settings.json"
+        code={`{
+  "mcpServers": {
+    "shodh-memory": {
+      "command": "npx",
+      "args": ["-y", "@shodh/memory-mcp"],
+      "env": {
+        "SHODH_API_URL": "http://127.0.0.1:3030",
+        "SHODH_API_KEY": "your-api-key-here",
+        "SHODH_USER_ID": "claude-code"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxxxxxxxxxx"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/dir"]
+    }
+  }
+}`}
+      />
+
+      <h3>Configuration Fields Explained</h3>
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Required</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>command</code></td><td>Yes</td><td>Executable to run (npx, node, python, etc.)</td></tr>
+          <tr><td><code>args</code></td><td>Yes</td><td>Arguments passed to the command</td></tr>
+          <tr><td><code>env</code></td><td>No</td><td>Environment variables for the server process</td></tr>
+          <tr><td><code>cwd</code></td><td>No</td><td>Working directory for the server</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Method 3: Project-Specific Configuration</h2>
+      <p>
+        For project-specific MCP servers, create a <code>.mcp.json</code> file in your
+        project root:
+      </p>
+
+      <CodeBlock
+        language="json"
+        filename=".mcp.json"
+        code={`{
+  "mcpServers": {
+    "project-memory": {
+      "command": "npx",
+      "args": ["-y", "@shodh/memory-mcp"],
+      "env": {
+        "SHODH_API_URL": "http://127.0.0.1:3030",
+        "SHODH_USER_ID": "my-project"
+      }
+    }
+  }
+}`}
+      />
+
+      <p>
+        Project-specific servers are only available when Claude Code is running in that
+        directory. This is useful for:
+      </p>
+      <ul>
+        <li>Project-specific databases or APIs</li>
+        <li>Different configurations per project</li>
+        <li>Sharing MCP setup with your team (commit <code>.mcp.json</code> to git)</li>
+      </ul>
+
+      <h2>Setting Up Shodh Memory Server</h2>
+      <p>
+        Let's walk through a complete example: adding persistent memory to Claude Code
+        using Shodh Memory. This gives Claude the ability to remember information across
+        sessions—preferences, project context, decisions, and learnings.
+      </p>
+
+      <h3>Step 1: Start the Shodh Memory Server</h3>
+      <p>
+        First, download and run the Shodh Memory server. You can use the pre-built
+        binary or run from source:
+      </p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# Option A: Using pre-built binary (recommended)
+# Download from: https://github.com/varun29ankuS/shodh-memory/releases
+
+# macOS/Linux
+chmod +x shodh-memory-server
+./shodh-memory-server
+
+# Windows
+shodh-memory-server.exe
+
+# Option B: From source
+git clone https://github.com/varun29ankuS/shodh-memory
+cd shodh-memory
+cargo run --release
+
+# Server starts on http://127.0.0.1:3030 by default`}
+      />
+
+      <p>
+        Verify the server is running:
+      </p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`curl http://127.0.0.1:3030/health
+# Response: {"status":"ok"}`}
+      />
+
+      <h3>Step 2: Add the MCP Server to Claude Code</h3>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# Using the CLI
+claude mcp add @shodh/memory-mcp \\
+  --env SHODH_API_URL=http://127.0.0.1:3030 \\
+  --env SHODH_API_KEY=your-api-key \\
+  --env SHODH_USER_ID=claude-code`}
+      />
+
+      <p>Or manually add to your <code>settings.json</code>:</p>
+
+      <CodeBlock
+        language="json"
+        filename="settings.json"
+        code={`{
+  "mcpServers": {
+    "shodh-memory": {
+      "command": "npx",
+      "args": ["-y", "@shodh/memory-mcp"],
+      "env": {
+        "SHODH_API_URL": "http://127.0.0.1:3030",
+        "SHODH_API_KEY": "sk-shodh-dev-4f8b2c1d9e3a7f5b6d2c8e4a1b9f7d3c",
+        "SHODH_USER_ID": "claude-code"
+      }
+    }
+  }
+}`}
+      />
+
+      <h3>Step 3: Restart Claude Code</h3>
+      <p>
+        After configuring, restart Claude Code to load the new MCP server:
+      </p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# Exit Claude Code (Ctrl+C or type /exit)
+# Then restart
+claude`}
+      />
+
+      <h3>Step 4: Test the Memory Tools</h3>
+      <p>
+        Once connected, Claude has access to memory tools. Try these commands:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code"
+        code={`> Remember that I prefer dark mode and use Vim keybindings
+[Claude uses the remember tool to store this preference]
+
+> What are my preferences?
+[Claude uses the recall tool to search memories]
+
+> Give me a summary of what you know about me
+[Claude uses context_summary to get categorized memories]`}
+      />
+
+      <h2>Available Memory Tools</h2>
+      <p>
+        The Shodh Memory MCP server exposes these tools to Claude:
+      </p>
+
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>remember</code></td><td>Store a new memory with content, type, and optional tags</td></tr>
+          <tr><td><code>recall</code></td><td>Semantic search for relevant memories</td></tr>
+          <tr><td><code>context_summary</code></td><td>Get categorized summary of recent learnings and decisions</td></tr>
+          <tr><td><code>list_memories</code></td><td>List all stored memories</td></tr>
+          <tr><td><code>forget</code></td><td>Delete a specific memory by ID</td></tr>
+          <tr><td><code>memory_stats</code></td><td>Get statistics about stored memories</td></tr>
+          <tr><td><code>recall_by_tags</code></td><td>Search memories by tags</td></tr>
+          <tr><td><code>recall_by_date</code></td><td>Search memories within a date range</td></tr>
+          <tr><td><code>forget_by_tags</code></td><td>Delete memories matching tags</td></tr>
+          <tr><td><code>forget_by_date</code></td><td>Delete memories within a date range</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Memory Types for Better Organization</h2>
+      <p>
+        When storing memories, you can specify types to help with retrieval and
+        prioritization:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Memory Types"
+        code={`Observation  — General observations and facts
+Decision     — Choices made and their rationale
+Learning     — New knowledge acquired
+Error        — Mistakes to avoid
+Discovery    — Findings from exploration
+Pattern      — Recurring behaviors identified
+Context      — Session or project context
+Task         — Work items and todos
+CodeEdit     — Code changes made
+FileAccess   — Files accessed
+Search       — Search queries performed
+Command      — Commands executed
+Conversation — Notable conversation points`}
+      />
+
+      <h2>Practical Examples</h2>
+
+      <h3>Example 1: Project Onboarding</h3>
+      <p>
+        When starting work on a new project, Claude can build up context that persists:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`> Explore this codebase and remember the key architectural decisions
+
+[Claude explores and stores memories like:]
+- "This project uses Next.js 14 with App Router"
+- "Authentication is handled by NextAuth with GitHub OAuth"
+- "Database is PostgreSQL accessed via Prisma ORM"
+- "Tests use Vitest with React Testing Library"
+
+# Next session, same project:
+> What's the tech stack here?
+
+[Claude recalls from memory without re-exploring]`}
+      />
+
+      <h3>Example 2: User Preferences</h3>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`> Remember: I prefer functional components over class components,
+> use TypeScript strict mode, and always add JSDoc comments to public APIs
+
+[Claude stores as Decision type memories]
+
+# Later, when writing code:
+> Create a new React component for user profiles
+
+[Claude automatically applies remembered preferences]`}
+      />
+
+      <h3>Example 3: Learning from Errors</h3>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`> The tests are failing with "Cannot find module '@/lib/auth'"
+
+[After investigation]
+> Remember: path aliases in this project require tsconfig paths
+> to be mirrored in vitest.config.ts
+
+[Claude stores as Error type memory]
+
+# Future similar issues are caught faster`}
+      />
+
+      <h2>Troubleshooting Common Issues</h2>
+
+      <h3>Server Connection Failed</h3>
+      <CodeBlock
+        language="bash"
+        filename="Debugging"
+        code={`# Check if server is running
+curl http://127.0.0.1:3030/health
+
+# Check Claude Code logs
+claude --verbose
+
+# Verify configuration
+cat ~/.config/claude-code/settings.json | jq .`}
+      />
+
+      <h3>Tools Not Appearing</h3>
+      <p>
+        If MCP tools don't show up in Claude:
+      </p>
+      <ol>
+        <li>Ensure the server is running before starting Claude Code</li>
+        <li>Check for typos in the configuration file</li>
+        <li>Verify the <code>args</code> array is correctly formatted</li>
+        <li>Look for error messages in Claude Code's output</li>
+      </ol>
+
+      <h3>Permission Errors</h3>
+      <CodeBlock
+        language="bash"
+        filename="Fix Permissions"
+        code={`# Ensure npx can run the package
+npx -y @shodh/memory-mcp --help
+
+# If using a local server, check firewall rules
+# On macOS, you may need to allow incoming connections`}
+      />
+
+      <h2>Security Best Practices</h2>
+      <ul>
+        <li><strong>Use environment variables</strong> for API keys, never hardcode them</li>
+        <li><strong>Limit server scope</strong> — only expose necessary tools and data</li>
+        <li><strong>Run locally when possible</strong> — avoid sending sensitive data to external servers</li>
+        <li><strong>Review MCP server code</strong> before using third-party servers</li>
+        <li><strong>Use project-specific configs</strong> to isolate different projects</li>
+      </ul>
+
+      <h2>Popular MCP Servers</h2>
+      <p>
+        Beyond Shodh Memory, here are other useful MCP servers:
+      </p>
+
+      <table>
+        <thead>
+          <tr><th>Server</th><th>Package</th><th>Use Case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GitHub</td><td><code>@modelcontextprotocol/server-github</code></td><td>Repository operations, issues, PRs</td></tr>
+          <tr><td>Filesystem</td><td><code>@modelcontextprotocol/server-filesystem</code></td><td>Read/write files (sandboxed)</td></tr>
+          <tr><td>PostgreSQL</td><td><code>@modelcontextprotocol/server-postgres</code></td><td>Database queries</td></tr>
+          <tr><td>Brave Search</td><td><code>@modelcontextprotocol/server-brave-search</code></td><td>Web search</td></tr>
+          <tr><td>Puppeteer</td><td><code>@modelcontextprotocol/server-puppeteer</code></td><td>Browser automation</td></tr>
+          <tr><td>Linear</td><td><code>@linear/mcp-server</code></td><td>Issue tracking</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Building Your Own MCP Server</h2>
+      <p>
+        MCP servers can be built in any language that supports JSON-RPC over stdio.
+        The official SDK is available for TypeScript/Node.js:
+      </p>
+
+      <CodeBlock
+        language="typescript"
+        filename="Custom MCP Server"
+        code={`import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
+const server = new Server({
+  name: "my-custom-server",
+  version: "1.0.0",
+}, {
+  capabilities: {
+    tools: {},
+  },
+});
+
+// Define a tool
+server.setRequestHandler("tools/list", async () => ({
+  tools: [{
+    name: "my_tool",
+    description: "Does something useful",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "The input" }
+      },
+      required: ["query"]
+    }
+  }]
+}));
+
+// Handle tool calls
+server.setRequestHandler("tools/call", async (request) => {
+  if (request.params.name === "my_tool") {
+    const query = request.params.arguments.query;
+    return { content: [{ type: "text", text: \`Processed: \${query}\` }] };
+  }
+});
+
+// Start server
+const transport = new StdioServerTransport();
+await server.connect(transport);`}
+      />
+
+      <h2>Conclusion</h2>
+      <p>
+        MCP servers transform Claude Code from a powerful assistant into an extensible
+        platform. With persistent memory via Shodh Memory, Claude remembers your
+        preferences, learns from experience, and maintains context across sessions—just
+        like a human colleague would.
+      </p>
+      <p>
+        The setup takes less than 5 minutes, but the productivity gains compound over
+        time. Every preference remembered, every pattern learned, every error avoided
+        adds up.
+      </p>
+      <p>
+        Start with the basics: add Shodh Memory for persistent context. Then explore
+        other MCP servers for GitHub integration, database access, or build your own
+        for domain-specific needs.
+      </p>
+    </article>
+  );
+}
+
 function AgenticAIMemoryPost() {
   return (
     <article className="prose prose-lg dark:prose-invert max-w-none">
@@ -671,6 +1308,8 @@ export default function BlogPostPage() {
   // Render the appropriate content based on slug
   const renderContent = () => {
     switch (slug) {
+      case 'claude-code-mcp-server-setup-guide':
+        return <ClaudeCodeMCPSetupPost />;
       case 'agentic-ai-long-term-memory-2025':
         return <AgenticAIMemoryPost />;
       case 'embodied-ai-edge-memory-robotics':
@@ -683,10 +1322,12 @@ export default function BlogPostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        {/* Back link */}
-        <Link
+    <>
+      <ArticleStructuredData post={post} />
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          {/* Back link */}
+          <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 mb-8"
         >
@@ -764,8 +1405,9 @@ export default function BlogPostPage() {
               View on GitHub →
             </a>
           </div>
-        </footer>
+          </footer>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

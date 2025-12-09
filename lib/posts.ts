@@ -2,6 +2,20 @@ import { BlogPost } from './blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'claude-code-mcp-server-setup-guide',
+    title: 'How to Set Up MCP Servers in Claude Code: Complete Guide',
+    description: 'Learn how to supercharge Claude Code with MCP (Model Context Protocol) servers. From basic setup to production deployment, with practical examples using Shodh Memory for persistent AI memory.',
+    date: '2025-12-09',
+    author: {
+      name: 'Shodh Team',
+      role: 'Developer Experience',
+    },
+    category: 'Tutorial',
+    tags: ['claude-code', 'MCP', 'tutorial', 'AI-agents', 'developer-tools'],
+    readingTime: '10 min read',
+    featured: true,
+  },
+  {
     slug: 'agentic-ai-long-term-memory-2025',
     title: 'Why Long-Term Memory is the Missing Piece in Agentic AI Systems',
     description: 'Gartner named agentic AI the #1 technology trend for 2025. But without persistent memory, AI agents forget everything between sessions. Here\'s how to fix that with local-first memory systems.',
@@ -13,7 +27,7 @@ export const blogPosts: BlogPost[] = [
     category: 'AI',
     tags: ['agentic-ai', 'long-term-memory', 'LLM', 'context-engineering', 'multi-agent'],
     readingTime: '8 min read',
-    featured: true,
+    featured: false,
   },
   {
     slug: 'embodied-ai-edge-memory-robotics',

@@ -23,7 +23,11 @@ export const metadata = {
     'Hindi RAG', 'multilingual RAG', 'Indian languages',
     'robotics AI', 'Zenoh', 'ROS2', 'embedded AI',
     'cost-effective AI', 'no cloud dependency', 'data sovereignty',
-    'Vamana', 'BM25', 'hybrid search', 'CPU-optimized AI'
+    'Vamana', 'BM25', 'hybrid search', 'CPU-optimized AI',
+    'MCP server', 'Model Context Protocol', 'Claude Code', 'Claude Code MCP',
+    'AI memory', 'persistent AI memory', 'LLM memory', 'agent memory',
+    'Claude Code setup', 'MCP tutorial', 'Claude Code tutorial',
+    'Anthropic MCP', 'AI agent tools', 'Claude tools'
   ],
   authors: [{ name: 'Shodh Team', url: 'https://shodh-rag.com' }],
   creator: 'Shodh',
