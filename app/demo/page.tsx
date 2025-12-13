@@ -152,7 +152,7 @@ export default function Demo() {
 
             <div className="space-y-3">
               <a
-                href="mailto:varun@shodh-rag.com?subject=Shodh RAG Demo Request&body=Hi, I'd like to schedule a demo of Shodh RAG.%0A%0ACompany:%0AUse case:%0APreferred time:"
+                href="mailto:29.varuns@gmail.com?subject=Shodh RAG Demo Request&body=Hi, I'd like to schedule a demo of Shodh RAG.%0A%0ACompany:%0AUse case:%0APreferred time:"
                 className="flex items-center justify-center gap-2 w-full py-4 px-6 rounded-lg font-semibold bg-secondary hover:bg-secondary/90 text-white transition-all transform hover:scale-105"
               >
                 <Calendar className="w-5 h-5" />
