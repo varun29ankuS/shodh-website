@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion'
 import {
   ArrowRight, Brain, Database, Lock, Zap, Clock, Network,
-  Shield, HardDrive, Cpu, GitBranch, MessageSquare, Code, Bot, Users, FileText, Search
+  Shield, Cpu, GitBranch, Code, Bot, Sparkles, Terminal,
+  Layers, RefreshCw, Search, MessageSquare, Workflow
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -11,123 +12,95 @@ export default function Memory() {
   const keyFeatures = [
     {
       icon: Brain,
-      title: '3-Tier Memory Hierarchy',
-      description: 'Mimics human memory: Working → Session → Long-term with intelligent promotion',
-      detail: '<1ms working memory, <10ms session, <100ms long-term retrieval',
+      title: 'Hebbian Learning',
+      description: 'Memories strengthen when retrieved together - just like biological synapses',
+      detail: 'Co-activated memories form edges; 5+ co-activations become permanent',
+    },
+    {
+      icon: Layers,
+      title: '3-Tier Cognitive Architecture',
+      description: 'Working → Session → Long-term memory based on Cowan\'s model',
+      detail: 'Sub-ms working memory, automatic promotion based on importance',
     },
     {
       icon: Network,
-      title: 'Knowledge Graph Intelligence',
-      description: 'Track entities, relationships, and episodes with temporal validity',
-      detail: 'Graphiti-inspired architecture for complex knowledge modeling',
+      title: 'Knowledge Graph',
+      description: 'Entities, relationships, and spreading activation retrieval',
+      detail: '763ns entity lookup, 32μs 3-hop traversal',
     },
     {
       icon: Lock,
-      title: '100% Offline & Private',
-      description: 'No cloud dependency, GDPR compliant by design, your data stays local',
-      detail: 'Multi-tenant isolation with user_id, agent_id, run_id, actor_id',
+      title: '100% Local & Private',
+      description: 'Single ~15MB binary. No cloud. No data leaves your machine.',
+      detail: 'RocksDB storage, works completely offline',
     },
     {
       icon: Zap,
-      title: 'Lightning Fast (Rust)',
-      description: '10x faster than Python alternatives, 4MB binary, <100ms startup',
-      detail: 'RocksDB storage with LZ4 compression, custom Vamana HNSW index',
+      title: 'Sub-millisecond Graph Ops',
+      description: 'Rust-native performance for real-time agent decisions',
+      detail: '~55ms store (with embedding), ~45ms semantic search',
     },
     {
       icon: Search,
-      title: 'Multi-Modal Retrieval',
-      description: '5 search modes: Similarity, Temporal, Causal, Associative, Hybrid',
-      detail: 'ONNX Runtime + llama.cpp - bring your own embedding models',
-    },
-    {
-      icon: Shield,
-      title: 'Enterprise-Ready',
-      description: '28 REST APIs, audit logging, compression, GDPR compliance',
-      detail: 'Production-grade with Docker deployment and web dashboard',
+      title: 'Hybrid Retrieval',
+      description: 'Semantic, associative, and hybrid search modes',
+      detail: 'Density-dependent weighting adapts to your usage patterns',
     },
   ]
 
-  const useCases = [
+  const integrations = [
     {
-      icon: Bot,
-      title: 'Autonomous Drones',
-      plainEnglish: 'Drones that learn from every flight',
-      description: 'Store obstacle maps, terrain data, mission parameters—no internet needed in remote areas',
-      example: 'Agricultural drone surveying fields remembers crop patterns, irrigation issues from previous flights. Works in areas with zero connectivity.',
+      icon: Terminal,
+      title: 'Claude Code',
+      description: 'Add persistent memory to your CLI coding sessions',
+      setup: 'One line in claude_code_config.json',
     },
     {
-      icon: Shield,
-      title: 'Defence & Military Systems',
-      plainEnglish: 'Mission-critical memory for secure operations',
-      description: 'Air-gapped deployment, classified data stays on-device, complete audit trail for compliance',
-      example: 'Reconnaissance drone stores mission data locally. Tactical robots remember terrain, threats, patrol routes—all offline and secure.',
+      icon: MessageSquare,
+      title: 'Claude Desktop',
+      description: 'Remember conversations across chat sessions',
+      setup: 'One line in claude_desktop_config.json',
     },
     {
-      icon: Cpu,
-      title: 'Industrial Robotics',
-      plainEnglish: 'Factory robots with persistent knowledge',
-      description: 'Assembly procedures, quality checks, maintenance logs—all stored locally on robot controllers',
-      example: 'Manufacturing robot recalls "Part X123 requires 45° angle, torque 12Nm" from assembly manual. Warehouse robot optimizes paths based on stored floor layouts.',
+      icon: Code,
+      title: 'Cursor IDE',
+      description: 'Give your AI coding assistant project memory',
+      setup: 'Add to ~/.cursor/mcp.json',
     },
     {
-      icon: Network,
-      title: 'IoT & Smart Devices',
-      plainEnglish: 'Edge intelligence without cloud',
-      description: 'Smart city sensors, medical devices, surveillance systems—process and remember locally',
-      example: 'Smart city traffic sensor builds knowledge graph of congestion patterns. Medical IoT device stores patient context privately without cloud transmission.',
+      icon: Workflow,
+      title: 'LangChain / AutoGPT',
+      description: 'Persistent memory for autonomous agents',
+      setup: 'Python SDK or REST API',
     },
   ]
 
   const comparisonData = [
-    { feature: 'Speed (add memory)', shodh: '<1ms', mem0: '5-10ms', zep: '10-20ms' },
-    { feature: 'Speed (semantic search)', shodh: '10-20ms', mem0: '100-200ms', zep: '50-100ms' },
-    { feature: 'Deployment', shodh: '100% Edge/Offline', mem0: 'Cloud-only', zep: 'Hybrid' },
-    { feature: 'Connectivity', shodh: 'Works Offline', mem0: 'Requires Internet', zep: 'Requires Internet' },
-    { feature: 'Memory Hierarchy', shodh: '3-Tier (Unique)', mem0: 'Single-tier', zep: 'Single-tier' },
-    { feature: 'Knowledge Graph', shodh: 'Yes (Graphiti)', mem0: 'No', zep: 'Yes (Graphiti)' },
-    { feature: 'Language', shodh: 'Rust', mem0: 'Python', zep: 'TypeScript' },
-    { feature: 'Binary Size', shodh: '4MB', mem0: '200MB+', zep: '50MB+' },
-    { feature: 'Air-Gapped Support', shodh: 'Yes', mem0: 'No', zep: 'No' },
+    { feature: 'Store memory', shodh: '55-60ms', mem0: '100-500ms', langchain: 'Varies' },
+    { feature: 'Semantic search', shodh: '34-58ms', mem0: '200-500ms', langchain: 'Varies' },
+    { feature: 'Graph operations', shodh: '<1μs', mem0: 'N/A', langchain: 'N/A' },
+    { feature: 'Deployment', shodh: 'Local binary', mem0: 'Cloud API', langchain: 'Cloud DBs' },
+    { feature: 'Offline support', shodh: '100%', mem0: 'No', langchain: 'Partial' },
+    { feature: 'Learning algorithm', shodh: 'Hebbian + LTP', mem0: 'None', langchain: 'None' },
+    { feature: 'MCP support', shodh: 'Native', mem0: 'No', langchain: 'No' },
+    { feature: 'Binary size', shodh: '~15MB', mem0: 'Cloud', langchain: 'Cloud' },
   ]
 
-  const roadmap = [
-    {
-      year: 'Q1-Q3 2025',
-      title: 'Core Memory System',
-      description: '3-tier memory hierarchy, knowledge graph, vector indexing - production-ready Rust engine',
-      status: 'Completed',
-    },
-    {
-      year: 'Q4 2025',
-      title: 'Robotics Python SDK',
-      description: 'Full robotics support: Position, GeoLocation, mission tracking, sensor data, ROS2 integration',
-      status: 'Completed',
-    },
-    {
-      year: 'Q1 2026',
-      title: 'Fleet Coordination',
-      description: 'Multi-robot memory sync via Zenoh, shared knowledge graphs, fleet-wide learning',
-      status: 'In Progress',
-    },
-    {
-      year: 'Q2 2026',
-      title: 'Visual Positioning',
-      description: 'VPS integration for GPS-denied environments, Gaussian Splat scene memory (.spz format)',
-      status: 'Planned',
-    },
-    {
-      year: 'Q3 2026+',
-      title: 'Multi-Modal Memory',
-      description: 'Image, audio, video embeddings for complete multi-modal memory systems',
-      status: 'Vision',
-    },
+  const benchmarks = [
+    { operation: 'Entity Get (1000)', latency: '810ns', note: 'O(1) hash lookup' },
+    { operation: 'Entity Search', latency: '990ns', note: 'Sub-microsecond' },
+    { operation: 'Relationship Query', latency: '2.3μs', note: 'Graph traversal' },
+    { operation: '3-hop Traversal', latency: '32.8μs', note: 'Deep graph walk' },
+    { operation: 'Hebbian Strengthen', latency: '6.2μs', note: 'Synapse update' },
+    { operation: 'Remember (full)', latency: '55-60ms', note: 'Embedding + NER + store' },
+    { operation: 'Recall (semantic)', latency: '34-58ms', note: 'Vector search + rank' },
+    { operation: 'Recall (tags)', latency: '~1ms', note: 'Index lookup' },
   ]
 
   return (
     <main className="min-h-screen overflow-hidden">
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-hidden">
-        {/* Animated background */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] bg-secondary/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -150,26 +123,26 @@ export default function Memory() {
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-8"
             >
               <Brain className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Edge AI Memory • For Robots, Drones & IoT</span>
+              <span className="text-sm font-semibold text-primary">Cognitive Memory for AI Agents</span>
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 dark:text-white">
-              AI Memory for the Edge
+              Memory That Learns
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-destructive mt-2">
-                Private, Fast, Offline
+                For Claude, GPT & Your Agents
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
-              Bring persistent memory to robots, drones, IoT devices, and defence systems—running entirely on-device.
-              No cloud latency, no connectivity required, no data leaving your edge.
+              Give AI agents persistent memory that strengthens with use.
+              Hebbian learning, spreading activation, 3-tier cognitive architecture.
+              Single binary. Runs offline. Works with MCP.
             </p>
 
-            {/* Technical detail for credibility */}
             <p className="text-base text-slate-500 dark:text-slate-500 mb-12 max-w-2xl mx-auto">
-              <strong className="text-primary">Edge-Native:</strong> 4MB binary, &lt;100ms retrieval, works offline •
-              <strong className="text-primary ml-2">Stack:</strong> Rust + RocksDB + Vamana HNSW + ONNX Runtime + llama.cpp •
-              <strong className="text-primary ml-2">Targets:</strong> Drones, Robots, Industrial IoT, Defence
+              <strong className="text-primary">One-liner setup</strong> for Claude Code & Desktop.
+              <strong className="text-primary ml-2">Python SDK</strong> for custom agents.
+              <strong className="text-primary ml-2">REST API</strong> for everything else.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -177,7 +150,7 @@ export default function Memory() {
                 href="/getting-started"
                 className="group px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center gap-2"
               >
-                Join Beta Program
+                Get Started
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
@@ -196,8 +169,8 @@ export default function Memory() {
                 transition={{ delay: 0.3 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">4MB</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Binary Size</div>
+                <div className="text-2xl font-bold text-primary">688</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Tests Passing</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -205,8 +178,8 @@ export default function Memory() {
                 transition={{ delay: 0.4 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">&lt;100ms</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Startup Time</div>
+                <div className="text-2xl font-bold text-primary">&lt;1μs</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Graph Lookup</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -214,8 +187,8 @@ export default function Memory() {
                 transition={{ delay: 0.5 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">0%</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Cloud Dependency</div>
+                <div className="text-2xl font-bold text-primary">~15MB</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Binary Size</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -223,130 +196,176 @@ export default function Memory() {
                 transition={{ delay: 0.6 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">28</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">REST APIs</div>
+                <div className="text-2xl font-bold text-primary">100%</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Offline</div>
               </motion.div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Problem/Solution */}
+      {/* MCP Integration - The Key Feature */}
       <section className="relative py-24 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
         <div className="absolute inset-0 bg-grid-slate opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Why Edge Devices Need Local Memory
+              One Line to Remember Everything
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              Robots, drones, and IoT devices can't wait for cloud APIs. They need instant, offline intelligence.
+              Add persistent memory to Claude Code, Claude Desktop, or Cursor with a single config line
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
-            {/* Problem Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="p-8 rounded-xl border-2 border-destructive/30 bg-gradient-to-br from-destructive/5 to-white dark:from-destructive/10 dark:to-slate-900"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-destructive/20 rounded-lg flex items-center justify-center">
-                  <MessageSquare className="w-6 h-6 text-destructive" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Cloud-Dependent Systems</h3>
-              </div>
-              <div className="space-y-4 text-sm">
-                <div className="flex items-start gap-3">
-                  <span className="text-destructive font-bold text-lg">❌</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Network Latency</div>
-                    <div className="text-slate-600 dark:text-slate-400">200-500ms API roundtrip kills real-time decisions</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-destructive font-bold text-lg">❌</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Connectivity Required</div>
-                    <div className="text-slate-600 dark:text-slate-400">Drone in remote field, robot in factory dead zone = system stops</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-destructive font-bold text-lg">❌</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Data Transmission Risk</div>
-                    <div className="text-slate-600 dark:text-slate-400">Sensitive defence/industrial data sent to cloud servers</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-destructive font-bold text-lg">❌</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Per-API Costs</div>
-                    <div className="text-slate-600 dark:text-slate-400">1000 robots × 10K queries/day = ₹4L+/month cloud bills</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto p-8 bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-700"
+          >
+            <div className="flex items-center gap-2 mb-6 text-slate-400">
+              <Terminal className="w-5 h-5" />
+              <span className="text-sm font-semibold">MCP Configuration - Works Instantly</span>
+            </div>
+            <pre className="text-slate-100 font-mono text-sm overflow-x-auto mb-6">
+{`// Add to your MCP config file
+{
+  "mcpServers": {
+    "shodh-memory": {
+      "command": "npx",
+      "args": ["-y", "@shodh/memory-mcp"],
+      "env": {
+        "SHODH_API_KEY": "your-api-key"
+      }
+    }
+  }
+}`}
+            </pre>
 
-            {/* Solution Card */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="p-8 rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-slate-900"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <Brain className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">With Shodh Memory</h3>
+            <div className="grid md:grid-cols-3 gap-4 mt-6 text-sm">
+              <div className="p-4 bg-slate-800 rounded-lg">
+                <div className="text-primary font-semibold mb-1">Claude Code</div>
+                <code className="text-xs text-slate-400">~/.claude/claude_code_config.json</code>
               </div>
-              <div className="space-y-4 text-sm">
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold text-lg">✓</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Sub-100ms Response</div>
-                    <div className="text-slate-600 dark:text-slate-400">Local RocksDB + Vamana index = real-time decisions</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold text-lg">✓</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">100% Offline Operation</div>
-                    <div className="text-slate-600 dark:text-slate-400">Works in remote fields, factory floors, military zones—no internet needed</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold text-lg">✓</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">Air-Gapped Deployment</div>
-                    <div className="text-slate-600 dark:text-slate-400">Classified defence data, sensitive industrial IP—stays on your edge devices</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold text-lg">✓</span>
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white mb-1">4MB Binary, Low Power</div>
-                    <div className="text-slate-600 dark:text-slate-400">Rust efficiency = runs on resource-constrained edge devices</div>
-                  </div>
-                </div>
+              <div className="p-4 bg-slate-800 rounded-lg">
+                <div className="text-primary font-semibold mb-1">Claude Desktop</div>
+                <code className="text-xs text-slate-400">claude_desktop_config.json</code>
               </div>
-            </motion.div>
+              <div className="p-4 bg-slate-800 rounded-lg">
+                <div className="text-primary font-semibold mb-1">Cursor</div>
+                <code className="text-xs text-slate-400">~/.cursor/mcp.json</code>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-primary/10 dark:bg-primary/20 rounded-lg border-l-4 border-primary">
+              <p className="text-sm text-slate-300">
+                <strong className="text-primary">What you get:</strong> Claude remembers your decisions, learned patterns,
+                errors to avoid, and project context across all sessions. Memories strengthen when retrieved together (Hebbian learning).
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Integration Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mt-12">
+            {integrations.map((integration, index) => (
+              <motion.div
+                key={integration.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary dark:hover:border-primary transition-all"
+              >
+                <div className="w-10 h-10 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                  <integration.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-slate-900 dark:text-white">{integration.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{integration.description}</p>
+                <p className="text-xs text-primary font-medium">{integration.setup}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Key Features */}
+      {/* Python SDK */}
       <section className="relative py-24 bg-white dark:bg-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
+              Python SDK for Custom Agents
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400">
+              Build agents that learn from experience
+            </p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto p-8 bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-700"
+          >
+            <div className="flex items-center gap-2 mb-6 text-slate-400">
+              <Code className="w-5 h-5" />
+              <span className="text-sm font-semibold">pip install shodh-memory</span>
+            </div>
+            <pre className="text-slate-100 font-mono text-sm overflow-x-auto">
+{`from shodh_memory import Memory
+
+# Initialize (auto-starts server if needed)
+memory = Memory(api_key="your-api-key", storage_path="./my_agent_memory")
+
+# Store memories with types for importance weighting
+memory.remember("User prefers dark mode", memory_type="Decision")
+memory.remember("JWT tokens expire after 24h", memory_type="Learning")
+memory.remember("Don't use deprecated API v1", memory_type="Error")
+
+# Semantic search - finds related memories
+results = memory.recall("user preferences", limit=5)
+for mem in results:
+    print(f"{mem.content} (score: {mem.score:.2f})")
+
+# Hybrid retrieval - semantic + graph associations
+results = memory.recall("authentication", mode="hybrid", limit=10)
+
+# Get context summary for LLM bootstrap
+summary = memory.context_summary()
+# Returns: decisions, learnings, errors, patterns - structured for prompts
+
+# Memory statistics
+stats = memory.get_stats()
+print(f"Total memories: {stats.total_memories}")
+print(f"Graph edges: {stats.graph_edges}")`}
+            </pre>
+
+            <div className="grid md:grid-cols-2 gap-4 mt-6">
+              <div className="p-4 bg-primary/10 dark:bg-primary/20 rounded-lg">
+                <p className="text-xs text-slate-300">
+                  <strong className="text-primary">Memory Types:</strong> Decision (+0.30), Learning (+0.25),
+                  Error (+0.25), Discovery (+0.20), Task (+0.15), Context (+0.10)
+                </p>
+              </div>
+              <div className="p-4 bg-secondary/10 dark:bg-secondary/20 rounded-lg">
+                <p className="text-xs text-slate-300">
+                  <strong className="text-secondary">Retrieval Modes:</strong> semantic (vector),
+                  associative (graph), hybrid (density-weighted combination)
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Key Features */}
+      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Enterprise-Grade Memory Features
+              Cognitive Architecture
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              Built with Rust for performance, designed for production, free for everyone
+              Based on neuroscience research - Cowan's working memory model, Hebbian plasticity, spreading activation
             </p>
           </div>
 
@@ -372,306 +391,15 @@ export default function Memory() {
         </div>
       </section>
 
-      {/* Quick Start Code */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
-        <div className="absolute inset-0 bg-grid-slate opacity-30"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Get Started in 2 Lines of Code
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Simple Python API, auto-start server, instant memory
-            </p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto p-8 bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-700"
-          >
-            <div className="flex items-center gap-2 mb-6 text-slate-400">
-              <Code className="w-5 h-5" />
-              <span className="text-sm font-semibold">Python SDK for Robots & Drones - Full Robotics Support</span>
-            </div>
-            <pre className="text-slate-100 font-mono text-sm overflow-x-auto mb-6">
-{`# Install
-pip install shodh-memory
-
-from shodh_memory import ShodhClient, Position, GeoLocation, ExperienceType
-
-# Initialize with robot identity
-client = ShodhClient(robot_id="drone_001")
-
-# Start a mission (all experiences auto-tagged)
-client.start_mission("survey_mission_42")
-
-# Record with GPS + local position (works offline)
-client.record(
-    content="Obstacle detected: tree at 2m distance",
-    position=Position(x=10.5, y=20.3, z=0.0),       # Local coords (meters)
-    geo_location=GeoLocation(37.7749, -122.4194, 50.0),  # GPS
-    heading=45.0,                                    # Orientation (degrees)
-    action_type="obstacle_detection",
-    sensor_data={"lidar_distance": 2.1, "confidence": 0.95},
-    experience_type=ExperienceType.DISCOVERY
-)
-
-# Query with geo-spatial filters
-from shodh_memory import GeoFilter
-results = client.query(
-    query_text="obstacles near landing zone",
-    mission_id="survey_mission_42",
-    geo_filter=GeoFilter(
-        center=GeoLocation(37.7749, -122.4194, 0),
-        radius_meters=500  # Search within 500m radius
-    )
-)
-
-for mem in results.memories:
-    print(f"{mem.content} @ {mem.position} (score: {mem.score:.2f})")`}
-            </pre>
-
-            <div className="mt-4 p-4 bg-primary/10 dark:bg-primary/20 rounded-lg border-l-4 border-primary">
-              <p className="text-xs text-slate-300 mb-2">
-                <strong className="text-primary">🤖 Robotics-First:</strong> Native support for Position (x,y,z),
-                GeoLocation (lat,lon,alt), heading, mission tracking, and sensor data. Works completely offline.
-              </p>
-              <p className="text-xs text-slate-300">
-                <strong className="text-primary">⚡ Edge Performance:</strong> 15-50 records/sec, 6-35ms query latency.
-                Tested with 500+ rapid insertions at 100% success rate.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-4 mt-6">
-              <div className="p-4 bg-slate-800 rounded-lg">
-                <div className="text-primary font-semibold mb-1 text-sm">Python SDK</div>
-                <code className="text-xs text-slate-300">pip install shodh-memory</code>
-              </div>
-              <div className="p-4 bg-slate-800 rounded-lg">
-                <div className="text-primary font-semibold mb-1 text-sm">ROS2 Node</div>
-                <code className="text-xs text-slate-300">from shodh_memory.ros2 import *</code>
-              </div>
-              <div className="p-4 bg-slate-800 rounded-lg">
-                <div className="text-primary font-semibold mb-1 text-sm">REST API</div>
-                <code className="text-xs text-slate-300">POST /api/record</code>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ROS2 Integration Section */}
-      <section className="relative py-24 bg-white dark:bg-slate-950">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Native ROS2 Integration
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Drop-in node for ROS2 robots - auto-tracks position, GPS, and battery
-            </p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto p-8 bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-700"
-          >
-            <div className="flex items-center gap-2 mb-6 text-slate-400">
-              <Bot className="w-5 h-5" />
-              <span className="text-sm font-semibold">ROS2 Node - Automatic Position & Sensor Tracking</span>
-            </div>
-            <pre className="text-slate-100 font-mono text-sm overflow-x-auto mb-6">
-{`# In your ROS2 package
-from shodh_memory.ros2 import ShodhMemoryNode
-import rclpy
-
-def main():
-    rclpy.init()
-
-    # Node auto-subscribes to /odom, /gps/fix, /battery
-    node = ShodhMemoryNode(robot_id="warehouse_robot_01")
-
-    # Record obstacles (position auto-attached from /odom)
-    node.record_obstacle("forklift blocking aisle 3", distance=2.5)
-
-    # Record waypoints
-    node.record_waypoint("loading_dock_b", status="reached")
-
-    # Record sensor readings
-    node.record_sensor_reading(
-        sensor_name="temperature",
-        readings={"motor_temp": 45.2, "ambient": 22.0},
-        anomaly=False
-    )
-
-    rclpy.spin(node)
-
-# Auto-subscribed topics:
-# /memory/record (String) - Record arbitrary memories
-# /odom (Odometry) - Auto-track robot position
-# /gps/fix (NavSatFix) - Auto-track GPS (drones)
-# /battery (BatteryState) - Battery warnings at <20%
-# /mission/start, /mission/end - Mission lifecycle`}
-            </pre>
-
-            <div className="mt-4 grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-primary/10 dark:bg-primary/20 rounded-lg">
-                <p className="text-xs text-slate-300">
-                  <strong className="text-primary">📍 Auto Position:</strong> Every memory automatically tagged with current odometry position and GPS coordinates
-                </p>
-              </div>
-              <div className="p-4 bg-secondary/10 dark:bg-secondary/20 rounded-lg">
-                <p className="text-xs text-slate-300">
-                  <strong className="text-secondary">🔋 Battery Alerts:</strong> Automatically records critical battery warnings when level drops below 20%
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Use Cases */}
-      <section className="relative py-24 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Built For Real AI Applications
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Where local memory makes the difference
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {useCases.map((useCase, index) => (
-              <motion.div
-                key={useCase.title}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:shadow-primary/10 hover:border-primary dark:hover:border-primary transition-all duration-300 bg-white dark:bg-slate-900"
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <useCase.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-1 text-slate-900 dark:text-white">{useCase.title}</h3>
-                    <p className="text-sm text-primary mb-2 font-medium">{useCase.plainEnglish}</p>
-                    <p className="text-slate-600 dark:text-slate-400 mb-3">{useCase.description}</p>
-                  </div>
-                </div>
-                <div className="pl-16">
-                  <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border-l-4 border-primary">
-                    <p className="text-sm text-slate-700 dark:text-slate-300">
-                      <strong>Example:</strong> {useCase.example}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Performance Benchmarks - Real Test Results */}
-      <section className="relative py-24 bg-white dark:bg-slate-950">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Proven Edge Performance
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Real benchmarks from integration tests - not synthetic
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="p-6 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 border border-primary/20"
-            >
-              <div className="text-4xl font-bold text-primary mb-2">6-35ms</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Query Latency</div>
-              <div className="text-xs text-primary mt-1">Hybrid semantic + temporal</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              viewport={{ once: true }}
-              className="p-6 rounded-xl bg-gradient-to-br from-secondary/10 to-secondary/5 dark:from-secondary/20 dark:to-secondary/10 border border-secondary/20"
-            >
-              <div className="text-4xl font-bold text-secondary mb-2">15-50</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Records/Second</div>
-              <div className="text-xs text-secondary mt-1">With embedding generation</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-              className="p-6 rounded-xl bg-gradient-to-br from-destructive/10 to-destructive/5 dark:from-destructive/20 dark:to-destructive/10 border border-destructive/20"
-            >
-              <div className="text-4xl font-bold text-destructive mb-2">500+</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Stress Test Passed</div>
-              <div className="text-xs text-destructive mt-1">Rapid insertions, 100% success</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              viewport={{ once: true }}
-              className="p-6 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/5 dark:from-primary/20 dark:to-secondary/10 border border-primary/20"
-            >
-              <div className="text-4xl font-bold text-primary mb-2">34</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Integration Tests</div>
-              <div className="text-xs text-primary mt-1">All passing, production-ready</div>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto p-6 bg-slate-900 dark:bg-slate-950 rounded-xl border border-slate-700 font-mono text-xs text-slate-300"
-          >
-            <div className="text-primary font-semibold mb-4">$ cargo test --test integration_tests</div>
-            <div className="space-y-1 text-slate-400">
-              <div><span className="text-green-400">✓</span> test_core_memory_operations <span className="text-slate-500">(initialization, record, retrieve)</span></div>
-              <div><span className="text-green-400">✓</span> test_robotics_scenarios <span className="text-slate-500">(mission tracking, obstacle detection, calibration)</span></div>
-              <div><span className="text-green-400">✓</span> test_drone_fleet_operations <span className="text-slate-500">(multi-drone, geo-spatial, flight paths)</span></div>
-              <div><span className="text-green-400">✓</span> test_performance_benchmarks <span className="text-slate-500">(latency, throughput, concurrency)</span></div>
-              <div><span className="text-green-400">✓</span> test_reliability_and_edge_cases <span className="text-slate-500">(unicode, empty content, stress)</span></div>
-              <div><span className="text-green-400">✓</span> test_stress_scenarios <span className="text-slate-500">(500 rapid insertions, 100% success)</span></div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-slate-700 text-green-400">
-              test result: ok. 34 passed; 0 failed
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Architecture Diagram */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
-        <div className="absolute inset-0 bg-grid-slate opacity-30"></div>
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="relative py-24 bg-white dark:bg-slate-950">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              How Shodh Memory Works
+              How It Works
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              3-Tier memory hierarchy + Knowledge graph + Vector search
+              3-tier memory + knowledge graph + Hebbian learning
             </p>
           </div>
 
@@ -683,79 +411,74 @@ def main():
           >
             <div className="p-8 bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-700 mb-8">
               <pre className="text-slate-100 font-mono text-xs md:text-sm overflow-x-auto" style={{ fontFamily: 'Courier New, Consolas, monospace', lineHeight: '1.5', whiteSpace: 'pre' }}>
-{`┌──────────────────────────────────────────────────────────────┐
-│                    SHODH MEMORY SYSTEM                       │
-│                                                              │
-│  ┌────────────────────────────────────────────────────────┐  │
-│  │           WORKING MEMORY (LRU Cache)                   │  │
-│  │  • 100 most recent/frequent memories                   │  │
-│  │  • Retrieval: <1ms                                     │  │
-│  │  • High importance items (>0.4)                        │  │
-│  └────────────────────────────────────────────────────────┘  │
-│                          ↓↑                                  │
-│  ┌────────────────────────────────────────────────────────┐  │
-│  │           SESSION MEMORY (Size-Limited)                │  │
-│  │  • 100MB current session context                       │  │
-│  │  • Retrieval: <10ms                                    │  │
-│  │  • Promotion threshold: importance >0.6                │  │
-│  └────────────────────────────────────────────────────────┘  │
-│                          ↓↑                                  │
-│  ┌────────────────────────────────────────────────────────┐  │
-│  │          LONG-TERM MEMORY (RocksDB)                    │  │
-│  │  • Unlimited storage with LZ4 compression              │  │
-│  │  • Retrieval: <100ms uncompressed, <200ms compressed   │  │
-│  │  • Auto-compression after 7+ days                      │  │
-│  └────────────────────────────────────────────────────────┘  │
-│                                                              │
-│  ┌────────────────────────────────────────────────────────┐  │
-│  │         KNOWLEDGE GRAPH (Graphiti-Inspired)            │  │
-│  │                                                        │  │
-│  │  [Entity: John] ──WorksAt──> [Entity: OpenAI]         │  │
-│  │        │                            │                  │  │
-│  │        └──────Uses──────> [Entity: GPT-4]             │  │
-│  │                                                        │  │
-│  │  • Entities: Person, Org, Location, Tech, Concept     │  │
-│  │  • Relationships: Temporal validity + confidence      │  │
-│  │  • Episodes: Time-bounded context windows             │  │
-│  └────────────────────────────────────────────────────────┘  │
-│                                                              │
-│  ┌────────────────────────────────────────────────────────┐  │
-│  │         VECTOR INDEX (Custom Vamana HNSW)              │  │
-│  │  • ONNX Runtime for embeddings (any model)             │  │
-│  │  • Cosine similarity search                            │  │
-│  │  • Model-agnostic (384, 512, 768, 1024, 1536 dims)     │  │
-│  └────────────────────────────────────────────────────────┘  │
-│                                                              │
-└──────────────────────────────────────────────────────────────┘
-                              ↕
-                    ┌──────────────────┐
-                    │   28 REST APIs   │
-                    │  Python Client   │
-                    │   Web Dashboard  │
-                    └──────────────────┘`}
+{`┌──────────────────────────────────────────────────────────────────┐
+│                     SHODH MEMORY ARCHITECTURE                     │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │              WORKING MEMORY (LRU Cache)                    │  │
+│  │  • 100 most recent/frequent memories                       │  │
+│  │  • Retrieval: <1ms                                         │  │
+│  │  • High importance items promoted here                     │  │
+│  └────────────────────────────────────────────────────────────┘  │
+│                          ↓ overflow ↑ access                     │
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │              SESSION MEMORY (Bounded)                      │  │
+│  │  • Current session context                                 │  │
+│  │  • Retrieval: <10ms                                        │  │
+│  │  • Promotion threshold: importance > 0.6                   │  │
+│  └────────────────────────────────────────────────────────────┘  │
+│                          ↓ consolidation ↑ recall                │
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │              LONG-TERM MEMORY (RocksDB)                    │  │
+│  │  • Persistent storage with LZ4 compression                 │  │
+│  │  • Retrieval: <100ms                                       │  │
+│  │  • Semantic consolidation after 7+ days                    │  │
+│  └────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │              KNOWLEDGE GRAPH (Hebbian)                     │  │
+│  │                                                            │  │
+│  │  Memory A ──co-retrieved──▶ Memory B                       │  │
+│  │      │                          │                          │  │
+│  │      └────strengthens───────────┘                          │  │
+│  │                                                            │  │
+│  │  • Edges form on co-retrieval (Hebbian learning)           │  │
+│  │  • 5+ co-activations = Long-Term Potentiation (permanent)  │  │
+│  │  • Unused edges decay over time                            │  │
+│  └────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│  ┌────────────────────────────────────────────────────────────┐  │
+│  │              VECTOR INDEX (Vamana HNSW)                    │  │
+│  │  • MiniLM-L6-v2 embeddings (384-dim, 25MB model)           │  │
+│  │  • TinyBERT NER for entity extraction (15MB model)         │  │
+│  │  • Approximate nearest neighbor search                     │  │
+│  └────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘`}
               </pre>
             </div>
 
             <div className="grid md:grid-cols-3 gap-4">
               <div className="p-6 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
-                <Clock className="w-8 h-8 text-primary mb-3" />
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Intelligent Promotion</h4>
+                <RefreshCw className="w-8 h-8 text-primary mb-3" />
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Automatic Consolidation</h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Memories automatically promoted based on 7-factor importance scoring
+                  Important memories promote up the hierarchy; old memories compress into semantic facts
                 </p>
               </div>
               <div className="p-6 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
                 <GitBranch className="w-8 h-8 text-primary mb-3" />
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Knowledge Graphs</h4>
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Spreading Activation</h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Extract entities and relationships automatically with temporal tracking
+                  Queries activate related memories through graph connections, not just vector similarity
                 </p>
               </div>
               <div className="p-6 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
                 <Database className="w-8 h-8 text-primary mb-3" />
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Auto-Compression</h4>
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Durable Storage</h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Old memories compressed automatically with LZ4 (2-5x) or semantic (10-50x)
+                  RocksDB with LZ4 compression. Survives restarts. Works offline.
                 </p>
               </div>
             </div>
@@ -763,15 +486,60 @@ def main():
         </div>
       </section>
 
-      {/* Comparison Table */}
+      {/* Benchmarks */}
+      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
+              Benchmark Results
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400">
+              Criterion benchmarks on Intel i7-1355U, release build
+            </p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto overflow-x-auto"
+          >
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b-2 border-slate-200 dark:border-slate-800">
+                  <th className="text-left p-4 text-slate-900 dark:text-white font-semibold">Operation</th>
+                  <th className="text-center p-4 text-primary font-semibold">Latency</th>
+                  <th className="text-left p-4 text-slate-600 dark:text-slate-400 font-semibold">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {benchmarks.map((row, index) => (
+                  <tr
+                    key={row.operation}
+                    className={`border-b border-slate-100 dark:border-slate-800 ${
+                      index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-900/50' : ''
+                    }`}
+                  >
+                    <td className="p-4 text-slate-900 dark:text-white font-medium">{row.operation}</td>
+                    <td className="p-4 text-center text-primary font-semibold font-mono">{row.latency}</td>
+                    <td className="p-4 text-slate-600 dark:text-slate-400 text-sm">{row.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Comparison */}
       <section className="relative py-24 bg-white dark:bg-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Why Choose Shodh Memory?
+              vs. Alternatives
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              Edge-native, offline alternative to cloud-based mem0 ($24M funding) and Zep (Graphiti)
+              Local-first alternative to cloud memory services
             </p>
           </div>
 
@@ -786,8 +554,8 @@ def main():
                 <tr className="border-b-2 border-slate-200 dark:border-slate-800">
                   <th className="text-left p-4 text-slate-900 dark:text-white font-semibold">Feature</th>
                   <th className="text-center p-4 text-primary font-semibold">Shodh Memory</th>
-                  <th className="text-center p-4 text-slate-600 dark:text-slate-400 font-semibold">mem0</th>
-                  <th className="text-center p-4 text-slate-600 dark:text-slate-400 font-semibold">Zep</th>
+                  <th className="text-center p-4 text-slate-600 dark:text-slate-400 font-semibold">Mem0</th>
+                  <th className="text-center p-4 text-slate-600 dark:text-slate-400 font-semibold">LangChain Memory</th>
                 </tr>
               </thead>
               <tbody>
@@ -801,7 +569,7 @@ def main():
                     <td className="p-4 text-slate-900 dark:text-white font-medium">{row.feature}</td>
                     <td className="p-4 text-center text-primary font-semibold">{row.shodh}</td>
                     <td className="p-4 text-center text-slate-600 dark:text-slate-400">{row.mem0}</td>
-                    <td className="p-4 text-center text-slate-600 dark:text-slate-400">{row.zep}</td>
+                    <td className="p-4 text-center text-slate-600 dark:text-slate-400">{row.langchain}</td>
                   </tr>
                 ))}
               </tbody>
@@ -818,65 +586,16 @@ def main():
               <Shield className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
-                  Privacy-First Architecture
+                  Why Local Matters
                 </h4>
                 <p className="text-sm text-slate-700 dark:text-slate-300">
-                  Unlike cloud-based alternatives, Shodh Memory runs 100% locally. Your data never leaves your machine.
-                  Perfect for healthcare, finance, legal, or any privacy-sensitive application. GDPR compliant by design
-                  with built-in "Right to be Forgotten" support.
+                  Your agent's memories contain sensitive context - user preferences, business logic,
+                  learned patterns. Shodh Memory keeps everything on your machine. No cloud API calls,
+                  no data transmission, no vendor lock-in. Works completely offline.
                 </p>
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Roadmap */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Development Roadmap
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Where we are and where we're going
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto space-y-8">
-            {roadmap.map((phase, index) => (
-              <motion.div
-                key={phase.year}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="relative pl-8 pb-8 border-l-4 border-primary"
-              >
-                <div className="absolute -left-3 top-0 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-slate-950"></div>
-                <div className="ml-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="inline-block px-3 py-1 bg-primary/10 dark:bg-primary/20 rounded-full text-sm font-semibold text-primary">
-                      {phase.year}
-                    </span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      phase.status === 'Completed'
-                        ? 'bg-primary/10 text-primary font-semibold'
-                        : phase.status === 'In Progress'
-                        ? 'bg-secondary/10 text-secondary'
-                        : phase.status === 'Planned'
-                        ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500'
-                    }`}>
-                      {phase.status}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white">{phase.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-400">{phase.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -895,25 +614,39 @@ def main():
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">
-              Bring Intelligence to the Edge
+              Give Your Agents Memory
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
-              Deploy Shodh Memory on your robots, drones, and IoT devices. Production-ready, runs completely offline, no cloud required.
+              One-liner for Claude. Python SDK for custom agents. REST API for everything else.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/getting-started"
                 className="group px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center gap-2"
               >
-                Join Beta Program
+                Get Started
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
-                href="/docs"
+              <a
+                href="https://github.com/varun29ankuS/shodh-memory"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-semibold hover:border-primary dark:hover:border-primary transition-colors text-slate-900 dark:text-white"
               >
-                Read Documentation
-              </Link>
+                View on GitHub
+              </a>
+            </div>
+
+            <div className="mt-12 grid grid-cols-3 gap-8 max-w-md mx-auto text-sm">
+              <a href="https://pypi.org/project/shodh-memory/" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                PyPI
+              </a>
+              <a href="https://www.npmjs.com/package/@shodh/memory-mcp" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                npm
+              </a>
+              <a href="https://crates.io/crates/shodh-memory" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                crates.io
+              </a>
             </div>
           </motion.div>
         </div>

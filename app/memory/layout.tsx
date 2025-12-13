@@ -1,35 +1,35 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'AI Memory for Edge Devices - Robots, Drones & IoT | Shodh',
-  description: 'Edge-native AI memory system for robots, drones, and IoT devices. 100% offline, 4MB binary, <100ms retrieval. 3-tier memory hierarchy with knowledge graphs. Built for defence, industrial, and autonomous systems.',
+  title: 'Shodh Memory - Cognitive Memory for AI Agents | Claude, GPT, LangChain',
+  description: 'Persistent memory for AI agents that learns with use. Hebbian learning, 3-tier cognitive architecture, knowledge graphs. Works with Claude Code, Claude Desktop, Cursor, LangChain, AutoGPT. Single ~15MB binary, 100% offline.',
   keywords: [
-    'edge AI memory', 'robot memory system', 'drone AI', 'IoT memory',
-    'offline AI', 'air-gapped AI', 'defence AI', 'military AI',
-    'industrial robotics', 'autonomous drones', 'embedded AI',
-    'local knowledge graph', 'edge computing', 'RocksDB', 'Rust AI',
-    'Graphiti knowledge graph', 'multi-tier memory', 'persistent memory',
-    'robot knowledge base', 'IoT intelligence', 'edge memory system'
+    'AI agent memory', 'persistent memory', 'Claude memory', 'GPT memory',
+    'LangChain memory', 'AutoGPT memory', 'MCP memory', 'cognitive memory',
+    'Hebbian learning', 'knowledge graph', 'offline AI', 'local memory',
+    'Claude Code', 'Claude Desktop', 'Cursor IDE', 'AI assistant memory',
+    'semantic memory', 'episodic memory', 'spreading activation',
+    'long-term potentiation', 'memory consolidation', 'Rust AI'
   ],
   openGraph: {
-    title: 'AI Memory for Edge Devices - Robots, Drones & IoT',
-    description: '100% offline AI memory for robots and drones. 4MB binary, <100ms retrieval, works without internet. Perfect for defence, agriculture, and industrial automation.',
+    title: 'Shodh Memory - Cognitive Memory for AI Agents',
+    description: 'Give Claude, GPT, and your custom agents persistent memory that strengthens with use. Hebbian learning, 3-tier architecture, knowledge graphs. 100% offline.',
     type: 'website',
     url: 'https://shodh-rag.com/memory',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-memory.png',
         width: 1200,
         height: 630,
-        alt: 'Shodh Memory - Edge AI Memory for Robots, Drones & IoT',
+        alt: 'Shodh Memory - Memory That Learns for Claude, GPT & Your Agents',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Memory for Edge Devices - Robots, Drones & IoT',
-    description: '100% offline AI memory. 4MB binary, <100ms retrieval. Built for defence, drones, and industrial robots.',
-    images: ['/og-image.png'],
+    title: 'Shodh Memory - Cognitive Memory for AI Agents',
+    description: 'Persistent memory for Claude, GPT & custom agents. Hebbian learning, knowledge graphs. Single binary, 100% offline.',
+    images: ['/og-memory.png'],
   },
   alternates: {
     canonical: 'https://shodh-rag.com/memory',
