@@ -1,100 +1,119 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  Book, Code, Terminal, Rocket, FileText, Settings,
-  Database, Cloud, Lock, Zap, ArrowRight
-} from 'lucide-react'
 import Link from 'next/link'
+import {
+  Book, Code, Terminal, Rocket, Github, ExternalLink,
+  Play, Package, MessageCircle, FileText, Cpu, Brain,
+  ArrowRight, Copy, Check
+} from 'lucide-react'
+import { useState } from 'react'
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="p-2 hover:bg-slate-700 rounded transition-colors"
+      title="Copy to clipboard"
+    >
+      {copied ? (
+        <Check className="w-4 h-4 text-green-400" />
+      ) : (
+        <Copy className="w-4 h-4 text-slate-400" />
+      )}
+    </button>
+  )
+}
 
 export default function Docs() {
-  const docSections = [
+  const quickStart = [
     {
-      title: 'Getting Started',
-      icon: Rocket,
-      links: [
-        { name: 'Quick Start', href: '#' },
-        { name: 'Installation', href: '#' },
-        { name: 'Configuration', href: '#' },
-        { name: 'First Query', href: '#' },
-      ],
+      title: 'Python SDK',
+      command: 'pip install shodh-memory',
+      description: 'Full-featured Python library for memory operations',
+      link: 'https://pypi.org/project/shodh-memory/',
+      linkText: 'PyPI',
     },
     {
-      title: 'Core Concepts',
-      icon: Book,
-      links: [
-        { name: 'How RAG Works', href: '#' },
-        { name: 'Vector Search', href: '#' },
-        { name: 'Citations', href: '#' },
-        { name: 'Embeddings', href: '#' },
-      ],
-    },
-    {
-      title: 'API Reference',
-      icon: Code,
-      links: [
-        { name: 'REST API', href: '#' },
-        { name: 'gRPC API', href: '#' },
-        { name: 'Client SDKs', href: '#' },
-        { name: 'Authentication', href: '#' },
-      ],
-    },
-    {
-      title: 'Deployment',
-      icon: Cloud,
-      links: [
-        { name: 'On-Premise Setup', href: '#' },
-        { name: 'Docker Deployment', href: '#' },
-        { name: 'Kubernetes', href: '#' },
-        { name: 'Load Balancing', href: '#' },
-      ],
-    },
-    {
-      title: 'Configuration',
-      icon: Settings,
-      links: [
-        { name: 'Storage Backends', href: '#' },
-        { name: 'Performance Tuning', href: '#' },
-        { name: 'Security Settings', href: '#' },
-        { name: 'Monitoring', href: '#' },
-      ],
-    },
-    {
-      title: 'Advanced',
-      icon: Zap,
-      links: [
-        { name: 'Custom Embeddings', href: '#' },
-        { name: 'Hybrid Search', href: '#' },
-        { name: 'Multi-Tenancy', href: '#' },
-        { name: 'Scaling', href: '#' },
-      ],
+      title: 'MCP Server (npm)',
+      command: 'npx @shodh/memory-mcp',
+      description: 'Model Context Protocol server for Claude Code/Desktop',
+      link: 'https://www.npmjs.com/package/@shodh/memory-mcp',
+      linkText: 'npm',
     },
   ]
 
-  const quickLinks = [
+  const resources = [
+    {
+      icon: Github,
+      title: 'GitHub Repository',
+      description: 'Source code, README, issues, and discussions',
+      link: 'https://github.com/varun29ankuS/shodh-memory',
+      primary: true,
+    },
+    {
+      icon: Play,
+      title: 'Interactive Colab',
+      description: 'Try all features in your browser - no setup required',
+      link: 'https://colab.research.google.com/github/varun29ankuS/shodh-memory/blob/main/notebooks/shodh_memory_demo.ipynb',
+      primary: true,
+    },
+    {
+      icon: Package,
+      title: 'PyPI Package',
+      description: 'Python package with version history and metadata',
+      link: 'https://pypi.org/project/shodh-memory/',
+      primary: false,
+    },
+    {
+      icon: Package,
+      title: 'npm Package',
+      description: 'MCP server package for Node.js environments',
+      link: 'https://www.npmjs.com/package/@shodh/memory-mcp',
+      primary: false,
+    },
+  ]
+
+  const guides = [
+    {
+      icon: Rocket,
+      title: 'Quick Start',
+      description: 'Get up and running in 2 minutes',
+      link: 'https://github.com/varun29ankuS/shodh-memory#quick-start',
+    },
     {
       icon: Terminal,
-      title: 'CLI Reference',
-      description: 'Complete command-line interface documentation',
-      link: '#',
+      title: 'MCP Setup',
+      description: 'Configure for Claude Code or Claude Desktop',
+      link: 'https://github.com/varun29ankuS/shodh-memory#mcp-server',
     },
     {
-      icon: FileText,
-      title: 'Changelog',
-      description: 'Release notes and version history',
-      link: '#',
+      icon: Code,
+      title: 'API Reference',
+      description: 'Full Python API documentation',
+      link: 'https://github.com/varun29ankuS/shodh-memory#api-reference',
     },
     {
-      icon: Lock,
-      title: 'Security',
-      description: 'Security best practices and compliance',
-      link: '#',
+      icon: Cpu,
+      title: 'Technical Specs',
+      description: 'Architecture, benchmarks, and deployment options',
+      link: '/features',
+      internal: true,
     },
   ]
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="container mx-auto px-4 py-24">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,157 +122,241 @@ export default function Docs() {
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white">
             Documentation
           </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-8">
-            Everything you need to deploy and run SHODH in production
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Everything you need to get started with Shodh Memory
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#"
-              className="px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center gap-2"
-            >
-              <Book className="w-5 h-5" />
-              Read Full Docs
-            </a>
-            <Link
-              href="/demo"
-              className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-semibold hover:border-primary dark:hover:border-primary transition-colors text-slate-900 dark:text-white"
-            >
-              Try Demo
-            </Link>
+        </motion.div>
+
+        {/* Quick Install */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="max-w-3xl mx-auto mb-16"
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center text-slate-900 dark:text-white">
+            Quick Install
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {quickStart.map((item) => (
+              <div
+                key={item.title}
+                className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-slate-900 dark:text-white">
+                    {item.title}
+                  </h3>
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary hover:underline flex items-center gap-1"
+                  >
+                    {item.linkText} <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-slate-900 dark:bg-slate-950 rounded-lg font-mono text-sm">
+                  <code className="text-green-400 flex-1">{item.command}</code>
+                  <CopyButton text={item.command} />
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </motion.div>
 
-        {/* Main Doc Sections */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
-          {docSections.map((section, index) => (
-            <motion.div
-              key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary dark:hover:border-primary transition-all"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center">
-                  <section.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
-                  {section.title}
-                </h3>
-              </div>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-2 group"
-                    >
-                      <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Quick Links */}
+        {/* Primary Resources */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-6xl mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-16"
         >
-          <h2 className="text-3xl font-bold mb-8 text-center text-slate-900 dark:text-white">
-            Quick Links
+          <h2 className="text-2xl font-bold mb-6 text-center text-slate-900 dark:text-white">
+            Resources
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {quickLinks.map((link, index) => (
+          <div className="grid md:grid-cols-2 gap-4">
+            {resources.map((resource, index) => (
               <motion.a
-                key={link.title}
-                href={link.link}
+                key={resource.title}
+                href={resource.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary dark:hover:border-primary hover:shadow-lg transition-all"
+                className={`p-6 rounded-xl border-2 transition-all hover:shadow-lg group ${
+                  resource.primary
+                    ? 'border-primary/30 bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-slate-900 hover:border-primary'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary dark:hover:border-primary'
+                }`}
               >
-                <div className="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center mb-4">
-                  <link.icon className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                    resource.primary
+                      ? 'bg-primary/20'
+                      : 'bg-slate-100 dark:bg-slate-800'
+                  }`}>
+                    <resource.icon className={`w-6 h-6 ${
+                      resource.primary ? 'text-primary' : 'text-slate-600 dark:text-slate-400'
+                    }`} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold text-slate-900 dark:text-white">
+                        {resource.title}
+                      </h3>
+                      <ExternalLink className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                      {resource.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-slate-900 dark:text-white">
-                  {link.title}
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  {link.description}
-                </p>
               </motion.a>
             ))}
           </div>
         </motion.div>
 
-        {/* Beta Notice */}
+        {/* Guides */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto mb-16"
         >
-          <div className="rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 p-8 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 dark:bg-primary/30 rounded-full text-primary font-semibold mb-4">
-              <Rocket className="w-5 h-5" />
-              Beta Coming Soon
+          <h2 className="text-2xl font-bold mb-6 text-center text-slate-900 dark:text-white">
+            Guides
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {guides.map((guide, index) => {
+              const Component = guide.internal ? Link : 'a'
+              const props = guide.internal
+                ? { href: guide.link }
+                : { href: guide.link, target: '_blank', rel: 'noopener noreferrer' }
+
+              return (
+                <motion.div
+                  key={guide.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                >
+                  <Component
+                    {...props}
+                    className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary dark:hover:border-primary transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <guide.icon className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-slate-900 dark:text-white">
+                        {guide.title}
+                      </h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        {guide.description}
+                      </p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </Component>
+                </motion.div>
+              )
+            })}
+          </div>
+        </motion.div>
+
+        {/* Quick Example */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto mb-16"
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center text-slate-900 dark:text-white">
+            Quick Example
+          </h2>
+          <div className="rounded-xl border border-slate-700 overflow-hidden">
+            <div className="bg-slate-800 px-4 py-3 border-b border-slate-700 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Code className="w-4 h-4 text-slate-400" />
+                <span className="text-sm font-medium text-slate-300">Python</span>
+              </div>
+              <CopyButton text={`from shodh_memory import Memory
+
+# Initialize
+m = Memory()
+
+# Store a memory
+m.remember("User prefers dark mode", memory_type="Decision", tags=["preferences"])
+
+# Recall memories
+results = m.recall("What are the user preferences?")
+for r in results:
+    print(f"[{r.memory_type}] {r.content}")
+
+# Get context summary for LLM bootstrap
+summary = m.context_summary()
+print(summary.decisions)`} />
             </div>
-            <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">
-              Documentation Under Development
-            </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
-              Full documentation will be available when we launch the beta.
-              Contact us to get early access and work directly with our team.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/getting-started"
-                className="px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
-              >
-                Request Beta Access
-              </Link>
-              <a
-                href="mailto:29.varun@gmail.com"
-                className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-semibold hover:border-primary dark:hover:border-primary transition-colors text-slate-900 dark:text-white"
-              >
-                Contact Us
-              </a>
+            <div className="bg-slate-900 p-6 overflow-x-auto">
+              <pre className="text-sm text-slate-300 font-mono">
+{`from shodh_memory import Memory
+
+# Initialize
+m = Memory()
+
+# Store a memory
+m.remember("User prefers dark mode", memory_type="Decision", tags=["preferences"])
+
+# Recall memories
+results = m.recall("What are the user preferences?")
+for r in results:
+    print(f"[{r.memory_type}] {r.content}")
+
+# Get context summary for LLM bootstrap
+summary = m.context_summary()
+print(summary.decisions)`}
+              </pre>
             </div>
           </div>
         </motion.div>
 
-        {/* CTA */}
+        {/* Help Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-16 p-12 rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-destructive/10 dark:from-primary/20 dark:via-secondary/20 dark:to-destructive/20"
+          className="text-center p-12 rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-destructive/10 dark:from-primary/20 dark:via-secondary/20 dark:to-destructive/20"
         >
           <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
             Need Help?
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
-            Join our community or contact support for personalized assistance
+          <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-xl mx-auto">
+            Check GitHub issues or reach out directly
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#"
-              className="px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
+              href="https://github.com/varun29ankuS/shodh-memory/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center justify-center gap-2"
             >
-              Join Discord
+              <Github className="w-5 h-5" />
+              GitHub Issues
             </a>
             <a
-              href="#"
-              className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-semibold hover:border-primary dark:hover:border-primary transition-colors text-slate-900 dark:text-white"
+              href="https://wa.me/919810300618?text=Hi, I need help with Shodh Memory"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-semibold hover:border-primary dark:hover:border-primary transition-colors text-slate-900 dark:text-white flex items-center justify-center gap-2"
             >
-              Contact Support
+              <MessageCircle className="w-5 h-5" />
+              WhatsApp
             </a>
           </div>
         </motion.div>
