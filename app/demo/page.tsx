@@ -148,7 +148,7 @@ export default function Demo() {
               </a>
 
               <a
-                href="https://wa.me/919876543210?text=Hi, I'd like to see a demo of Shodh"
+                href="https://wa.me/919810300618?text=Hi, I'd like to see a demo of Shodh"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-secondary dark:hover:border-secondary text-slate-900 dark:text-white transition-all"
