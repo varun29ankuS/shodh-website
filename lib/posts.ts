@@ -2,6 +2,48 @@ import { BlogPost } from './blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'shodh-memory-python-sdk-complete-tutorial',
+    title: 'Shodh Memory Python SDK: Complete Tutorial with Examples',
+    description: 'Learn how to use the Shodh Memory Python SDK from installation to advanced features. Store memories, semantic recall, context summaries, and integration patterns for AI applications.',
+    date: '2025-12-13',
+    author: {
+      name: 'Shodh Team',
+      role: 'Developer Experience',
+    },
+    category: 'Tutorial',
+    tags: ['python', 'SDK', 'tutorial', 'shodh-memory', 'AI-memory'],
+    readingTime: '8 min read',
+    featured: true,
+  },
+  {
+    slug: 'how-shodh-memory-works-hebbian-learning',
+    title: 'How Shodh Memory Works: Hebbian Learning & Cognitive Architecture',
+    description: 'Deep dive into the cognitive science behind Shodh Memory. Hebbian plasticity, spreading activation, memory consolidation, and the three-tier architecture that makes AI memory human-like.',
+    date: '2025-12-12',
+    author: {
+      name: 'Shodh Team',
+      role: 'AI Research',
+    },
+    category: 'AI',
+    tags: ['Hebbian-learning', 'cognitive-science', 'architecture', 'memory-systems', 'AI'],
+    readingTime: '10 min read',
+    featured: true,
+  },
+  {
+    slug: 'ai-memory-use-cases-developer-workflows',
+    title: '5 Ways AI Memory Transforms Your Development Workflow',
+    description: 'Practical use cases for persistent AI memory: project context retention, preference learning, error tracking, knowledge accumulation, and cross-session continuity. Real examples with Claude Code.',
+    date: '2025-12-11',
+    author: {
+      name: 'Shodh Team',
+      role: 'Developer Advocacy',
+    },
+    category: 'AI',
+    tags: ['use-cases', 'developer-tools', 'productivity', 'Claude-Code', 'workflows'],
+    readingTime: '6 min read',
+    featured: false,
+  },
+  {
     slug: 'claude-code-mcp-server-setup-guide',
     title: 'How to Set Up MCP Servers in Claude Code: Complete Guide',
     description: 'Learn how to supercharge Claude Code with MCP (Model Context Protocol) servers. From basic setup to production deployment, with practical examples using Shodh Memory for persistent AI memory.',

@@ -1286,6 +1286,656 @@ def generate_launch_description():
   );
 }
 
+// New Blog Posts - Shodh Memory focused
+
+function PythonSDKTutorialPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        The Shodh Memory Python SDK gives your applications persistent, semantic memory
+        in just a few lines of code. This tutorial covers everything from installation
+        to advanced patterns.
+      </p>
+
+      <h2>Installation</h2>
+      <p>Install from PyPI:</p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`pip install shodh-memory`}
+      />
+
+      <p>That's it. No external services, no API keys required for local use.</p>
+
+      <h2>Quick Start</h2>
+      <p>Here's the minimal example to get started:</p>
+
+      <CodeBlock
+        language="python"
+        filename="quickstart.py"
+        code={`from shodh_memory import Memory
+
+# Initialize (creates local storage in ./shodh_data by default)
+m = Memory()
+
+# Store a memory
+m.remember("User prefers dark mode in all applications",
+           memory_type="Decision",
+           tags=["preferences", "ui"])
+
+# Recall memories by semantic search
+results = m.recall("What are the user's UI preferences?")
+for r in results:
+    print(f"[{r.memory_type}] {r.content} (score: {r.score:.2f})")`}
+      />
+
+      <h2>Memory Types</h2>
+      <p>
+        Shodh Memory supports different memory types, each with different importance
+        weights during retrieval:
+      </p>
+
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Weight Boost</th><th>Use Case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Decision</code></td><td>+30%</td><td>Choices, preferences, architectural decisions</td></tr>
+          <tr><td><code>Learning</code></td><td>+25%</td><td>New knowledge, discoveries</td></tr>
+          <tr><td><code>Error</code></td><td>+25%</td><td>Mistakes to avoid, bugs encountered</td></tr>
+          <tr><td><code>Pattern</code></td><td>+20%</td><td>Recurring behaviors, habits</td></tr>
+          <tr><td><code>Task</code></td><td>+15%</td><td>Work items, todos</td></tr>
+          <tr><td><code>Context</code></td><td>+10%</td><td>General information, session context</td></tr>
+          <tr><td><code>Observation</code></td><td>+0%</td><td>Default type for general notes</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Retrieval Modes</h2>
+      <p>The SDK supports three retrieval modes:</p>
+
+      <CodeBlock
+        language="python"
+        filename="retrieval_modes.py"
+        code={`# Semantic mode: Pure vector similarity search
+results = m.recall("authentication", mode="semantic", limit=5)
+
+# Associative mode: Graph-based traversal
+# Follows learned connections between memories
+results = m.recall("authentication", mode="associative", limit=5)
+
+# Hybrid mode (default): Combines both
+# Uses density-dependent weighting
+results = m.recall("authentication", mode="hybrid", limit=5)`}
+      />
+
+      <h2>Context Summary</h2>
+      <p>
+        Get a structured summary of memories - perfect for bootstrapping LLM context
+        at the start of a session:
+      </p>
+
+      <CodeBlock
+        language="python"
+        filename="context_summary.py"
+        code={`summary = m.context_summary(max_items=5)
+
+print("Decisions:", summary.decisions)
+print("Learnings:", summary.learnings)
+print("Errors to avoid:", summary.errors)
+print("Patterns:", summary.patterns)
+
+# Use in LLM prompt
+system_prompt = f"""You are helping a user. Here's what you know:
+
+Decisions: {summary.decisions}
+Learnings: {summary.learnings}
+Errors to avoid: {summary.errors}
+"""`}
+      />
+
+      <h2>Tag-Based Retrieval</h2>
+      <p>Search memories by tags for precise filtering:</p>
+
+      <CodeBlock
+        language="python"
+        filename="tags.py"
+        code={`# Store with tags
+m.remember("PostgreSQL connection pool size should be 20",
+           memory_type="Learning",
+           tags=["database", "postgres", "performance"])
+
+# Retrieve by tags
+db_memories = m.recall_by_tags(["database", "postgres"])
+
+# Delete by tags
+m.forget_by_tags(["temporary", "scratch"])`}
+      />
+
+      <h2>Date-Based Operations</h2>
+      <p>Query and manage memories by date range:</p>
+
+      <CodeBlock
+        language="python"
+        filename="date_operations.py"
+        code={`from datetime import datetime, timedelta
+
+# Get memories from the last 7 days
+week_ago = (datetime.now() - timedelta(days=7)).isoformat()
+now = datetime.now().isoformat()
+
+recent = m.recall_by_date(start=week_ago, end=now)
+
+# Clean up old memories
+month_ago = (datetime.now() - timedelta(days=30)).isoformat()
+m.forget_by_date(start="2024-01-01", end=month_ago)`}
+      />
+
+      <h2>Memory Statistics</h2>
+      <p>Monitor your memory system:</p>
+
+      <CodeBlock
+        language="python"
+        filename="stats.py"
+        code={`stats = m.memory_stats()
+
+print(f"Total memories: {stats.total_memories}")
+print(f"Graph edges: {stats.graph_edges}")
+print(f"Storage size: {stats.storage_size_bytes / 1024:.1f} KB")`}
+      />
+
+      <h2>Integration with LangChain</h2>
+      <p>Use Shodh Memory as a LangChain memory backend:</p>
+
+      <CodeBlock
+        language="python"
+        filename="langchain_integration.py"
+        code={`from shodh_memory import Memory
+from langchain.memory import ConversationBufferMemory
+
+class ShodhLangChainMemory(ConversationBufferMemory):
+    def __init__(self, shodh_memory: Memory):
+        super().__init__()
+        self.shodh = shodh_memory
+
+    def save_context(self, inputs, outputs):
+        # Store in Shodh for persistence
+        self.shodh.remember(
+            f"User: {inputs['input']}\\nAssistant: {outputs['output']}",
+            memory_type="Conversation"
+        )
+        super().save_context(inputs, outputs)
+
+    def load_memory_variables(self, inputs):
+        # Retrieve relevant context from Shodh
+        if 'input' in inputs:
+            relevant = self.shodh.recall(inputs['input'], limit=3)
+            # Add to context...
+        return super().load_memory_variables(inputs)`}
+      />
+
+      <h2>Custom Storage Path</h2>
+      <p>Specify where memories are stored:</p>
+
+      <CodeBlock
+        language="python"
+        filename="custom_path.py"
+        code={`# Project-specific memory
+project_memory = Memory(storage_path="./my_project/.shodh")
+
+# User-specific memory
+user_memory = Memory(storage_path="~/.shodh/personal")
+
+# Temporary memory (will be deleted)
+import tempfile
+temp_memory = Memory(storage_path=tempfile.mkdtemp())`}
+      />
+
+      <h2>Best Practices</h2>
+      <ul>
+        <li><strong>Be specific with types</strong> — Use Decision for choices, Error for mistakes. This improves retrieval relevance.</li>
+        <li><strong>Tag liberally</strong> — Tags enable precise filtering. Use project names, topics, technologies.</li>
+        <li><strong>Use context_summary for LLMs</strong> — At session start, bootstrap with recent decisions and learnings.</li>
+        <li><strong>Clean up periodically</strong> — Use forget_by_date to remove old, irrelevant memories.</li>
+        <li><strong>One Memory instance per user/project</strong> — Don't share instances across different contexts.</li>
+      </ul>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="https://github.com/varun29ankuS/shodh-memory">GitHub Repository</a> — Full source and documentation</li>
+        <li><a href="https://pypi.org/project/shodh-memory/">PyPI Package</a> — Version history and metadata</li>
+        <li><a href="/blog/claude-code-mcp-server-setup-guide">MCP Setup Guide</a> — Use with Claude Code</li>
+      </ul>
+    </article>
+  );
+}
+
+function HebbianLearningPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        Shodh Memory isn't just a key-value store with vector search. It's built on
+        cognitive science principles—the same mechanisms that make human memory work.
+        This post explains the architecture.
+      </p>
+
+      <h2>The Problem with Naive Memory</h2>
+      <p>
+        Most AI memory systems are glorified databases: store embeddings, run similarity
+        search, return top-k results. This misses fundamental properties of biological memory:
+      </p>
+      <ul>
+        <li>Memories strengthen with use and weaken without it</li>
+        <li>Related memories activate each other (spreading activation)</li>
+        <li>Raw experiences consolidate into abstract knowledge over time</li>
+        <li>Not all information is equally important</li>
+      </ul>
+
+      <h2>Hebbian Learning: "Fire Together, Wire Together"</h2>
+      <p>
+        Donald Hebb's 1949 theory states that when neurons repeatedly fire together,
+        the connection between them strengthens. In Shodh Memory, when two memories
+        are retrieved in the same context, we strengthen their association:
+      </p>
+
+      <CodeBlock
+        language="rust"
+        filename="hebbian.rs"
+        code={`/// When memories A and B are retrieved together, strengthen their edge
+pub fn strengthen_association(&mut self, memory_a: &str, memory_b: &str) {
+    let edge = self.get_or_create_edge(memory_a, memory_b);
+
+    // Hebbian strengthening with diminishing returns
+    let delta = LEARNING_RATE * (1.0 - edge.strength);
+    edge.strength = (edge.strength + delta).min(1.0);
+
+    edge.activation_count += 1;
+    edge.last_activated = Utc::now();
+
+    // Check for Long-Term Potentiation
+    if edge.activation_count >= LTP_THRESHOLD && !edge.potentiated {
+        edge.potentiated = true;  // Becomes permanent
+    }
+}`}
+      />
+
+      <p>
+        The key insight: frequently co-accessed memories form strong associations.
+        When you retrieve "authentication" and "JWT tokens" together multiple times,
+        future queries for "authentication" will naturally surface JWT-related memories.
+      </p>
+
+      <h2>Long-Term Potentiation (LTP)</h2>
+      <p>
+        In neuroscience, LTP is the process where synapses become permanently strengthened
+        after sufficient repetition. We implement this:
+      </p>
+
+      <CodeBlock
+        language="rust"
+        filename="ltp.rs"
+        code={`const LTP_THRESHOLD: u32 = 5;  // Activations needed for potentiation
+const LTP_DECAY_FACTOR: f32 = 0.1;  // Potentiated edges decay 10x slower
+
+impl Edge {
+    pub fn decay(&mut self) -> bool {
+        let half_life = if self.potentiated {
+            BASE_HALF_LIFE * 10.0  // Much slower decay
+        } else {
+            BASE_HALF_LIFE * (1.0 + self.strength as f64)
+        };
+
+        let elapsed_days = self.days_since_access();
+        self.strength *= (-0.693 / half_life * elapsed_days).exp() as f32;
+
+        self.strength < MIN_STRENGTH  // Return true if should prune
+    }
+}`}
+      />
+
+      <p>
+        After 5 co-activations, an association becomes "potentiated"—it decays 10x slower.
+        This means core knowledge persists while ephemeral associations fade.
+      </p>
+
+      <h2>Spreading Activation</h2>
+      <p>
+        When you recall a memory, activation spreads to connected memories. This models
+        how human memory retrieval works—thinking of "Paris" activates "France", "Eiffel Tower",
+        "croissants":
+      </p>
+
+      <CodeBlock
+        language="rust"
+        filename="spreading_activation.rs"
+        code={`pub fn spreading_activation(
+    &self,
+    seed_memories: &[MemoryId],
+    depth: usize,
+    decay_factor: f32,
+) -> HashMap<MemoryId, f32> {
+    let mut activations: HashMap<MemoryId, f32> = HashMap::new();
+    let mut frontier: VecDeque<(MemoryId, f32, usize)> = VecDeque::new();
+
+    // Initialize with seed memories at full activation
+    for id in seed_memories {
+        activations.insert(id.clone(), 1.0);
+        frontier.push_back((id.clone(), 1.0, 0));
+    }
+
+    while let Some((current, activation, current_depth)) = frontier.pop_front() {
+        if current_depth >= depth {
+            continue;
+        }
+
+        // Spread to neighbors
+        for (neighbor, edge) in self.get_neighbors(&current) {
+            let spread_activation = activation * edge.strength * decay_factor;
+
+            if spread_activation > MIN_ACTIVATION {
+                let existing = activations.get(&neighbor).unwrap_or(&0.0);
+                if spread_activation > *existing {
+                    activations.insert(neighbor.clone(), spread_activation);
+                    frontier.push_back((neighbor, spread_activation, current_depth + 1));
+                }
+            }
+        }
+    }
+
+    activations
+}`}
+      />
+
+      <h2>Memory Consolidation</h2>
+      <p>
+        Raw episodic memories ("API timed out at 3pm") aren't useful long-term.
+        Consolidation extracts semantic facts ("API has 30-second timeout"):
+      </p>
+
+      <CodeBlock
+        language="rust"
+        filename="consolidation.rs"
+        code={`pub struct ConsolidationEngine {
+    /// Minimum times a pattern must appear to become a fact
+    min_support: usize,
+    /// Minimum age before consolidation (days)
+    min_age_days: u32,
+}
+
+impl ConsolidationEngine {
+    pub fn consolidate(&self, episodic_memories: &[Memory]) -> Vec<SemanticFact> {
+        // Cluster similar memories by embedding similarity
+        let clusters = self.cluster_by_embedding(episodic_memories);
+
+        clusters.into_iter()
+            .filter(|c| c.len() >= self.min_support)
+            .map(|cluster| {
+                SemanticFact {
+                    content: self.extract_common_pattern(&cluster),
+                    confidence: cluster.len() as f32 / episodic_memories.len() as f32,
+                    source_count: cluster.len(),
+                    fact_type: self.classify_fact_type(&cluster),
+                }
+            })
+            .collect()
+    }
+}`}
+      />
+
+      <h2>Three-Tier Architecture</h2>
+      <p>Shodh Memory organizes storage in three tiers:</p>
+
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>Purpose</th><th>Lifetime</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Working Memory</strong></td><td>Current context, active associations</td><td>Session</td></tr>
+          <tr><td><strong>Episodic Memory</strong></td><td>Specific events and experiences</td><td>Days to weeks</td></tr>
+          <tr><td><strong>Semantic Memory</strong></td><td>Consolidated facts and knowledge</td><td>Permanent (potentiated)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Salience Scoring</h2>
+      <p>
+        Not all memories are equally important. Salience combines multiple signals:
+      </p>
+
+      <CodeBlock
+        language="rust"
+        filename="salience.rs"
+        code={`pub fn compute_salience(memory: &Memory, query_embedding: &[f32]) -> f32 {
+    let recency = recency_score(memory.last_accessed);      // 30%
+    let frequency = frequency_score(memory.access_count);    // 25%
+    let importance = importance_score(memory.memory_type);   // 25%
+    let similarity = cosine_similarity(&memory.embedding, query_embedding); // 20%
+
+    0.30 * recency +
+    0.25 * frequency +
+    0.25 * importance +
+    0.20 * similarity
+}
+
+fn importance_score(memory_type: MemoryType) -> f32 {
+    match memory_type {
+        MemoryType::Decision => 1.3,
+        MemoryType::Error => 1.25,
+        MemoryType::Learning => 1.25,
+        MemoryType::Pattern => 1.2,
+        MemoryType::Task => 1.15,
+        MemoryType::Context => 1.1,
+        _ => 1.0,
+    }
+}`}
+      />
+
+      <h2>The Result</h2>
+      <p>
+        These mechanisms combine to create memory that:
+      </p>
+      <ul>
+        <li><strong>Gets smarter with use</strong> — Frequently accessed knowledge surfaces faster</li>
+        <li><strong>Forgets appropriately</strong> — Unused information fades, reducing noise</li>
+        <li><strong>Connects ideas</strong> — Related concepts strengthen each other</li>
+        <li><strong>Prioritizes importance</strong> — Decisions and errors rank higher than casual observations</li>
+      </ul>
+
+      <p>
+        The implementation is ~6MB of Rust, runs entirely locally, and achieves sub-10ms
+        retrieval on tens of thousands of memories. It's cognitive science, not magic.
+      </p>
+    </article>
+  );
+}
+
+function AIMemoryUseCasesPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        "Why does my AI assistant keep forgetting what I told it yesterday?"
+        This is the most common frustration with AI tools. Here are 5 concrete ways
+        persistent memory transforms your development workflow.
+      </p>
+
+      <h2>1. Project Context Retention</h2>
+      <p>
+        Every new coding session starts with: "This project uses Next.js 14 with App Router,
+        TypeScript strict mode, and Tailwind CSS..." With persistent memory, you tell it once:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`> Explore this codebase and remember the key architectural decisions
+
+[Claude explores and stores:]
+- "This project uses Next.js 14 with App Router"
+- "Database is PostgreSQL via Prisma ORM"
+- "Auth is NextAuth with GitHub OAuth"
+- "CSS is Tailwind with custom design tokens"
+
+# Next day, new session:
+> Add a new API endpoint for user preferences
+
+[Claude already knows the tech stack, no re-explanation needed]`}
+      />
+
+      <p>
+        The memory persists across sessions. Claude remembers your project structure,
+        naming conventions, and architectural decisions.
+      </p>
+
+      <h2>2. Preference Learning</h2>
+      <p>
+        You have opinions: tabs vs spaces, functional vs class components, error handling
+        patterns. Without memory, you repeat these preferences constantly:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`> Remember my coding preferences:
+> - Always use functional components with hooks
+> - TypeScript strict mode, no 'any' types
+> - Error handling: try-catch with custom error classes
+> - Tests: Vitest with React Testing Library
+> - Comments: JSDoc for public APIs only
+
+[Stored as Decision type memories]
+
+# Future sessions automatically apply these preferences
+> Create a new user profile component
+
+[Claude generates functional component, strict TypeScript,
+with Vitest tests—no reminders needed]`}
+      />
+
+      <h2>3. Error Tracking & Prevention</h2>
+      <p>
+        "We fixed this bug before, but nobody remembers how." Memory captures errors
+        and their solutions:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`> The tests are failing with "Cannot find module '@/components/Button'"
+
+[After investigation:]
+> Remember: Path aliases require tsconfig.json paths to be mirrored
+> in vitest.config.ts under resolve.alias
+
+[Stored as Error type memory]
+
+# Weeks later, similar issue:
+> Why can't Vitest find my aliased imports?
+
+[Claude recalls the previous error and solution immediately]`}
+      />
+
+      <p>
+        Error memories get a 25% importance boost, so they surface quickly when
+        relevant issues arise.
+      </p>
+
+      <h2>4. Knowledge Accumulation</h2>
+      <p>
+        Every debugging session teaches something. Without memory, that knowledge
+        evaporates. With memory, it compounds:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`# Day 1:
+> Remember: React Query's staleTime should be set higher for
+> data that doesn't change often. We use 5 minutes for user profiles.
+
+# Day 5:
+> Remember: The Stripe webhook needs the raw body, so we disable
+> body parsing for that route only.
+
+# Day 12:
+> Remember: PostgreSQL connection pool exhaustion happens when
+> we don't close connections in serverless functions. Use
+> connection poolers like PgBouncer.
+
+# Day 30:
+> Give me a summary of learnings about this project
+
+[Claude retrieves all Learning type memories, providing
+a knowledge base that grew organically over time]`}
+      />
+
+      <h2>5. Cross-Session Continuity</h2>
+      <p>
+        Large tasks span multiple sessions. Memory maintains continuity:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Claude Code Session"
+        code={`# Session 1 (Monday):
+> We're refactoring the auth system from session-based to JWT.
+> Today we updated the login endpoint.
+
+[Claude stores task context]
+
+# Session 2 (Tuesday):
+> What was I working on with the auth refactor?
+
+[Claude recalls:]
+"You were refactoring auth from session to JWT.
+Login endpoint is updated. Remaining: logout, refresh tokens,
+middleware updates."
+
+# Session continues without re-explaining the whole context`}
+      />
+
+      <h2>Setting It Up</h2>
+      <p>Getting these benefits takes 2 minutes:</p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# 1. Install the memory server
+pip install shodh-memory
+
+# 2. Add to Claude Code
+claude mcp add @shodh/memory-mcp
+
+# 3. Start using it
+claude
+> Remember that this project uses PostgreSQL with Prisma`}
+      />
+
+      <h2>The Compound Effect</h2>
+      <p>
+        Each of these use cases is valuable alone. Together, they compound:
+      </p>
+      <ul>
+        <li>Project context eliminates repetitive explanations</li>
+        <li>Preferences ensure consistent code style</li>
+        <li>Error tracking prevents repeated debugging</li>
+        <li>Knowledge accumulation builds institutional memory</li>
+        <li>Cross-session continuity maintains flow</li>
+      </ul>
+      <p>
+        After a month of use, your AI assistant knows your codebase, your preferences,
+        your past mistakes, and your accumulated learnings. It's like having a colleague
+        who actually remembers everything.
+      </p>
+
+      <h2>Getting Started</h2>
+      <ul>
+        <li><a href="/docs">Documentation</a> — Quick start guide</li>
+        <li><a href="/demo">Try in Colab</a> — Interactive notebook</li>
+        <li><a href="https://github.com/varun29ankuS/shodh-memory">GitHub</a> — Source and issues</li>
+      </ul>
+    </article>
+  );
+}
+
 // Main page component
 export default function BlogPostPage() {
   const params = useParams();
@@ -1308,6 +1958,12 @@ export default function BlogPostPage() {
   // Render the appropriate content based on slug
   const renderContent = () => {
     switch (slug) {
+      case 'shodh-memory-python-sdk-complete-tutorial':
+        return <PythonSDKTutorialPost />;
+      case 'how-shodh-memory-works-hebbian-learning':
+        return <HebbianLearningPost />;
+      case 'ai-memory-use-cases-developer-workflows':
+        return <AIMemoryUseCasesPost />;
       case 'claude-code-mcp-server-setup-guide':
         return <ClaudeCodeMCPSetupPost />;
       case 'agentic-ai-long-term-memory-2025':
