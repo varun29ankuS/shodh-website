@@ -7,6 +7,7 @@ import {
   Layers, RefreshCw, Search, MessageSquare, Workflow
 } from 'lucide-react'
 import Link from 'next/link'
+import NeuralAnimation from '@/components/NeuralAnimation'
 
 export default function Memory() {
   const keyFeatures = [
@@ -108,6 +109,9 @@ export default function Memory() {
         </div>
         <div className="absolute inset-0 bg-grid-slate opacity-40" />
         <div className="absolute inset-0 gradient-mesh"></div>
+
+        {/* Neural network animation - interactive cognition visualization */}
+        <NeuralAnimation />
 
         <div className="container mx-auto px-4 py-20 relative z-10">
           <motion.div
