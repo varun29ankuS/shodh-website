@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Play, Code, Calendar, MessageCircle, Github,
   BookOpen, Zap, Brain, ArrowRight, ExternalLink,
-  CheckCircle2
+  CheckCircle2, FileSearch
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -57,19 +57,25 @@ export default function Demo() {
 
         {/* Two Options */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
-          {/* Option 1: Google Colab */}
+          {/* Option 1: Shodh Memory - Self-serve */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
             className="p-8 rounded-2xl border-2 border-primary bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20"
           >
-            <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
-              <Play className="w-8 h-8 text-primary" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+                <Brain className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-primary">Shodh Memory</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">For developers & AI agents</p>
+              </div>
             </div>
 
-            <div className="inline-block px-3 py-1 bg-primary/20 rounded-full text-sm font-semibold text-primary mb-4">
-              Self-Serve
+            <div className="inline-block px-3 py-1 bg-green-500/20 rounded-full text-sm font-semibold text-green-600 dark:text-green-400 mb-4">
+              Free & Open Source
             </div>
 
             <h2 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
@@ -104,26 +110,32 @@ export default function Demo() {
             </p>
           </motion.div>
 
-          {/* Option 2: Book a Demo */}
+          {/* Option 2: Shodh RAG - Enterprise Demo */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="p-8 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+            className="p-8 rounded-2xl border-2 border-secondary bg-gradient-to-br from-secondary/5 to-secondary/10 dark:from-secondary/10 dark:to-secondary/20"
           >
-            <div className="w-16 h-16 bg-secondary/20 rounded-xl flex items-center justify-center mb-6">
-              <Calendar className="w-8 h-8 text-secondary" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center">
+                <FileSearch className="w-6 h-6 text-secondary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-secondary">Shodh RAG</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">For enterprises & teams</p>
+              </div>
             </div>
 
             <div className="inline-block px-3 py-1 bg-secondary/20 rounded-full text-sm font-semibold text-secondary mb-4">
-              Enterprise
+              Free Pilot Available
             </div>
 
             <h2 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">
               Book a Demo
             </h2>
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              30-minute call with our team. See Shodh on your documents, discuss your use case.
+              30-minute call with our team. See Shodh RAG on your documents, discuss your use case.
             </p>
 
             <ul className="space-y-3 mb-8">
@@ -140,7 +152,7 @@ export default function Demo() {
 
             <div className="space-y-3">
               <a
-                href="mailto:varun@shodh-rag.com?subject=Demo Request&body=Hi, I'd like to schedule a demo of Shodh.%0A%0ACompany:%0AUse case:%0APreferred time:"
+                href="mailto:varun@shodh-rag.com?subject=Shodh RAG Demo Request&body=Hi, I'd like to schedule a demo of Shodh RAG.%0A%0ACompany:%0AUse case:%0APreferred time:"
                 className="flex items-center justify-center gap-2 w-full py-4 px-6 rounded-lg font-semibold bg-secondary hover:bg-secondary/90 text-white transition-all transform hover:scale-105"
               >
                 <Calendar className="w-5 h-5" />
@@ -148,10 +160,10 @@ export default function Demo() {
               </a>
 
               <a
-                href="https://wa.me/919810300618?text=Hi, I'd like to see a demo of Shodh"
+                href="https://wa.me/919810300618?text=Hi, I'd like to see a demo of Shodh RAG for document search"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-secondary dark:hover:border-secondary text-slate-900 dark:text-white transition-all"
+                className="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg font-semibold border-2 border-secondary/30 hover:border-secondary text-slate-900 dark:text-white transition-all"
               >
                 <MessageCircle className="w-5 h-5" />
                 WhatsApp Us

@@ -241,13 +241,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Capabilities */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+      {/* Two Solutions - Early Product Introduction */}
+      <section className="relative py-16 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-slate-900 dark:text-white">
+              Two Products. One Mission.
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400">
+              AI infrastructure that runs on your terms
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <Link href="/features" className="group">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-900 hover:border-primary transition-all hover:shadow-lg"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <Database className="w-8 h-8 text-primary" />
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Shodh RAG</h3>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                  Search thousands of documents with AI. Get answers with citations. For enterprises.
+                </p>
+                <span className="text-primary font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Learn more <ArrowRight className="w-4 h-4" />
+                </span>
+              </motion.div>
+            </Link>
+
+            <Link href="/memory" className="group">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-xl border-2 border-secondary/20 bg-white dark:bg-slate-900 hover:border-secondary transition-all hover:shadow-lg"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <Brain className="w-8 h-8 text-secondary" />
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Shodh Memory</h3>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                  Give AI agents persistent memory that learns. Works with Claude, GPT, any agent.
+                </p>
+                <span className="text-secondary font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Learn more <ArrowRight className="w-4 h-4" />
+                </span>
+              </motion.div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities - Shodh RAG Focus */}
+      <section className="relative py-24 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
         <div className="absolute inset-0 bg-grid-slate opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 dark:bg-primary/20 rounded-full mb-4">
+              <Database className="w-4 h-4 text-primary" />
+              <span className="text-sm font-semibold text-primary">Shodh RAG</span>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              What You Get
+              Document Intelligence
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400">
               Everything you need to search your documents intelligently

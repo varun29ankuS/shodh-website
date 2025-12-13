@@ -5,7 +5,7 @@ import Link from 'next/link'
 import {
   Book, Code, Terminal, Rocket, Github, ExternalLink,
   Play, Package, MessageCircle, FileText, Cpu, Brain,
-  ArrowRight, Copy, Check
+  ArrowRight, Copy, Check, Database
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -119,12 +119,37 @@ export default function Docs() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-6">
+            <Brain className="w-4 h-4 text-primary" />
+            <span className="text-sm font-semibold text-primary">Shodh Memory</span>
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white">
             Documentation
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Everything you need to get started with Shodh Memory
+            Everything you need to get started with Shodh Memory - the open-source cognitive memory system for AI agents
           </p>
+        </motion.div>
+
+        {/* RAG Note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="max-w-3xl mx-auto mb-12 p-4 rounded-xl bg-secondary/5 dark:bg-secondary/10 border border-secondary/20"
+        >
+          <div className="flex items-start gap-3">
+            <FileText className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm text-slate-700 dark:text-slate-300">
+                <strong className="text-secondary">Looking for Shodh RAG docs?</strong>{' '}
+                RAG documentation is provided during enterprise pilots.
+                <a href="https://wa.me/919810300618?text=Hi, I'd like to access Shodh RAG documentation" target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline ml-1">
+                  Contact us to get started →
+                </a>
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         {/* Quick Install */}

@@ -20,17 +20,17 @@ export default function BlogPage() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-1.5 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium mb-6">
-              Engineering Blog
+              Blog
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-              Insights on AI Memory,{' '}
+              AI That Remembers,{' '}
               <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                Robotics & Edge AI
+                Documents That Talk
               </span>
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-8">
-              Deep dives into building production-grade memory systems for autonomous robots,
-              agentic AI, and edge computing. From Hebbian learning to ROS2 integration.
+              Practical guides, tutorials, and insights on AI memory systems, document intelligence,
+              and building AI that actually works for your business.
             </p>
 
             <div className="flex items-center justify-center gap-4">
@@ -83,11 +83,11 @@ export default function BlogPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-8 md:p-12 text-center text-white">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Stay Updated on Edge AI & Robotics
+              Stay Updated
             </h2>
             <p className="text-orange-100 mb-6 max-w-2xl mx-auto">
-              Get notified when we publish new technical deep-dives on memory systems,
-              autonomous robots, and production-grade AI infrastructure.
+              Get notified when we publish new guides, tutorials, and product updates.
+              Follow us on GitHub for the latest releases.
             </p>
             <a
               href="https://github.com/varun29ankuS/shodh-memory"

@@ -14,10 +14,10 @@ export default function Navigation() {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Features', href: '/features' },
+    { name: 'Shodh RAG', href: '/features' },
+    { name: 'Shodh Memory', href: '/memory' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Robotics', href: '/robotics' },
-    { name: 'Memory', href: '/memory' },
     { name: 'Blog', href: '/blog' },
     { name: 'Docs', href: '/docs' },
   ]
