@@ -328,7 +328,7 @@ memory.remember("Don't use deprecated API v1", memory_type="Error")
 # Semantic search - finds related memories
 results = memory.recall("user preferences", limit=5)
 for mem in results:
-    print(f"{mem.content} (score: {mem.score:.2f})")
+    print(f"{mem['content']} (importance: {mem.get('importance', 0):.2f})")
 
 # Hybrid retrieval - semantic + graph associations
 results = memory.recall("authentication", mode="hybrid", limit=10)
@@ -339,8 +339,7 @@ summary = memory.context_summary()
 
 # Memory statistics
 stats = memory.get_stats()
-print(f"Total memories: {stats.total_memories}")
-print(f"Graph edges: {stats.graph_edges}")`}
+print(f"Total memories: {stats['total_memories']}")`}
             </pre>
 
             <div className="grid md:grid-cols-2 gap-4 mt-6">

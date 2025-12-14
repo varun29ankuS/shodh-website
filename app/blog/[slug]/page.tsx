@@ -1100,7 +1100,7 @@ class MemoryNode(Node):
     def recall_callback(self, request, response):
         results = self.memory.recall(request.query, limit=request.limit or 5)
         response.memories = [
-            {"id": r.id, "content": r.content, "score": r.score}
+            {"id": r["id"], "content": r["content"], "importance": r.get("importance", 0)}
             for r in results
         ]
         return response
@@ -1188,8 +1188,8 @@ class WaypointTracker:
         failure_counts = {}
         for r in results:
             # Extract waypoint name from memory content
-            if "waypoint" in r.content.lower():
-                name = self.extract_waypoint_name(r.content)
+            if "waypoint" in r["content"].lower():
+                name = self.extract_waypoint_name(r["content"])
                 failure_counts[name] = failure_counts.get(name, 0) + 1
 
         # Return waypoints with 2+ failures
@@ -1229,14 +1229,14 @@ class WaypointTracker:
     for failure in similar_failures:
         # Search for decisions made after this failure
         followup = memory.recall(
-            f"decision after {failure.id[:8]}",
+            f"decision after {failure['id'][:8]}",
             limit=3
         )
         if followup:
             resolutions.append({
-                "failure": failure.content,
-                "resolution": followup[0].content,
-                "confidence": failure.score * followup[0].score
+                "failure": failure["content"],
+                "resolution": followup[0]["content"],
+                "confidence": failure.get("importance", 0) * followup[0].get("importance", 0)
             })
 
     return sorted(resolutions, key=lambda x: x["confidence"], reverse=True)`}
@@ -1327,7 +1327,7 @@ m.remember("User prefers dark mode in all applications",
 # Recall memories by semantic search
 results = m.recall("What are the user's UI preferences?")
 for r in results:
-    print(f"[{r.memory_type}] {r.content} (score: {r.score:.2f})")`}
+    print(f"[{r['experience_type']}] {r['content']} (importance: {r.get('importance', 0):.2f})")`}
       />
 
       <h2>Memory Types</h2>
@@ -1380,17 +1380,17 @@ results = m.recall("authentication", mode="hybrid", limit=5)`}
         filename="context_summary.py"
         code={`summary = m.context_summary(max_items=5)
 
-print("Decisions:", summary.decisions)
-print("Learnings:", summary.learnings)
-print("Errors to avoid:", summary.errors)
-print("Patterns:", summary.patterns)
+print("Decisions:", summary["decisions"])
+print("Learnings:", summary["learnings"])
+print("Errors to avoid:", summary.get("errors", []))
+print("Patterns:", summary.get("patterns", []))
 
 # Use in LLM prompt
 system_prompt = f"""You are helping a user. Here's what you know:
 
-Decisions: {summary.decisions}
-Learnings: {summary.learnings}
-Errors to avoid: {summary.errors}
+Decisions: {summary["decisions"]}
+Learnings: {summary["learnings"]}
+Errors to avoid: {summary.get("errors", [])}
 """`}
       />
 

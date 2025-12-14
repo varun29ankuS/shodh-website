@@ -322,11 +322,11 @@ m.remember("User prefers dark mode", memory_type="Decision", tags=["preferences"
 # Recall memories
 results = m.recall("What are the user preferences?")
 for r in results:
-    print(f"[{r.memory_type}] {r.content}")
+    print(f"[{r['experience_type']}] {r['content']}")
 
 # Get context summary for LLM bootstrap
 summary = m.context_summary()
-print(summary.decisions)`} />
+print(summary["decisions"])`} />
             </div>
             <div className="bg-slate-900 p-6 overflow-x-auto">
               <pre className="text-sm text-slate-300 font-mono">
@@ -341,11 +341,11 @@ m.remember("User prefers dark mode", memory_type="Decision", tags=["preferences"
 # Recall memories
 results = m.recall("What are the user preferences?")
 for r in results:
-    print(f"[{r.memory_type}] {r.content}")
+    print(f"[{r['experience_type']}] {r['content']}")
 
 # Get context summary for LLM bootstrap
 summary = m.context_summary()
-print(summary.decisions)`}
+print(summary["decisions"])`}
               </pre>
             </div>
           </div>

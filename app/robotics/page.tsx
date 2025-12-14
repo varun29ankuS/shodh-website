@@ -342,7 +342,7 @@ memory.remember(
 # Before next action, recall relevant experience
 results = memory.recall("gripper approach angle part X", limit=5)
 for mem in results:
-    print(f"{mem.content} (type: {mem.memory_type})")
+    print(f"{mem['content']} (type: {mem['experience_type']})")
 
 # Hybrid retrieval - semantic + graph associations
 results = memory.recall("gripper failures", mode="hybrid", limit=10)
