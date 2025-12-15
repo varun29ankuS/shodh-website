@@ -5,7 +5,14 @@ export default function StructuredData() {
     name: 'Shodh',
     alternateName: 'Shodh RAG',
     url: 'https://shodh-rag.com',
-    logo: 'https://shodh-rag.com/logo.png',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://shodh-rag.com/logo.png',
+      width: 1024,
+      height: 1024,
+      caption: 'Shodh Logo',
+    },
+    image: 'https://shodh-rag.com/og-image.png',
     description: 'Production-grade RAG system that runs on your laptop. AI memory engine for edge devices, robots, drones, and IoT.',
     sameAs: [
       'https://twitter.com/shodhAI',
