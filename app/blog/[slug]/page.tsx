@@ -1936,6 +1936,529 @@ claude
   );
 }
 
+function QuickStartMemoryPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        Your AI assistant forgets everything the moment you close the chat. Here's how to
+        fix that in 5 minutes with persistent memory—no cloud accounts, no API keys, just code.
+      </p>
+
+      <div className="not-prose bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6 my-8 border border-green-200 dark:border-green-800">
+        <h3 className="text-lg font-semibold text-green-900 dark:text-green-100 mb-2">What you'll build</h3>
+        <p className="text-green-800 dark:text-green-200">
+          An AI agent that remembers user preferences, past conversations, and learned facts
+          across sessions. Everything runs locally on your machine.
+        </p>
+      </div>
+
+      <h2>Step 1: Install</h2>
+      <p>One command:</p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`pip install shodh-memory`}
+      />
+
+      <p>That's it. No Docker, no database setup, no cloud accounts.</p>
+
+      <h2>Step 2: Initialize Memory</h2>
+
+      <CodeBlock
+        language="python"
+        filename="app.py"
+        code={`from shodh_memory import Memory
+
+# Create memory instance (stores in ./shodh_data by default)
+memory = Memory()
+
+# Or specify a custom path
+memory = Memory(storage_path="./my_agent_memory")`}
+      />
+
+      <h2>Step 3: Store Memories</h2>
+
+      <CodeBlock
+        language="python"
+        filename="app.py"
+        code={`# Remember facts, preferences, decisions
+memory.remember(
+    "User prefers dark mode and concise responses",
+    memory_type="Decision",
+    tags=["preferences", "ui"]
+)
+
+memory.remember(
+    "Project uses Next.js 14 with TypeScript",
+    memory_type="Context",
+    tags=["tech-stack", "frontend"]
+)
+
+memory.remember(
+    "API timeout fixed by increasing connection pool to 20",
+    memory_type="Learning",
+    tags=["debugging", "api"]
+)`}
+      />
+
+      <h2>Step 4: Recall Memories</h2>
+
+      <CodeBlock
+        language="python"
+        filename="app.py"
+        code={`# Semantic search - finds relevant memories
+results = memory.recall("What's the tech stack?", limit=3)
+
+for r in results:
+    print(f"[{r['experience_type']}] {r['content']}")
+
+# Output:
+# [Context] Project uses Next.js 14 with TypeScript`}
+      />
+
+      <h2>Step 5: Use with Your LLM</h2>
+      <p>Here's the pattern for injecting memory into LLM prompts:</p>
+
+      <CodeBlock
+        language="python"
+        filename="agent.py"
+        code={`from shodh_memory import Memory
+from openai import OpenAI  # or any LLM client
+
+memory = Memory()
+client = OpenAI()
+
+def chat(user_message: str) -> str:
+    # 1. Recall relevant memories
+    relevant = memory.recall(user_message, limit=5)
+    memory_context = "\\n".join([m["content"] for m in relevant])
+
+    # 2. Build prompt with memory
+    messages = [
+        {"role": "system", "content": f"""You are a helpful assistant.
+
+Here's what you remember about this user:
+{memory_context}
+
+Use this context to personalize your response."""},
+        {"role": "user", "content": user_message}
+    ]
+
+    # 3. Get response
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=messages
+    )
+
+    # 4. Optionally store new learnings
+    # memory.remember(f"User asked about: {user_message}", memory_type="Conversation")
+
+    return response.choices[0].message.content
+
+# Now your AI remembers across sessions!
+print(chat("What framework are we using?"))
+# Uses the stored context about Next.js 14`}
+      />
+
+      <h2>Bonus: Context Summary</h2>
+      <p>Get a structured summary for bootstrapping sessions:</p>
+
+      <CodeBlock
+        language="python"
+        filename="session_start.py"
+        code={`summary = memory.context_summary(max_items=5)
+
+print("Recent Decisions:", summary.get("decisions", []))
+print("Learnings:", summary.get("learnings", []))
+print("Errors to avoid:", summary.get("errors", []))
+
+# Perfect for system prompts at session start`}
+      />
+
+      <h2>That's It!</h2>
+      <p>You now have an AI agent with persistent memory. The memories survive:</p>
+      <ul>
+        <li>Application restarts</li>
+        <li>System reboots</li>
+        <li>Forever (until you delete them)</li>
+      </ul>
+
+      <div className="not-prose bg-slate-100 dark:bg-slate-800 rounded-lg p-6 my-8">
+        <h3 className="font-semibold text-slate-900 dark:text-white mb-3">Next Steps</h3>
+        <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+          <li>→ <a href="/blog/shodh-memory-python-sdk-complete-tutorial" className="text-orange-600 dark:text-orange-400 hover:underline">Full SDK Tutorial</a> — All methods and patterns</li>
+          <li>→ <a href="/blog/claude-code-mcp-server-setup-guide" className="text-orange-600 dark:text-orange-400 hover:underline">Claude Code Integration</a> — Use with Anthropic's CLI</li>
+          <li>→ <a href="https://github.com/varun29ankuS/shodh-memory" className="text-orange-600 dark:text-orange-400 hover:underline">GitHub</a> — Source code and issues</li>
+        </ul>
+      </div>
+    </article>
+  );
+}
+
+function ContextWindowProblemPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        "Why does my AI keep forgetting what I told it?" This is the #1 frustration with
+        LLM applications. The culprit: context windows. Here's what's actually happening
+        and how to fix it.
+      </p>
+
+      <h2>The Problem: Context Windows Are Finite</h2>
+      <p>
+        Every LLM has a context window—the maximum amount of text it can "see" at once.
+        GPT-4 has 128K tokens. Claude has 200K. Sounds like a lot, right?
+      </p>
+      <p>
+        It's not. Here's why:
+      </p>
+
+      <div className="not-prose bg-red-50 dark:bg-red-900/20 rounded-lg p-5 my-6 border border-red-200 dark:border-red-800">
+        <h4 className="font-semibold text-red-900 dark:text-red-100 mb-2">The Math Problem</h4>
+        <ul className="space-y-1 text-sm text-red-800 dark:text-red-200">
+          <li>• System prompt: ~500-2000 tokens</li>
+          <li>• Tool definitions: ~1000-5000 tokens</li>
+          <li>• Conversation history: grows with every message</li>
+          <li>• Retrieved documents (RAG): ~1000-10000 tokens</li>
+          <li>• Current user message + response: ~500-2000 tokens</li>
+        </ul>
+        <p className="mt-3 text-sm text-red-800 dark:text-red-200">
+          After a few exchanges, you're already using 20-50K tokens. After an hour of work?
+          You hit the limit.
+        </p>
+      </div>
+
+      <h2>What Happens When You Hit the Limit?</h2>
+      <p>
+        The typical solution is <strong>truncation</strong>: drop old messages to make room for new ones.
+        The result? Your AI forgets:
+      </p>
+      <ul>
+        <li>What you discussed an hour ago</li>
+        <li>Decisions you made together</li>
+        <li>Your preferences and context</li>
+        <li>Errors it already helped you fix</li>
+      </ul>
+      <p>
+        Every session starts from scratch. You repeat yourself constantly.
+      </p>
+
+      <h2>Why RAG Isn't Enough</h2>
+      <p>
+        Retrieval-Augmented Generation (RAG) helps by fetching relevant documents. But it has limits:
+      </p>
+
+      <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-2">RAG is good for:</h4>
+          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+            <li>✅ Static documents</li>
+            <li>✅ Knowledge bases</li>
+            <li>✅ FAQ-style retrieval</li>
+          </ul>
+        </div>
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-2">RAG can't do:</h4>
+          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+            <li>❌ Remember conversations</li>
+            <li>❌ Learn preferences over time</li>
+            <li>❌ Track decisions and outcomes</li>
+            <li>❌ Build relationships between facts</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>
+        RAG retrieves <em>documents</em>. Memory retrieves <em>experiences</em>. They solve different problems.
+      </p>
+
+      <h2>The Solution: Persistent Memory</h2>
+      <p>
+        Persistent memory is a separate system that stores what your AI learns—outside the context window.
+        When needed, relevant memories are retrieved and injected into the prompt.
+      </p>
+
+      <div className="not-prose bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-xl p-6 my-8 border border-orange-200 dark:border-orange-800">
+        <h4 className="font-semibold text-orange-900 dark:text-orange-100 mb-3">How It Works</h4>
+        <ol className="space-y-2 text-sm text-orange-800 dark:text-orange-200">
+          <li><strong>1. Store:</strong> Important facts, decisions, and learnings go into memory</li>
+          <li><strong>2. Index:</strong> Memories are embedded as vectors for semantic search</li>
+          <li><strong>3. Retrieve:</strong> When relevant, memories are pulled into the prompt</li>
+          <li><strong>4. Forget:</strong> Old, unused memories decay naturally (like human memory)</li>
+        </ol>
+      </div>
+
+      <h2>Memory vs RAG vs Fine-tuning</h2>
+
+      <div className="not-prose overflow-x-auto my-8">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-slate-800">
+              <th className="text-left p-3">Approach</th>
+              <th className="text-left p-3">Best For</th>
+              <th className="text-left p-3">Limitation</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+            <tr>
+              <td className="p-3 font-medium">RAG</td>
+              <td className="p-3">Static knowledge bases</td>
+              <td className="p-3">Doesn't learn or remember</td>
+            </tr>
+            <tr>
+              <td className="p-3 font-medium">Fine-tuning</td>
+              <td className="p-3">Permanent behavior changes</td>
+              <td className="p-3">Expensive, slow, can't undo</td>
+            </tr>
+            <tr>
+              <td className="p-3 font-medium">Memory</td>
+              <td className="p-3">Dynamic, personal context</td>
+              <td className="p-3">Requires retrieval at runtime</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Most applications need all three. RAG for documents, fine-tuning for core behaviors,
+        memory for personalization and learning.
+      </p>
+
+      <h2>Adding Memory in Practice</h2>
+
+      <CodeBlock
+        language="python"
+        filename="example.py"
+        code={`from shodh_memory import Memory
+
+memory = Memory()
+
+# Store what you learn
+memory.remember("User prefers TypeScript over JavaScript", memory_type="Decision")
+memory.remember("Project deadline is January 15th", memory_type="Context")
+memory.remember("Auth bug was caused by expired JWT", memory_type="Error")
+
+# Later, retrieve relevant context
+context = memory.recall("What's the deadline?", limit=3)
+# Returns: "Project deadline is January 15th"
+
+# Inject into your LLM prompt
+prompt = f"""Context from memory:
+{context}
+
+User question: When do we need to ship?"""
+
+# Your LLM now has persistent context`}
+      />
+
+      <h2>The Result</h2>
+      <p>With persistent memory, your AI:</p>
+      <ul>
+        <li><strong>Remembers preferences</strong> — No more "I prefer dark mode" every session</li>
+        <li><strong>Tracks decisions</strong> — "We decided to use PostgreSQL because..."</li>
+        <li><strong>Learns from errors</strong> — "Last time this failed because..."</li>
+        <li><strong>Builds context over time</strong> — Gets smarter the more you use it</li>
+      </ul>
+
+      <div className="not-prose bg-slate-100 dark:bg-slate-800 rounded-lg p-6 my-8">
+        <h3 className="font-semibold text-slate-900 dark:text-white mb-3">Get Started</h3>
+        <CodeBlock
+          language="bash"
+          filename="Terminal"
+          code={`pip install shodh-memory`}
+        />
+        <p className="text-sm text-slate-600 dark:text-slate-400 mt-3">
+          No cloud accounts. No API keys. Runs entirely on your machine.
+        </p>
+      </div>
+    </article>
+  );
+}
+
+function LocalFirstAIPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        Every keystroke. Every conversation. Every preference. Cloud AI services see it all.
+        There's a better way: local-first AI that never phones home.
+      </p>
+
+      <h2>The Privacy Problem</h2>
+      <p>
+        When you use cloud-based AI memory services, your data travels:
+      </p>
+      <ol>
+        <li>From your device to their servers</li>
+        <li>Through their embedding models</li>
+        <li>Into their vector databases</li>
+        <li>Stored indefinitely (read the ToS carefully)</li>
+      </ol>
+      <p>
+        For personal notes? Maybe that's fine. For enterprise code, medical records, financial data,
+        or anything covered by GDPR/HIPAA? That's a compliance nightmare.
+      </p>
+
+      <div className="not-prose bg-red-50 dark:bg-red-900/20 rounded-lg p-5 my-6 border border-red-200 dark:border-red-800">
+        <h4 className="font-semibold text-red-900 dark:text-red-100 mb-2">What Cloud Memory Services See</h4>
+        <ul className="space-y-1 text-sm text-red-800 dark:text-red-200">
+          <li>• Your conversations (stored as embeddings)</li>
+          <li>• Your preferences and behaviors</li>
+          <li>• Your code and project details</li>
+          <li>• Your decisions and reasoning</li>
+          <li>• Timestamps of when you work</li>
+        </ul>
+      </div>
+
+      <h2>The Local-First Alternative</h2>
+      <p>
+        Local-first means your data never leaves your device. The memory system runs entirely
+        on your machine:
+      </p>
+
+      <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+          <h4 className="font-semibold text-green-900 dark:text-green-100 mb-2">✓ Local-First</h4>
+          <ul className="text-sm text-green-800 dark:text-green-200 space-y-1">
+            <li>• Data stays on device</li>
+            <li>• No network requests</li>
+            <li>• No accounts or API keys</li>
+            <li>• Works offline</li>
+            <li>• You control deletion</li>
+          </ul>
+        </div>
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-2">✗ Cloud-Based</h4>
+          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+            <li>• Data on their servers</li>
+            <li>• Network dependent</li>
+            <li>• Requires accounts</li>
+            <li>• Fails without internet</li>
+            <li>• Deletion policies vary</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Beyond Privacy: Performance</h2>
+      <p>
+        Local-first isn't just about privacy. It's faster:
+      </p>
+
+      <div className="not-prose bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 my-8 border border-blue-200 dark:border-blue-800">
+        <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3">Latency Comparison</h4>
+        <div className="space-y-3">
+          <div>
+            <div className="flex justify-between text-sm mb-1">
+              <span className="text-blue-800 dark:text-blue-200">Cloud Memory API</span>
+              <span className="text-blue-600 dark:text-blue-400">200-500ms</span>
+            </div>
+            <div className="h-2 bg-blue-200 dark:bg-blue-800 rounded-full">
+              <div className="h-2 bg-blue-500 rounded-full" style={{width: '100%'}}></div>
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-sm mb-1">
+              <span className="text-blue-800 dark:text-blue-200">Local Memory (Shodh)</span>
+              <span className="text-blue-600 dark:text-blue-400">5-50ms</span>
+            </div>
+            <div className="h-2 bg-blue-200 dark:bg-blue-800 rounded-full">
+              <div className="h-2 bg-green-500 rounded-full" style={{width: '15%'}}></div>
+            </div>
+          </div>
+        </div>
+        <p className="text-sm text-blue-700 dark:text-blue-300 mt-4">
+          10-40x faster. No network round-trip.
+        </p>
+      </div>
+
+      <h2>Use Cases for Local-First</h2>
+
+      <h3>1. Robotics & Edge Devices</h3>
+      <p>
+        A robot navigating a warehouse can't wait 200ms for a cloud round-trip. At 2m/s, that's
+        40cm of movement with stale data. Local memory runs in under 1ms.
+      </p>
+
+      <h3>2. Healthcare & Legal</h3>
+      <p>
+        Patient records, legal documents, financial data—anything with compliance requirements
+        shouldn't touch third-party servers. Local-first means HIPAA/GDPR compliance by default.
+      </p>
+
+      <h3>3. Offline Operation</h3>
+      <p>
+        Field workers, aircraft systems, rural deployments—anywhere internet is unreliable.
+        Local-first works with zero connectivity.
+      </p>
+
+      <h3>4. Developer Privacy</h3>
+      <p>
+        Your code, your architecture decisions, your debugging sessions. Keep them local.
+      </p>
+
+      <h2>How It Works Technically</h2>
+
+      <CodeBlock
+        language="python"
+        filename="local_first.py"
+        code={`from shodh_memory import Memory
+
+# Everything runs on your machine:
+# - Embedding model: MiniLM-L6-v2 (22MB, ONNX)
+# - Vector index: Vamana HNSW (in-process)
+# - Storage: RocksDB (embedded)
+# - No network calls. Ever.
+
+memory = Memory(storage_path="./my_private_data")
+
+# This never leaves your device
+memory.remember("Patient ID 12345 prefers morning appointments")
+memory.remember("Case #789 settled for $50,000")
+
+# Semantic search runs locally
+results = memory.recall("patient scheduling preferences")`}
+      />
+
+      <h2>The Trade-off</h2>
+      <p>
+        Local-first has one trade-off: you manage the infrastructure. There's no managed
+        cloud service to handle scaling, backups, or multi-device sync.
+      </p>
+      <p>
+        For many use cases, that's the right trade-off. Your data, your control.
+      </p>
+
+      <div className="not-prose bg-orange-50 dark:bg-orange-900/20 rounded-lg p-6 my-8 border border-orange-200 dark:border-orange-800">
+        <h3 className="font-semibold text-orange-900 dark:text-orange-100 mb-3">When to Choose Local-First</h3>
+        <ul className="space-y-2 text-sm text-orange-800 dark:text-orange-200">
+          <li>✓ Sensitive data (healthcare, legal, financial)</li>
+          <li>✓ Compliance requirements (GDPR, HIPAA, SOC2)</li>
+          <li>✓ Offline operation needed</li>
+          <li>✓ Low-latency requirements (&lt;50ms)</li>
+          <li>✓ Edge devices (robots, IoT, embedded)</li>
+          <li>✓ Cost sensitivity (no API fees)</li>
+        </ul>
+      </div>
+
+      <h2>Get Started</h2>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# Install
+pip install shodh-memory
+
+# Or with Claude Code
+claude mcp add @shodh/memory-mcp`}
+      />
+
+      <p>
+        15MB binary. Zero cloud dependencies. Your data stays yours.
+      </p>
+    </article>
+  );
+}
+
 function AIMemoryComparisonPost() {
   return (
     <article className="prose prose-lg dark:prose-invert max-w-none">
@@ -2249,6 +2772,12 @@ export default function BlogPostPage() {
   // Render the appropriate content based on slug
   const renderContent = () => {
     switch (slug) {
+      case 'add-memory-to-ai-agent-5-minutes':
+        return <QuickStartMemoryPost />;
+      case 'why-ai-keeps-forgetting-context-window-problem':
+        return <ContextWindowProblemPost />;
+      case 'local-first-ai-data-privacy-2025':
+        return <LocalFirstAIPost />;
       case 'ai-memory-comparison-shodh-vs-mem0-vs-zep-2025':
         return <AIMemoryComparisonPost />;
       case 'shodh-memory-python-sdk-complete-tutorial':

@@ -2,6 +2,48 @@ import { BlogPost } from './blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'add-memory-to-ai-agent-5-minutes',
+    title: 'Add Persistent Memory to Any AI Agent in 5 Minutes',
+    description: 'Stop your AI from forgetting everything. A quick guide to adding persistent memory to LLM applications, chatbots, and AI agents using Python. No cloud required.',
+    date: '2025-12-15',
+    author: {
+      name: 'Shodh Team',
+      role: 'Developer Experience',
+    },
+    category: 'Tutorial',
+    tags: ['quickstart', 'python', 'AI-agents', 'memory', 'tutorial'],
+    readingTime: '5 min read',
+    featured: true,
+  },
+  {
+    slug: 'why-ai-keeps-forgetting-context-window-problem',
+    title: 'Why Your AI Keeps Forgetting Everything (And How to Fix It)',
+    description: 'The context window problem explained. Why LLMs forget between sessions, why RAG isn\'t enough, and how persistent memory solves the problem.',
+    date: '2025-12-14',
+    author: {
+      name: 'Shodh Team',
+      role: 'AI Research',
+    },
+    category: 'AI',
+    tags: ['context-window', 'LLM', 'memory', 'RAG', 'explainer'],
+    readingTime: '7 min read',
+    featured: true,
+  },
+  {
+    slug: 'local-first-ai-data-privacy-2025',
+    title: 'Local-First AI: Why Your Data Should Never Leave Your Device',
+    description: 'The case for on-device AI memory. Privacy, latency, offline operation, and why the future of AI is local, not cloud.',
+    date: '2025-12-14',
+    author: {
+      name: 'Shodh Team',
+      role: 'Engineering',
+    },
+    category: 'AI',
+    tags: ['privacy', 'local-first', 'edge-AI', 'data-sovereignty', 'offline'],
+    readingTime: '6 min read',
+    featured: false,
+  },
+  {
     slug: 'ai-memory-comparison-shodh-vs-mem0-vs-zep-2025',
     title: 'AI Memory Comparison 2025: Shodh vs Mem0 vs Zep — Which Should You Use?',
     description: 'An honest comparison of the top AI memory solutions. Mem0 (cloud-first, $24M funding), Zep (temporal graphs), and Shodh (edge-native, offline). Benchmarks, pricing, and use cases.',
@@ -13,7 +55,7 @@ export const blogPosts: BlogPost[] = [
     category: 'AI',
     tags: ['comparison', 'mem0', 'zep', 'AI-memory', 'evaluation', 'benchmarks'],
     readingTime: '12 min read',
-    featured: true,
+    featured: false,
   },
   {
     slug: 'shodh-memory-python-sdk-complete-tutorial',
