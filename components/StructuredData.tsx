@@ -50,6 +50,7 @@ export default function StructuredData() {
     '@type': 'Product',
     name: 'Shodh Memory',
     description: 'Edge-native AI memory system for robots, drones, and IoT devices. 100% offline, 4MB binary, <100ms retrieval.',
+    image: 'https://shodh-rag.com/og-image.png',
     brand: {
       '@type': 'Brand',
       name: 'Shodh',
@@ -61,10 +62,6 @@ export default function StructuredData() {
       availability: 'https://schema.org/InStock',
     },
     category: 'Edge AI Software',
-    audience: {
-      '@type': 'Audience',
-      audienceType: 'Robotics Engineers, IoT Developers, Defence Systems, Industrial Automation',
-    },
   }
 
   return (
