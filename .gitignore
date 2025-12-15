@@ -5,3 +5,7 @@ out/
 *.log
 .DS_Store
 .claude/
+
+# Test data
+shodh_data/
+test_python_memory/
