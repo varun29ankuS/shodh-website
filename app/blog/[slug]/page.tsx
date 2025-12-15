@@ -1940,516 +1940,288 @@ function AIMemoryComparisonPost() {
   return (
     <article className="prose prose-lg dark:prose-invert max-w-none">
       <p className="lead">
-        Every AI agent needs memory. The question is: which memory system? This comparison
-        covers the three leading solutions—Mem0, Zep, and Shodh—with honest assessments
-        of when each shines and where each falls short.
+        Every AI agent needs memory. But which system? Here's an honest comparison of
+        Mem0, Zep, and Shodh—where each shines and where each falls short.
       </p>
 
-      <div className="not-prose bg-slate-100 dark:bg-slate-800 rounded-lg p-6 my-8">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">TL;DR Summary</h3>
-        <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-          <li><strong>Mem0:</strong> Best for cloud-first teams wanting managed infrastructure</li>
-          <li><strong>Zep:</strong> Best for applications needing temporal reasoning and chat history</li>
-          <li><strong>Shodh:</strong> Best for edge devices, offline operation, and privacy-sensitive deployments</li>
-        </ul>
+      {/* TL;DR Cards */}
+      <div className="not-prose grid md:grid-cols-3 gap-4 my-10">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20 rounded-xl p-5 border border-blue-200 dark:border-blue-800">
+          <div className="text-2xl mb-2">☁️</div>
+          <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-1">Mem0</h4>
+          <p className="text-sm text-blue-700 dark:text-blue-300 mb-3">$24M funding · 41K stars</p>
+          <p className="text-sm text-blue-800 dark:text-blue-200">
+            Best for cloud-first teams wanting managed infrastructure and AWS integration.
+          </p>
+        </div>
+        <div className="bg-gradient-to-br from-violet-50 to-violet-100 dark:from-violet-900/30 dark:to-violet-800/20 rounded-xl p-5 border border-violet-200 dark:border-violet-800">
+          <div className="text-2xl mb-2">⏱️</div>
+          <h4 className="font-bold text-violet-900 dark:text-violet-100 mb-1">Zep</h4>
+          <p className="text-sm text-violet-700 dark:text-violet-300 mb-3">LangChain partner · 20K stars</p>
+          <p className="text-sm text-violet-800 dark:text-violet-200">
+            Best for temporal reasoning—tracking when things happened and how facts change.
+          </p>
+        </div>
+        <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20 rounded-xl p-5 border border-orange-200 dark:border-orange-800">
+          <div className="text-2xl mb-2">🔌</div>
+          <h4 className="font-bold text-orange-900 dark:text-orange-100 mb-1">Shodh</h4>
+          <p className="text-sm text-orange-700 dark:text-orange-300 mb-3">Edge-native · 15MB binary</p>
+          <p className="text-sm text-orange-800 dark:text-orange-200">
+            Best for edge devices, offline operation, and privacy-sensitive deployments.
+          </p>
+        </div>
       </div>
 
-      <h2>The Contenders</h2>
-
-      <h3>Mem0 — The Well-Funded Cloud Player</h3>
+      <h2>The Core Difference</h2>
       <p>
-        Mem0 raised <strong>$24M from AWS</strong> in late 2024, making it the most well-funded
-        AI memory startup. They position as "the memory layer for AI applications" with
-        deep AWS integration and a managed cloud service.
+        All three store memories and retrieve them semantically. The difference is <em>where</em> and <em>how</em>:
       </p>
       <ul>
-        <li><strong>GitHub:</strong> 41K+ stars</li>
-        <li><strong>Model:</strong> Cloud-first SaaS with self-hosted option</li>
-        <li><strong>Integrations:</strong> LangChain, LlamaIndex, CrewAI</li>
-        <li><strong>Unique feature:</strong> AWS Bedrock native integration</li>
+        <li><strong>Mem0</strong> runs in the cloud (or self-hosted Docker), uses external vector DBs, and requires API keys</li>
+        <li><strong>Zep</strong> runs in the cloud (or self-hosted), specializes in temporal knowledge graphs</li>
+        <li><strong>Shodh</strong> runs entirely on-device as a single binary—no network, no containers, no dependencies</li>
       </ul>
 
-      <h3>Zep — The Temporal Memory Specialist</h3>
+      <h2>Quick Comparison</h2>
+
+      <div className="not-prose overflow-x-auto my-8">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-slate-800">
+              <th className="text-left p-3 font-semibold">Aspect</th>
+              <th className="text-left p-3 font-semibold">Mem0</th>
+              <th className="text-left p-3 font-semibold">Zep</th>
+              <th className="text-left p-3 font-semibold">Shodh</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+            <tr>
+              <td className="p-3 font-medium">Deployment</td>
+              <td className="p-3">Cloud / Docker</td>
+              <td className="p-3">Cloud / Docker</td>
+              <td className="p-3">Single binary</td>
+            </tr>
+            <tr>
+              <td className="p-3 font-medium">Offline?</td>
+              <td className="p-3">❌</td>
+              <td className="p-3">❌</td>
+              <td className="p-3">✅</td>
+            </tr>
+            <tr>
+              <td className="p-3 font-medium">Latency</td>
+              <td className="p-3">200-500ms</td>
+              <td className="p-3">150-400ms</td>
+              <td className="p-3">5-50ms</td>
+            </tr>
+            <tr>
+              <td className="p-3 font-medium">Binary size</td>
+              <td className="p-3">Docker image</td>
+              <td className="p-3">Docker image</td>
+              <td className="p-3">~15MB</td>
+            </tr>
+            <tr>
+              <td className="p-3 font-medium">Pricing</td>
+              <td className="p-3">$99/mo pro</td>
+              <td className="p-3">$20/mo pro</td>
+              <td className="p-3">Free forever</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>What Makes Each Unique</h2>
+
+      <h3>Mem0: Enterprise Cloud Memory</h3>
       <p>
-        Zep focuses on <strong>temporal knowledge graphs</strong>—understanding when things happened
-        and how relationships change over time. They've raised approximately $500K and have
-        strong LangChain integration.
+        Backed by $24M from AWS, Mem0 is building the "memory layer for AI" with deep cloud integration.
+        If you're on AWS and want a managed service with enterprise support, Mem0 is the safe choice.
       </p>
-      <ul>
-        <li><strong>GitHub:</strong> ~20K stars</li>
-        <li><strong>Model:</strong> Cloud service + open-source</li>
-        <li><strong>Integrations:</strong> LangChain (official partner)</li>
-        <li><strong>Unique feature:</strong> Temporal reasoning, fact versioning</li>
-      </ul>
+      <div className="not-prose bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 my-4">
+        <p className="text-sm text-blue-800 dark:text-blue-200">
+          <strong>Best for:</strong> Enterprise teams on AWS · Managed infrastructure · LangChain/LlamaIndex users
+        </p>
+      </div>
 
-      <h3>Shodh — The Edge-Native Option</h3>
+      <h3>Zep: Temporal Knowledge Graphs</h3>
       <p>
-        Shodh Memory is built for <strong>edge devices and offline operation</strong>. Single binary,
-        no external dependencies, runs on Raspberry Pi. Uses cognitive science principles
-        (Hebbian learning) for memory consolidation.
+        Zep's killer feature is <strong>temporal reasoning</strong>. It tracks when facts were learned,
+        how they've changed, and can answer questions like "What did the user believe last week?"
+        Official LangChain partner with deep framework integration.
       </p>
-      <ul>
-        <li><strong>GitHub:</strong> Open source</li>
-        <li><strong>Model:</strong> Fully local, single binary</li>
-        <li><strong>Integrations:</strong> MCP (Claude Code), Python SDK</li>
-        <li><strong>Unique feature:</strong> Offline-first, sub-millisecond latency</li>
-      </ul>
+      <div className="not-prose bg-violet-50 dark:bg-violet-900/20 rounded-lg p-4 my-4">
+        <p className="text-sm text-violet-800 dark:text-violet-200">
+          <strong>Best for:</strong> Chat history management · Fact versioning · Conversation summarization
+        </p>
+      </div>
 
-      <h2>Architecture Comparison</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Aspect</th>
-            <th>Mem0</th>
-            <th>Zep</th>
-            <th>Shodh</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Deployment</strong></td>
-            <td>Cloud SaaS / Self-hosted</td>
-            <td>Cloud SaaS / Self-hosted</td>
-            <td>Local binary only</td>
-          </tr>
-          <tr>
-            <td><strong>Storage Backend</strong></td>
-            <td>PostgreSQL + Qdrant</td>
-            <td>PostgreSQL + pgvector</td>
-            <td>RocksDB (embedded)</td>
-          </tr>
-          <tr>
-            <td><strong>Vector Search</strong></td>
-            <td>Qdrant</td>
-            <td>pgvector</td>
-            <td>Vamana HNSW (custom)</td>
-          </tr>
-          <tr>
-            <td><strong>Embedding Model</strong></td>
-            <td>OpenAI / Custom</td>
-            <td>OpenAI / Custom</td>
-            <td>MiniLM-L6-v2 (local ONNX)</td>
-          </tr>
-          <tr>
-            <td><strong>Graph Support</strong></td>
-            <td>Entity extraction</td>
-            <td>Temporal knowledge graph</td>
-            <td>Hebbian associative graph</td>
-          </tr>
-          <tr>
-            <td><strong>Binary Size</strong></td>
-            <td>Docker container</td>
-            <td>Docker container</td>
-            <td>~15MB standalone</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>Performance Benchmarks</h2>
+      <h3>Shodh: Edge-Native Cognitive Memory</h3>
       <p>
-        We benchmarked typical operations. Note: cloud services have network latency;
-        Shodh runs entirely local.
+        Shodh is the only option that runs fully offline on constrained hardware. A single 15MB binary
+        with embedded vector search, no external dependencies. Uses cognitive science principles
+        (Hebbian learning, memory decay) for human-like memory behavior.
       </p>
+      <div className="not-prose bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4 my-4">
+        <p className="text-sm text-orange-800 dark:text-orange-200">
+          <strong>Best for:</strong> Robots & drones · Offline operation · Privacy-first · Cost-sensitive
+        </p>
+      </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Operation</th>
-            <th>Mem0 (Cloud)</th>
-            <th>Zep (Cloud)</th>
-            <th>Shodh (Local)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Memory Store</strong></td>
-            <td>~200-400ms</td>
-            <td>~150-300ms</td>
-            <td>~5-15ms</td>
-          </tr>
-          <tr>
-            <td><strong>Semantic Recall</strong></td>
-            <td>~300-500ms</td>
-            <td>~200-400ms</td>
-            <td>~10-50ms</td>
-          </tr>
-          <tr>
-            <td><strong>Entity Lookup</strong></td>
-            <td>~100-200ms</td>
-            <td>~100-200ms</td>
-            <td>~0.7ms</td>
-          </tr>
-          <tr>
-            <td><strong>Offline Operation</strong></td>
-            <td>No</td>
-            <td>No</td>
-            <td>Yes</td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Feature Deep-Dive</h2>
+      <p>Here's where they differ on specific capabilities:</p>
 
-      <p className="text-sm text-slate-600 dark:text-slate-400">
-        * Cloud latencies include network round-trip. Self-hosted deployments would be faster
-        but require infrastructure management.
-      </p>
+      <div className="not-prose grid md:grid-cols-2 gap-6 my-8">
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-5">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Common to All Three</h4>
+          <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+            <li>✅ Semantic vector search</li>
+            <li>✅ Memory types/categories</li>
+            <li>✅ Tagging support</li>
+            <li>✅ Python SDK</li>
+            <li>✅ REST API</li>
+          </ul>
+        </div>
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-5">
+          <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Shodh-Only Features</h4>
+          <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+            <li>🧠 Hebbian learning (memories strengthen with use)</li>
+            <li>📉 Ebbinghaus decay (unused memories fade)</li>
+            <li>🔄 Memory consolidation (episodic → semantic)</li>
+            <li>🤖 ROS2 robotics integration</li>
+            <li>🔌 Claude Code MCP server</li>
+          </ul>
+        </div>
+      </div>
 
-      <h2>Feature Comparison</h2>
+      <h2>Code Examples</h2>
+      <p>All three have clean Python APIs. Here's the same task in each:</p>
 
-      <h3>Memory Types & Organization</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Mem0</th>
-            <th>Zep</th>
-            <th>Shodh</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Semantic search</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>Memory types/categories</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅ (13 types)</td>
-          </tr>
-          <tr>
-            <td>Tagging</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>Temporal queries</td>
-            <td>Basic</td>
-            <td>✅ Advanced</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>Fact versioning</td>
-            <td>❌</td>
-            <td>✅</td>
-            <td>❌</td>
-          </tr>
-          <tr>
-            <td>Memory decay</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✅ (Ebbinghaus curve)</td>
-          </tr>
-          <tr>
-            <td>Hebbian learning</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>Memory consolidation</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✅</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>Integration & Ecosystem</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Integration</th>
-            <th>Mem0</th>
-            <th>Zep</th>
-            <th>Shodh</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>LangChain</td>
-            <td>✅</td>
-            <td>✅ Official</td>
-            <td>🔜 Coming</td>
-          </tr>
-          <tr>
-            <td>LlamaIndex</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>🔜 Coming</td>
-          </tr>
-          <tr>
-            <td>Claude Code (MCP)</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>Python SDK</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>REST API</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>ROS2 (Robotics)</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✅</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>Pricing Comparison</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Tier</th>
-            <th>Mem0</th>
-            <th>Zep</th>
-            <th>Shodh</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Free</strong></td>
-            <td>1K memories</td>
-            <td>Limited</td>
-            <td>Unlimited</td>
-          </tr>
-          <tr>
-            <td><strong>Pro</strong></td>
-            <td>$99/mo</td>
-            <td>$20/mo</td>
-            <td>Free (open source)</td>
-          </tr>
-          <tr>
-            <td><strong>Enterprise</strong></td>
-            <td>Custom</td>
-            <td>Custom</td>
-            <td>Free (open source)</td>
-          </tr>
-          <tr>
-            <td><strong>Self-hosted</strong></td>
-            <td>Available</td>
-            <td>Available</td>
-            <td>Only option</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>When to Use Each</h2>
-
-      <h3>Choose Mem0 When:</h3>
-      <ul>
-        <li>You're building on AWS and want native integration</li>
-        <li>You prefer managed infrastructure over self-hosting</li>
-        <li>You need enterprise support and SLAs</li>
-        <li>Your team is already using LangChain/LlamaIndex</li>
-        <li>Budget isn't the primary constraint</li>
-      </ul>
-
-      <h3>Choose Zep When:</h3>
-      <ul>
-        <li>Temporal reasoning is critical (e.g., "What did the user say last week?")</li>
-        <li>You need fact versioning (tracking how beliefs change over time)</li>
-        <li>Chat history management is the primary use case</li>
-        <li>You're deeply integrated with LangChain</li>
-        <li>You need conversation summarization</li>
-      </ul>
-
-      <h3>Choose Shodh When:</h3>
-      <ul>
-        <li>Edge deployment (robots, drones, IoT devices)</li>
-        <li>Offline operation is required</li>
-        <li>Sub-millisecond latency matters</li>
-        <li>Privacy/data sovereignty—data never leaves the device</li>
-        <li>Minimal dependencies—single binary deployment</li>
-        <li>Cognitive features (Hebbian learning, memory decay, consolidation)</li>
-        <li>Cost sensitivity—fully open source, no usage fees</li>
-      </ul>
-
-      <h2>The Honest Trade-offs</h2>
-
-      <h3>Mem0's Trade-offs</h3>
-      <ul>
-        <li><strong>Pro:</strong> Best-funded, most integrations, enterprise support</li>
-        <li><strong>Con:</strong> Cloud dependency, higher cost, network latency</li>
-        <li><strong>Con:</strong> AWS-centric (if you're multi-cloud)</li>
-      </ul>
-
-      <h3>Zep's Trade-offs</h3>
-      <ul>
-        <li><strong>Pro:</strong> Best temporal reasoning, official LangChain partner</li>
-        <li><strong>Con:</strong> Smaller team, less funding than Mem0</li>
-        <li><strong>Con:</strong> Still requires cloud/server infrastructure</li>
-      </ul>
-
-      <h3>Shodh's Trade-offs</h3>
-      <ul>
-        <li><strong>Pro:</strong> Only true edge/offline solution, no dependencies</li>
-        <li><strong>Pro:</strong> Unique cognitive features (Hebbian, consolidation)</li>
-        <li><strong>Con:</strong> Smaller ecosystem (no LangChain integration yet)</li>
-        <li><strong>Con:</strong> No managed cloud option—you run it yourself</li>
-        <li><strong>Con:</strong> Newer project, smaller community</li>
-      </ul>
-
-      <h2>Code Comparison</h2>
-
-      <h3>Mem0</h3>
       <CodeBlock
         language="python"
         filename="mem0_example.py"
-        code={`from mem0 import Memory
+        code={`# Mem0 - Cloud API
+from mem0 import Memory
 
-m = Memory()
+m = Memory()  # Requires API key
 m.add("User prefers dark mode", user_id="alice")
-
-results = m.search("UI preferences", user_id="alice")
-for r in results:
-    print(r["memory"])`}
+results = m.search("UI preferences", user_id="alice")`}
       />
 
-      <h3>Zep</h3>
       <CodeBlock
         language="python"
         filename="zep_example.py"
-        code={`from zep_cloud.client import Zep
+        code={`# Zep - Cloud API
+from zep_cloud.client import Zep
 
 client = Zep(api_key="your-key")
-
-# Add memory
-client.memory.add(
-    session_id="session-123",
-    messages=[{"role": "user", "content": "I prefer dark mode"}]
-)
-
-# Search
-results = client.memory.search(
-    session_id="session-123",
-    text="UI preferences"
-)`}
+client.memory.add(session_id="123", messages=[...])
+results = client.memory.search(session_id="123", text="UI preferences")`}
       />
 
-      <h3>Shodh</h3>
       <CodeBlock
         language="python"
         filename="shodh_example.py"
-        code={`from shodh_memory import Memory
+        code={`# Shodh - Local, no API key
+from shodh_memory import Memory
 
-m = Memory()  # Local storage, no API key needed
-m.remember("User prefers dark mode",
-           memory_type="Decision",
-           tags=["preferences", "ui"])
-
-results = m.recall("UI preferences")
-for r in results:
-    print(f"[{r['experience_type']}] {r['content']}")`}
+m = Memory()  # Runs entirely on device
+m.remember("User prefers dark mode", memory_type="Decision")
+results = m.recall("UI preferences")`}
       />
 
-      <h2>Migration Paths</h2>
-      <p>
-        If you're switching between systems, here's what to know:
-      </p>
+      <h2>The Honest Trade-offs</h2>
 
-      <h3>Mem0 → Shodh</h3>
-      <p>
-        Export memories via Mem0 API, import using Shodh's batch_remember endpoint.
-        You'll lose Mem0-specific metadata but retain core content and timestamps.
-      </p>
-
-      <h3>Zep → Shodh</h3>
-      <p>
-        Export conversation history and facts. Zep's temporal metadata won't transfer
-        directly—you'll need to flatten versioned facts into current state.
-      </p>
-
-      <h3>Shodh → Cloud (Mem0/Zep)</h3>
-      <p>
-        Export from Shodh's REST API or directly from RocksDB. Memory types map to
-        categories. Hebbian edge weights and decay state won't transfer.
-      </p>
-
-      <h2>Our Recommendation</h2>
-      <p>
-        There's no single "best" choice—it depends on your constraints:
-      </p>
-
-      <div className="not-prose grid md:grid-cols-3 gap-4 my-8">
-        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-          <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Cloud-First Teams</h4>
-          <p className="text-sm text-blue-800 dark:text-blue-200">
-            Mem0 or Zep. Both are mature, well-integrated, and handle infrastructure for you.
-            Mem0 if you're on AWS; Zep if you need temporal features.
+      <div className="not-prose space-y-4 my-8">
+        <div className="border-l-4 border-blue-500 pl-4 py-2">
+          <h4 className="font-semibold text-slate-900 dark:text-white">Mem0</h4>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            <span className="text-green-600 dark:text-green-400">✓ Best-funded, most integrations, enterprise support</span><br/>
+            <span className="text-red-600 dark:text-red-400">✗ Cloud dependency, higher cost ($99/mo), AWS-centric</span>
           </p>
         </div>
-        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
-          <h4 className="font-semibold text-green-900 dark:text-green-100 mb-2">Edge/Robotics</h4>
-          <p className="text-sm text-green-800 dark:text-green-200">
-            Shodh is the only option that runs fully offline on constrained devices.
-            15MB binary, no network required, sub-ms latency.
+        <div className="border-l-4 border-violet-500 pl-4 py-2">
+          <h4 className="font-semibold text-slate-900 dark:text-white">Zep</h4>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            <span className="text-green-600 dark:text-green-400">✓ Best temporal reasoning, official LangChain partner</span><br/>
+            <span className="text-red-600 dark:text-red-400">✗ Still requires infrastructure, smaller team than Mem0</span>
           </p>
         </div>
-        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4">
-          <h4 className="font-semibold text-purple-900 dark:text-purple-100 mb-2">Privacy-Sensitive</h4>
-          <p className="text-sm text-purple-800 dark:text-purple-200">
-            Shodh—data never leaves the device. No cloud accounts, no API keys,
-            no data transmission. Full sovereignty.
+        <div className="border-l-4 border-orange-500 pl-4 py-2">
+          <h4 className="font-semibold text-slate-900 dark:text-white">Shodh</h4>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            <span className="text-green-600 dark:text-green-400">✓ Only true edge/offline solution, unique cognitive features, free</span><br/>
+            <span className="text-red-600 dark:text-red-400">✗ No LangChain yet, no managed cloud option, newer project</span>
           </p>
         </div>
       </div>
 
-      <h2>Getting Started</h2>
+      <h2>Decision Guide</h2>
 
-      <h3>Try Mem0</h3>
+      <div className="not-prose bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 my-8">
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <span className="text-xl">🏢</span>
+            <div>
+              <p className="font-medium text-slate-900 dark:text-white">Building cloud chatbots on AWS?</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">→ <strong>Mem0</strong></p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-xl">⏰</span>
+            <div>
+              <p className="font-medium text-slate-900 dark:text-white">Need to track how facts change over time?</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">→ <strong>Zep</strong></p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-xl">🤖</span>
+            <div>
+              <p className="font-medium text-slate-900 dark:text-white">Deploying to robots, drones, or edge devices?</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">→ <strong>Shodh</strong></p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-xl">🔒</span>
+            <div>
+              <p className="font-medium text-slate-900 dark:text-white">Data can't leave the device (privacy/compliance)?</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">→ <strong>Shodh</strong></p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-xl">💰</span>
+            <div>
+              <p className="font-medium text-slate-900 dark:text-white">Need to minimize costs?</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">→ <strong>Shodh</strong> (free) or <strong>Zep</strong> ($20/mo)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Get Started</h2>
+
       <CodeBlock
         language="bash"
-        filename="Terminal"
-        code={`pip install mem0ai
-# Requires API key from mem0.ai`}
-      />
+        filename="Try each one"
+        code={`# Mem0 (requires API key)
+pip install mem0ai
 
-      <h3>Try Zep</h3>
-      <CodeBlock
-        language="bash"
-        filename="Terminal"
-        code={`pip install zep-cloud
-# Requires API key from getzep.com`}
-      />
+# Zep (requires API key)
+pip install zep-cloud
 
-      <h3>Try Shodh</h3>
-      <CodeBlock
-        language="bash"
-        filename="Terminal"
-        code={`pip install shodh-memory
-# No API key needed - runs locally
+# Shodh (no API key, runs locally)
+pip install shodh-memory
 
-# Or with Claude Code:
+# Or add to Claude Code:
 claude mcp add @shodh/memory-mcp`}
       />
 
-      <h2>Conclusion</h2>
+      <h2>Bottom Line</h2>
       <p>
-        The AI memory space is maturing rapidly. Mem0 has the funding and AWS partnership.
-        Zep has the temporal reasoning niche. Shodh has the edge/offline niche.
+        The AI memory market is big enough for different approaches. Mem0 owns enterprise cloud.
+        Zep owns temporal reasoning. Shodh owns edge and offline.
       </p>
       <p>
-        If you're building cloud chatbots, Mem0 or Zep will serve you well. If you're
-        building robots, drones, or privacy-first applications, Shodh is purpose-built
-        for your constraints.
-      </p>
-      <p>
-        The market is big enough for all three. Choose based on your deployment model,
-        not marketing.
+        Pick based on where your code runs, not marketing. If it runs in the cloud,
+        Mem0 or Zep. If it runs on a device, Shodh.
       </p>
     </article>
   );
