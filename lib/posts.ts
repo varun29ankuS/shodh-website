@@ -2,6 +2,20 @@ import { BlogPost } from './blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'ai-memory-comparison-shodh-vs-mem0-vs-zep-2025',
+    title: 'AI Memory Comparison 2025: Shodh vs Mem0 vs Zep — Which Should You Use?',
+    description: 'An honest comparison of the top AI memory solutions. Mem0 (cloud-first, $24M funding), Zep (temporal graphs), and Shodh (edge-native, offline). Benchmarks, pricing, and use cases.',
+    date: '2025-12-15',
+    author: {
+      name: 'Shodh Team',
+      role: 'Engineering',
+    },
+    category: 'AI',
+    tags: ['comparison', 'mem0', 'zep', 'AI-memory', 'evaluation', 'benchmarks'],
+    readingTime: '12 min read',
+    featured: true,
+  },
+  {
     slug: 'shodh-memory-python-sdk-complete-tutorial',
     title: 'Shodh Memory Python SDK: Complete Tutorial with Examples',
     description: 'Learn how to use the Shodh Memory Python SDK from installation to advanced features. Store memories, semantic recall, context summaries, and integration patterns for AI applications.',
