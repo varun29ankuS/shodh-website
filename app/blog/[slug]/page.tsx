@@ -2750,6 +2750,724 @@ claude mcp add @shodh/memory-mcp`}
   );
 }
 
+// LLMs Are Stateless Post
+function LLMsAreStatelessPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        Here's an uncomfortable truth about large language models: they have no memory.
+        Every API call to Claude, GPT-4, or any other LLM starts completely fresh. The model
+        doesn't know what you discussed yesterday. It doesn't remember that you prefer TypeScript
+        over JavaScript. It has no idea that you've explained your project architecture twelve times already.
+      </p>
+
+      <h2>The Illusion of Memory</h2>
+      <p>
+        When you chat with ChatGPT or Claude, it <em>feels</em> like they remember. You say something,
+        they respond, you continue the conversation. But here's what's actually happening:
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="How LLM 'Memory' Actually Works"
+        code={`Turn 1: You send "Hello, I'm building a React app"
+        → Model receives: "Hello, I'm building a React app"
+        → Model responds
+
+Turn 2: You send "What testing library should I use?"
+        → Model receives: "Hello, I'm building a React app" +
+                          "What testing library should I use?"
+        → Model responds
+
+Turn 3: You send "How do I mock API calls?"
+        → Model receives: ALL previous messages + new message
+        → Model responds`}
+      />
+
+      <p>
+        The "memory" is just the chat application re-sending the entire conversation every time.
+        The model itself remembers nothing.
+      </p>
+
+      <h2>Why This Matters</h2>
+
+      <h3>1. Context Windows Are Finite</h3>
+      <p>
+        Every LLM has a context window—the maximum amount of text it can process at once.
+        Claude's is 200K tokens. GPT-4's varies. Sounds like a lot, right? It's not.
+      </p>
+      <p>
+        A medium-sized codebase easily exceeds this. A few hours of conversation fills it.
+        Once you hit the limit, old context gets dropped. The model literally forgets the
+        beginning of your conversation.
+      </p>
+
+      <h3>2. Sessions End</h3>
+      <p>
+        Close the tab. Start a new chat. Switch to a different project. The model forgets everything.
+      </p>
+      <p>
+        That decision you made about your database schema? Gone. The bug you spent an hour debugging
+        together? Vanished. The coding style preferences you established? Reset to defaults.
+      </p>
+
+      <h3>3. No Cross-Session Learning</h3>
+      <p>
+        Humans learn from experience. We remember that a particular approach worked well, or that
+        a certain pattern caused problems.
+      </p>
+      <p>
+        LLMs can't do this. They don't learn that your team prefers composition over inheritance.
+        They don't remember that the last three times you asked about authentication, you were using JWT.
+        They rediscover the same patterns over and over.
+      </p>
+
+      <h2>"But What About RAG?"</h2>
+      <p>
+        Retrieval-Augmented Generation (RAG) is often proposed as the solution. Store documents in a
+        vector database, retrieve relevant chunks, inject them into the prompt.
+      </p>
+      <p>
+        RAG is great for document Q&A. <strong>It's not memory.</strong>
+      </p>
+
+      <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-lg my-6">
+        <p className="font-semibold mb-2">RAG gives you:</p>
+        <ul className="mt-0 mb-4">
+          <li>Access to static documents</li>
+          <li>Semantic search over stored content</li>
+          <li>The ability to answer questions about your docs</li>
+        </ul>
+        <p className="font-semibold mb-2">RAG doesn't give you:</p>
+        <ul className="mt-0 mb-0">
+          <li>Memory of past interactions</li>
+          <li>Learned preferences that strengthen over time</li>
+          <li>Associations that form from usage patterns</li>
+          <li>Context that builds across sessions</li>
+        </ul>
+      </div>
+
+      <h2>The Real Solution: Persistent Memory</h2>
+      <p>
+        What LLMs need is what humans have: a memory system that persists across sessions and
+        learns from usage.
+      </p>
+
+      <h3>Memories that survive session boundaries</h3>
+      <CodeBlock
+        language="python"
+        filename="Persistent Memory"
+        code={`# Session 1
+memory.remember("User prefers dark mode in all UIs", memory_type="Decision")
+
+# Session 2 (days later)
+results = memory.recall("UI preferences")
+# Returns: "User prefers dark mode in all UIs"`}
+      />
+
+      <h3>Associations that form from co-retrieval</h3>
+      <p>
+        When you retrieve "React" and "TypeScript" together repeatedly, they should become associated.
+        Query one, get the other.
+      </p>
+
+      <h3>Importance that emerges from usage</h3>
+      <p>
+        Memories you access frequently should become more prominent. Memories you never use should fade.
+        This is how biological memory works.
+      </p>
+
+      <h2>How Shodh Memory Solves This</h2>
+      <p>
+        <a href="/memory">Shodh Memory</a> provides exactly this: persistent, learning memory for LLMs and AI agents.
+      </p>
+
+      <CodeBlock
+        language="python"
+        filename="Shodh Memory Example"
+        code={`from shodh_memory import Memory
+
+memory = Memory(storage_path="./project_memory")
+
+# These survive forever
+memory.remember("Project uses Next.js 14 with App Router", memory_type="Context")
+memory.remember("Team decided on Prisma over Drizzle", memory_type="Decision")
+memory.remember("Always use server components by default", memory_type="Learning")
+
+# Semantic search - finds relevant memories
+results = memory.recall("what ORM are we using?")
+# Returns: "Team decided on Prisma over Drizzle"
+
+# Associations form automatically from co-retrieval
+# After 5+ co-activations, connections become permanent (LTP)`}
+      />
+
+      <h2>The MCP Integration</h2>
+      <p>
+        For Claude Code and Claude Desktop, Shodh Memory works as an MCP server:
+      </p>
+
+      <CodeBlock
+        language="json"
+        filename="MCP Configuration"
+        code={`{
+  "mcpServers": {
+    "shodh-memory": {
+      "command": "npx",
+      "args": ["-y", "@shodh/memory-mcp"],
+      "env": {
+        "SHODH_API_KEY": "your-api-key"
+      }
+    }
+  }
+}`}
+      />
+
+      <p>
+        Now Claude remembers across sessions. No re-explanation. No context lost. Memory that persists.
+      </p>
+
+      <h2>The Future is Stateful</h2>
+      <p>
+        LLMs are incredibly powerful—but they're crippled by their statelessness. The models are there.
+        The reasoning is there. What's missing is memory.
+      </p>
+      <p>
+        <a href="/memory">Shodh Memory</a> provides that missing piece: a cognitive layer that turns
+        stateless LLMs into learning systems.
+      </p>
+    </article>
+  );
+}
+
+// 37 MCP Tools Cognitive Toolkit Post
+function CognitiveToolkitPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        When we started building <a href="/memory">Shodh Memory</a>, the goal was simple: give AI agents
+        persistent memory. Store things, retrieve things, don't forget between sessions.
+      </p>
+      <p>
+        But as we used it ourselves, we realized something. Memory isn't enough. A brain doesn't just
+        remember—it organizes, prioritizes, reminds, and plans.
+      </p>
+      <p>
+        So we kept building. Today, Shodh Memory exposes <strong>37 MCP tools</strong> across five categories.
+        It's not just memory anymore. It's a complete cognitive toolkit.
+      </p>
+
+      <h2>The Five Categories</h2>
+
+      <h3>1. Memory (10 tools)</h3>
+      <p>The core. Persistent, learning memory with Hebbian associations.</p>
+
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>remember</code></td><td>Store a memory with semantic indexing and entity extraction</td></tr>
+            <tr><td><code>recall</code></td><td>Semantic search across memories (vector + graph hybrid)</td></tr>
+            <tr><td><code>recall_by_tags</code></td><td>Filter memories by tags</td></tr>
+            <tr><td><code>recall_by_date</code></td><td>Find memories within a time range</td></tr>
+            <tr><td><code>forget</code></td><td>Delete a specific memory</td></tr>
+            <tr><td><code>forget_by_tags</code></td><td>Bulk delete by tag</td></tr>
+            <tr><td><code>forget_by_date</code></td><td>Bulk delete by date range</td></tr>
+            <tr><td><code>list_memories</code></td><td>List all stored memories</td></tr>
+            <tr><td><code>context_summary</code></td><td>Get a structured summary of decisions, learnings, errors</td></tr>
+            <tr><td><code>proactive_context</code></td><td>Auto-surface relevant memories for current context</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2. Todos (8 tools)</h3>
+      <p>Full GTD (Getting Things Done) workflow. Not a simple checklist—a complete task management system.</p>
+
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>add_todo</code></td><td>Create a task with project, contexts, priority, due date</td></tr>
+            <tr><td><code>list_todos</code></td><td>Filter by status, project, context, priority, due date</td></tr>
+            <tr><td><code>update_todo</code></td><td>Modify any property of a task</td></tr>
+            <tr><td><code>complete_todo</code></td><td>Mark done (auto-creates next occurrence for recurring tasks)</td></tr>
+            <tr><td><code>delete_todo</code></td><td>Remove a task</td></tr>
+            <tr><td><code>reorder_todo</code></td><td>Change priority ordering within a status group</td></tr>
+            <tr><td><code>list_subtasks</code></td><td>Get child tasks of a parent</td></tr>
+            <tr><td><code>todo_stats</code></td><td>Counts by status, overdue items, completion rates</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        <strong>Why this matters for AI agents</strong>: Claude can now track work across sessions.
+        Start a refactoring task today, continue tomorrow. The agent doesn't forget what needs to be done.
+      </p>
+
+      <h3>3. Projects (4 tools)</h3>
+      <p>Organize todos into hierarchical projects. Track progress. Archive when done.</p>
+
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>add_project</code></td><td>Create a project (supports sub-projects via parent)</td></tr>
+            <tr><td><code>list_projects</code></td><td>See all projects with todo counts and status breakdown</td></tr>
+            <tr><td><code>archive_project</code></td><td>Hide completed projects (can be restored)</td></tr>
+            <tr><td><code>delete_project</code></td><td>Permanently remove (optionally with all todos)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4. Reminders (3 tools)</h3>
+      <p>Three trigger types: time-based, duration-based, and context-triggered.</p>
+
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>set_reminder</code></td><td>Create a reminder with trigger conditions</td></tr>
+            <tr><td><code>list_reminders</code></td><td>See pending/triggered/dismissed reminders</td></tr>
+            <tr><td><code>dismiss_reminder</code></td><td>Acknowledge a triggered reminder</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Context-triggered reminders are the game-changer:</strong></p>
+
+      <CodeBlock
+        language="python"
+        filename="Context-Triggered Reminder"
+        code={`# This reminder surfaces when you mention "deployment"
+memory.set_reminder(
+    content="Remember to update the changelog before deploying",
+    trigger_type="context",
+    keywords=["deployment", "deploy", "release", "ship"]
+)
+
+# Days later, you say "Let's deploy to production"
+# The reminder automatically surfaces: "Remember to update the changelog..."`}
+      />
+
+      <h3>5. System (7 tools)</h3>
+      <p>Introspection, health checks, and maintenance.</p>
+
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>memory_stats</code></td><td>Total memories, retrievals, storage size</td></tr>
+            <tr><td><code>verify_index</code></td><td>Check vector index health, find orphaned memories</td></tr>
+            <tr><td><code>repair_index</code></td><td>Re-index orphaned memories</td></tr>
+            <tr><td><code>consolidation_report</code></td><td>See memory strengthening, decay, edge formation</td></tr>
+            <tr><td><code>streaming_status</code></td><td>Check WebSocket connection health</td></tr>
+            <tr><td><code>token_status</code></td><td>Monitor context window usage</td></tr>
+            <tr><td><code>reset_token_session</code></td><td>Reset token counter for new session</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Why 37 Tools?</h2>
+      <p>
+        The number isn't the point. The point is <strong>completeness</strong>.
+      </p>
+      <p>
+        Most memory solutions give you store/retrieve. That's a database, not a brain.
+      </p>
+      <p>A brain:</p>
+      <ul>
+        <li>Remembers (memory tools)</li>
+        <li>Plans and tracks work (todos)</li>
+        <li>Organizes into domains (projects)</li>
+        <li>Surfaces things at the right time (reminders)</li>
+        <li>Has introspection capabilities (system tools)</li>
+      </ul>
+      <p>
+        Shodh Memory provides all of this in a single MCP server. One install, 37 capabilities.
+      </p>
+
+      <h2>Getting Started</h2>
+      <p>Install Shodh Memory as an MCP server:</p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# For Claude Code
+claude mcp add shodh-memory -- npx -y @shodh/memory-mcp`}
+      />
+
+      <p>Or with Python:</p>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`pip install shodh-memory`}
+      />
+
+      <p>
+        All 37 tools become available immediately. No configuration. No cloud setup. Everything runs locally.
+      </p>
+
+      <h2>The Cognitive Layer</h2>
+      <p>
+        LLMs are powerful reasoners but poor rememberers. They can analyze, synthesize, and generate—but
+        they can't retain.
+      </p>
+      <p>
+        Shodh Memory is the missing layer: a cognitive substrate that handles memory, planning, and
+        organization so the LLM can focus on reasoning.
+      </p>
+      <p>
+        37 tools. One MCP server. A complete brain.
+      </p>
+    </article>
+  );
+}
+
+// Proactive Context Post
+function ProactiveContextPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        There's a fundamental difference between searching for something and having it come to mind.
+      </p>
+      <p>
+        When you see a friend, you don't query your brain for "memories tagged with John, sorted by recency."
+        Relevant memories just surface—shared experiences, inside jokes, recent conversations. This happens
+        automatically, without conscious effort.
+      </p>
+      <p>
+        Most AI memory systems work like databases: you query, they return results.
+        <a href="/memory">Shodh Memory</a> works differently. The <code>proactive_context</code> tool
+        surfaces relevant memories automatically based on the current conversation.
+      </p>
+
+      <h2>Search vs. Recall</h2>
+
+      <h3>Traditional Memory Search</h3>
+      <CodeBlock
+        language="python"
+        filename="Explicit Search"
+        code={`# You explicitly search
+results = memory.recall("authentication patterns")
+
+# You get back what matches your query
+# But you had to know what to ask for`}
+      />
+
+      <p>This works when you know what you need. But often, you don't. The most valuable context is the thing you forgot to ask about.</p>
+
+      <h3>Proactive Context</h3>
+      <CodeBlock
+        language="python"
+        filename="Proactive Context"
+        code={`# You provide the current conversation context
+memories = memory.proactive_context("I'm implementing the login page")
+
+# The system surfaces what's relevant:
+# - "We decided to use JWT with refresh tokens" (Decision)
+# - "Last login implementation had a race condition with state updates" (Error)
+# - "User prefers shadcn/ui for auth forms" (Preference)
+# - "OAuth integration is planned for v2" (Context)`}
+      />
+
+      <p>You didn't ask for these. They're relevant, so they appear.</p>
+
+      <h2>How It Works</h2>
+      <p>Proactive context uses three signals to determine relevance:</p>
+
+      <h3>1. Entity Matching (40% weight)</h3>
+      <p>
+        The system extracts entities from your current context and finds memories mentioning the same entities.
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Entity Matching"
+        code={`Context: "Working on the Stripe payment integration"
+
+Entities extracted: ["Stripe", "payment", "integration"]
+
+Memories mentioning these entities get boosted:
+- "Stripe webhooks require raw body parsing" ✓
+- "Payment flow needs idempotency keys" ✓
+- "Integration tests run on CI" (different "integration") △`}
+      />
+
+      <h3>2. Semantic Similarity (40% weight)</h3>
+      <p>Vector similarity between your context and stored memories.</p>
+
+      <h3>3. Recency Boost (20% weight)</h3>
+      <p>Recent memories get a boost. Yesterday's decision is more relevant than last year's.</p>
+
+      <h2>Why This Matters</h2>
+
+      <h3>1. You Can't Search for What You Forgot</h3>
+      <p>
+        The biggest problem with explicit search is that you need to know what to ask.
+        But the most valuable context is often something you've forgotten.
+      </p>
+
+      <CodeBlock
+        language="text"
+        filename="Surfacing Forgotten Context"
+        code={`# You're about to implement caching
+# You forgot that 3 months ago, you decided against Redis
+
+Proactive context for "adding cache layer":
+→ "Decision: Use in-memory caching initially, Redis for v2"
+
+# The decision surfaces automatically
+# You don't repeat past mistakes`}
+      />
+
+      <h3>2. Context Flows Naturally</h3>
+      <p>In a conversation, relevant memories should appear as the topic shifts—without explicit queries.</p>
+
+      <h3>3. Less Cognitive Load</h3>
+      <p>
+        With explicit search, you have to recognize you need information, formulate a query, review results.
+        With proactive context, relevant information appears automatically.
+      </p>
+
+      <h2>Using Proactive Context</h2>
+
+      <h3>Basic Usage</h3>
+      <CodeBlock
+        language="python"
+        filename="Basic Usage"
+        code={`from shodh_memory import Memory
+
+memory = Memory()
+
+# Provide the current conversation or task
+context = memory.proactive_context(
+    "I'm debugging the authentication flow. Users report being logged out randomly."
+)
+
+# Returns the most relevant memories
+for mem in context:
+    print(f"[{mem['memory_type']}] {mem['content']}")`}
+      />
+
+      <h3>Configuring Sensitivity</h3>
+      <CodeBlock
+        language="python"
+        filename="Configuring Sensitivity"
+        code={`# More strict - only highly relevant memories
+context = memory.proactive_context(
+    "current task description",
+    semantic_threshold=0.75,  # Higher = more strict
+    max_results=3
+)
+
+# More permissive - cast a wider net
+context = memory.proactive_context(
+    "current task description",
+    semantic_threshold=0.5,  # Lower = more permissive
+    max_results=10
+)`}
+      />
+
+      <h2>The Biological Inspiration</h2>
+      <p>
+        Human memory doesn't have a search bar. When you think of your childhood home, associated memories
+        surface: the smell of the kitchen, the creak of the stairs, family dinners. You didn't query for
+        these—they activated through association.
+      </p>
+      <p>
+        This is called <strong>spreading activation</strong> in cognitive science. Activating one memory
+        spreads activation to connected memories. The most activated memories surface to consciousness.
+      </p>
+      <p>
+        <code>proactive_context</code> implements this: your current context activates matching entities and
+        embeddings, activation spreads through the knowledge graph, and the most activated memories surface.
+      </p>
+      <p>
+        It's not a search algorithm. It's a memory system.
+      </p>
+    </article>
+  );
+}
+
+// TUI Dashboard Post
+function TUIDashboardPost() {
+  return (
+    <article className="prose prose-lg dark:prose-invert max-w-none">
+      <p className="lead">
+        AI systems are often black boxes. You put data in, results come out, and what happens in between is a mystery.
+      </p>
+      <p>
+        <a href="/memory">Shodh Memory</a> includes something different: a Terminal User Interface (TUI) that lets you
+        watch your AI's memory system in real-time. See memories form. Watch associations strengthen. Browse the
+        knowledge graph. Explore indexed codebases.
+      </p>
+
+      <img src="/blog/splash.jpg" alt="Shodh Memory TUI Dashboard" className="rounded-lg shadow-lg" />
+
+      <h2>Why a TUI?</h2>
+      <p>Three reasons:</p>
+      <ul>
+        <li><strong>Debugging</strong>: When the AI doesn't recall something you expect, you can see why. Is the memory stored? Is the association weak? Was it decayed?</li>
+        <li><strong>Understanding</strong>: Watching Hebbian strengthening in real-time builds intuition about how the system learns.</li>
+        <li><strong>Confidence</strong>: Seeing the memory system work builds trust in the system.</li>
+      </ul>
+      <p>Plus, it looks cool.</p>
+
+      <h2>The Main Dashboard</h2>
+      <p>The dashboard is your command center for memory introspection:</p>
+
+      <img src="/blog/dashboard.jpg" alt="Main Dashboard View" className="rounded-lg shadow-lg" />
+
+      <p>The dashboard shows:</p>
+      <ul>
+        <li><strong>Memory List</strong>: All stored memories, grouped by type (Learning, Decision, Error, Context)</li>
+        <li><strong>Recent Activity</strong>: Real-time log of memory operations</li>
+        <li><strong>Stats</strong>: Quick metrics—total memories, edges, LTP connections, storage size</li>
+        <li><strong>Session Context</strong>: What's currently active across different users/sessions</li>
+      </ul>
+
+      <h3>Real-Time Activity Feed</h3>
+      <p>Watch operations as they happen:</p>
+
+      <CodeBlock
+        language="text"
+        filename="Activity Feed"
+        code={`14:23:01  REMEMBER   "JWT refresh token implementation requires..."
+14:23:01  EMBED      384-dim vector generated (47ms)
+14:23:01  NER        Entities: [JWT, refresh token, implementation]
+14:23:01  EDGE       New edge: jwt ↔ authentication (strength: 0.15)
+14:23:01  EDGE       Strengthened: auth ↔ security (+0.12 → 0.67)`}
+      />
+
+      <h3>Hebbian Learning Visualization</h3>
+      <p>When memories are retrieved together, their connection strengthens:</p>
+
+      <CodeBlock
+        language="text"
+        filename="Hebbian Strengthening"
+        code={`RECALL query: "authentication security"
+  Retrieved: [JWT tokens, Session handling, Password hashing]
+
+  Edge updates:
+    jwt ↔ session:    0.45 → 0.52 (+0.07)
+    jwt ↔ password:   0.23 → 0.31 (+0.08)
+
+  Co-activation count: jwt↔session = 8 (LTP threshold: 10)`}
+      />
+
+      <p>After enough co-activations, connections become permanent (Long-Term Potentiation).</p>
+
+      <h2>Knowledge Graph Explorer</h2>
+      <p>Navigate the association graph visually:</p>
+
+      <img src="/blog/graph-map.jpg" alt="Knowledge Graph Map" className="rounded-lg shadow-lg" />
+
+      <p>The graph view shows:</p>
+      <ul>
+        <li><strong>Nodes</strong>: Entities and memory clusters</li>
+        <li><strong>Edges</strong>: Connections with strength indicated by thickness</li>
+        <li><strong>LTP Edges</strong>: Permanent connections highlighted</li>
+        <li><strong>Activation</strong>: Recently accessed nodes glow</li>
+      </ul>
+
+      <h2>Projects and Todos View</h2>
+      <p>The TUI also provides a complete view of your task management:</p>
+
+      <img src="/blog/projects-todos.jpg" alt="Projects and Todos" className="rounded-lg shadow-lg" />
+
+      <p>This view shows:</p>
+      <ul>
+        <li><strong>Projects</strong>: Hierarchical project structure with sub-projects</li>
+        <li><strong>Todos</strong>: Tasks organized by status (backlog, todo, in_progress, done)</li>
+        <li><strong>Codebase Status</strong>: Which projects have indexed codebases</li>
+        <li><strong>File Browser</strong>: Navigate indexed files with related memories</li>
+      </ul>
+
+      <h2>Running the TUI</h2>
+
+      <CodeBlock
+        language="bash"
+        filename="Terminal"
+        code={`# Install the TUI binary
+cargo install shodh-memory-tui
+
+# Run it
+shodh-tui
+
+# Connect to a specific server
+shodh-tui --server http://localhost:3030
+
+# Watch a specific user's memories
+shodh-tui --user claude-code`}
+      />
+
+      <h3>Keyboard Navigation</h3>
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr><th>Key</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Tab</code></td><td>Switch panels</td></tr>
+            <tr><td><code>j/k</code></td><td>Navigate up/down</td></tr>
+            <tr><td><code>h/l</code></td><td>Navigate left/right (graph view)</td></tr>
+            <tr><td><code>Enter</code></td><td>Select/expand</td></tr>
+            <tr><td><code>/</code></td><td>Search</td></tr>
+            <tr><td><code>r</code></td><td>Refresh</td></tr>
+            <tr><td><code>g</code></td><td>Go to graph view</td></tr>
+            <tr><td><code>p</code></td><td>Go to projects view</td></tr>
+            <tr><td><code>q</code></td><td>Back/quit</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Debugging with the TUI</h2>
+
+      <h3>"Why didn't Claude recall this memory?"</h3>
+      <ol>
+        <li>Open the TUI, find the memory in the list</li>
+        <li>Check its importance score (too low?)</li>
+        <li>Check its last access time (decayed?)</li>
+        <li>Check connected edges (weak associations?)</li>
+        <li>Check entity overlap with query (no matching entities?)</li>
+      </ol>
+
+      <h3>"Why are these memories connected?"</h3>
+      <ol>
+        <li>Open the knowledge graph view</li>
+        <li>Find the edge between them</li>
+        <li>Check activation count (how many times co-retrieved?)</li>
+        <li>Check if LTP (permanent or temporary?)</li>
+      </ol>
+
+      <h2>The Value of Transparency</h2>
+      <p>
+        AI memory systems are only useful if you can trust them. Black-box storage that might or might not
+        recall things correctly isn't helpful.
+      </p>
+      <p>
+        The TUI provides transparency: see exactly what's stored, watch learning happen in real-time,
+        debug retrieval issues visually, understand the system's behavior.
+      </p>
+      <p>
+        This isn't just a debugging tool. It's a trust-building tool. When you can watch the AI's brain
+        form connections, you understand why it behaves the way it does.
+      </p>
+    </article>
+  );
+}
+
 // Main page component
 export default function BlogPostPage() {
   const params = useParams();
@@ -2794,6 +3512,14 @@ export default function BlogPostPage() {
         return <EmbodiedAIMemoryPost />;
       case 'autonomous-robot-memory-ros2-guide':
         return <ROS2TutorialPost />;
+      case 'llms-are-stateless-problem':
+        return <LLMsAreStatelessPost />;
+      case '37-mcp-tools-cognitive-toolkit':
+        return <CognitiveToolkitPost />;
+      case 'proactive-context-automatic-memory':
+        return <ProactiveContextPost />;
+      case 'tui-dashboard-watch-ai-brain':
+        return <TUIDashboardPost />;
       default:
         return <p>Content coming soon...</p>;
     }
