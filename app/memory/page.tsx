@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import {
   ArrowRight, Brain, Database, Lock, Zap, Clock, Network,
   Shield, Cpu, GitBranch, Code, Bot, Sparkles, Terminal,
-  Layers, RefreshCw, Search, MessageSquare, Workflow
+  Layers, RefreshCw, Search, MessageSquare, Workflow,
+  CheckSquare, Bell, FolderOpen, Monitor, ListTodo
 } from 'lucide-react'
 import Link from 'next/link'
 import NeuralAnimation from '@/components/NeuralAnimation'
@@ -32,7 +33,7 @@ export default function Memory() {
     {
       icon: Lock,
       title: '100% Local & Private',
-      description: 'Single ~15MB binary. No cloud. No data leaves your machine.',
+      description: 'Single ~18MB binary. No cloud. No data leaves your machine.',
       detail: 'RocksDB storage, works completely offline',
     },
     {
@@ -83,8 +84,11 @@ export default function Memory() {
     { feature: 'Deployment', shodh: 'Local binary', mem0: 'Cloud API', langchain: 'Cloud DBs' },
     { feature: 'Offline support', shodh: '100%', mem0: 'No', langchain: 'Partial' },
     { feature: 'Learning algorithm', shodh: 'Hebbian + LTP', mem0: 'None', langchain: 'None' },
-    { feature: 'MCP support', shodh: 'Native', mem0: 'No', langchain: 'No' },
-    { feature: 'Binary size', shodh: '~15MB', mem0: 'Cloud', langchain: 'Cloud' },
+    { feature: 'MCP support', shodh: 'Native (37 tools)', mem0: 'No', langchain: 'No' },
+    { feature: 'Task management', shodh: 'Built-in', mem0: 'No', langchain: 'No' },
+    { feature: 'Reminders', shodh: 'Built-in', mem0: 'No', langchain: 'No' },
+    { feature: 'Proactive context', shodh: 'Yes', mem0: 'No', langchain: 'No' },
+    { feature: 'Binary size', shodh: '~18MB', mem0: 'Cloud', langchain: 'Cloud' },
   ]
 
   const benchmarks = [
@@ -96,6 +100,29 @@ export default function Memory() {
     { operation: 'Remember (full)', latency: '55-60ms', note: 'Embedding + NER + store' },
     { operation: 'Recall (semantic)', latency: '34-58ms', note: 'Vector search + rank' },
     { operation: 'Recall (tags)', latency: '~1ms', note: 'Index lookup' },
+  ]
+
+  const mcpTools = [
+    {
+      category: 'Memory',
+      tools: ['remember', 'recall', 'recall_by_tags', 'recall_by_date', 'forget', 'forget_by_tags', 'forget_by_date', 'list_memories', 'context_summary', 'proactive_context'],
+    },
+    {
+      category: 'Todos',
+      tools: ['add_todo', 'list_todos', 'update_todo', 'complete_todo', 'delete_todo', 'reorder_todo', 'list_subtasks', 'todo_stats'],
+    },
+    {
+      category: 'Projects',
+      tools: ['add_project', 'list_projects', 'archive_project', 'delete_project'],
+    },
+    {
+      category: 'Reminders',
+      tools: ['set_reminder', 'list_reminders', 'dismiss_reminder'],
+    },
+    {
+      category: 'System',
+      tools: ['memory_stats', 'verify_index', 'repair_index', 'consolidation_report', 'streaming_status', 'token_status', 'reset_token_session'],
+    },
   ]
 
   return (
@@ -127,7 +154,7 @@ export default function Memory() {
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-8"
             >
               <Brain className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Cognitive Memory for AI Agents</span>
+              <span className="text-sm font-semibold text-primary">The Missing Brain for Stateless LLMs</span>
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 dark:text-white">
@@ -138,15 +165,15 @@ export default function Memory() {
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
-              Give AI agents persistent memory that strengthens with use.
+              LLMs are stateless. Every conversation starts from scratch.
+              Shodh Memory gives them persistent memory that strengthens with use.
               Hebbian learning, spreading activation, 3-tier cognitive architecture.
-              Single binary. Runs offline. Works with MCP.
             </p>
 
             <p className="text-base text-slate-500 dark:text-slate-500 mb-12 max-w-2xl mx-auto">
               <strong className="text-primary">One-liner setup</strong> for Claude Code & Desktop.
+              <strong className="text-primary ml-2">37 MCP tools</strong> for memory, todos, reminders.
               <strong className="text-primary ml-2">Python SDK</strong> for custom agents.
-              <strong className="text-primary ml-2">REST API</strong> for everything else.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -173,7 +200,7 @@ export default function Memory() {
                 transition={{ delay: 0.3 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">688</div>
+                <div className="text-2xl font-bold text-primary">759</div>
                 <div className="text-sm text-slate-600 dark:text-slate-400">Tests Passing</div>
               </motion.div>
               <motion.div
@@ -182,8 +209,8 @@ export default function Memory() {
                 transition={{ delay: 0.4 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">&lt;1μs</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Graph Lookup</div>
+                <div className="text-2xl font-bold text-primary">37</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">MCP Tools</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -191,8 +218,8 @@ export default function Memory() {
                 transition={{ delay: 0.5 }}
                 className="p-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg border border-slate-200 dark:border-slate-800"
               >
-                <div className="text-2xl font-bold text-primary">~15MB</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Binary Size</div>
+                <div className="text-2xl font-bold text-primary">66k+</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Lines of Code</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -205,6 +232,78 @@ export default function Memory() {
               </motion.div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* LLMs Are Stateless Problem Statement */}
+      <section className="relative py-24 bg-gradient-to-b from-slate-100 to-white dark:from-slate-900 dark:to-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">
+                The Problem: LLMs Are Stateless
+              </h2>
+              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                Every conversation with Claude or GPT starts from scratch. They forget what you told them yesterday.
+                They can't learn from past mistakes. They rediscover the same patterns again and again.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="grid md:grid-cols-2 gap-6"
+            >
+              <div className="p-6 bg-red-50 dark:bg-red-950/30 rounded-xl border border-red-200 dark:border-red-900">
+                <h3 className="text-lg font-semibold text-red-700 dark:text-red-400 mb-4">Without Memory</h3>
+                <ul className="space-y-3 text-slate-700 dark:text-slate-300 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500">✗</span>
+                    <span>Repeats same mistakes across sessions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500">✗</span>
+                    <span>Forgets user preferences and context</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500">✗</span>
+                    <span>Can't learn from successful patterns</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500">✗</span>
+                    <span>No accumulated project knowledge</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="p-6 bg-green-50 dark:bg-green-950/30 rounded-xl border border-green-200 dark:border-green-900">
+                <h3 className="text-lg font-semibold text-green-700 dark:text-green-400 mb-4">With Shodh Memory</h3>
+                <ul className="space-y-3 text-slate-700 dark:text-slate-300 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">✓</span>
+                    <span>Remembers errors and avoids them</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">✓</span>
+                    <span>Builds persistent user model</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">✓</span>
+                    <span>Strengthens useful associations (Hebbian)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">✓</span>
+                    <span>Accumulates domain expertise over time</span>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -292,8 +391,145 @@ export default function Memory() {
         </div>
       </section>
 
-      {/* Python SDK */}
+      {/* 37 MCP Tools */}
+      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
+              37 MCP Tools
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              More than just memory - a complete cognitive toolkit for AI agents
+            </p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {mcpTools.map((category, index) => (
+              <div
+                key={category.category}
+                className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  {category.category === 'Memory' && <Brain className="w-5 h-5 text-primary" />}
+                  {category.category === 'Todos' && <CheckSquare className="w-5 h-5 text-primary" />}
+                  {category.category === 'Projects' && <FolderOpen className="w-5 h-5 text-primary" />}
+                  {category.category === 'Reminders' && <Bell className="w-5 h-5 text-primary" />}
+                  {category.category === 'System' && <Cpu className="w-5 h-5 text-primary" />}
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{category.category}</h3>
+                  <span className="ml-auto text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">{category.tools.length}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {category.tools.map((tool) => (
+                    <code key={tool} className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
+                      {tool}
+                    </code>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Not Just Memory - Productivity Features */}
       <section className="relative py-24 bg-white dark:bg-slate-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
+              Not Just Memory
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              Built-in task management, reminders, and a TUI dashboard for introspection
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900"
+            >
+              <ListTodo className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">GTD Todos</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Full GTD workflow with projects, contexts (@computer, @phone), priorities, due dates, and subtasks.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900"
+            >
+              <Bell className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">Smart Reminders</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Time-based, duration-based, or context-triggered reminders that surface when relevant keywords appear.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900"
+            >
+              <FolderOpen className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">Projects</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Organize todos into projects with sub-project support. Archive when done. Codebase indexing for file context.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
+              className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900"
+            >
+              <Monitor className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">TUI Dashboard</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Terminal UI for memory introspection. Watch memories form, see Hebbian strengthening, browse knowledge graph.
+              </p>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto mt-12 p-6 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/20"
+          >
+            <div className="flex items-start gap-4">
+              <Sparkles className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                  Proactive Context
+                </h4>
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  The <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded">proactive_context</code> tool automatically surfaces relevant memories
+                  based on the current conversation. Claude doesn't need to search - context appears when it's needed.
+                  This is how biological memory works: associations activate related memories without conscious effort.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Python SDK */}
+      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
@@ -361,7 +597,7 @@ print(f"Total memories: {stats['total_memories']}")`}
       </section>
 
       {/* Key Features */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+      <section className="relative py-24 bg-white dark:bg-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
@@ -380,7 +616,7 @@ print(f"Total memories: {stats['total_memories']}")`}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group p-6 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary dark:hover:border-primary transition-all duration-300 bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1"
+                className="group p-6 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary dark:hover:border-primary transition-all duration-300 bg-slate-50 dark:bg-slate-900 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1"
               >
                 <div className="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center mb-4">
                   <feature.icon className="w-6 h-6 text-primary" />
@@ -395,7 +631,7 @@ print(f"Total memories: {stats['total_memories']}")`}
       </section>
 
       {/* Architecture Diagram */}
-      <section className="relative py-24 bg-white dark:bg-slate-950">
+      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
@@ -490,7 +726,7 @@ print(f"Total memories: {stats['total_memories']}")`}
       </section>
 
       {/* Benchmarks */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+      <section className="relative py-24 bg-white dark:bg-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
@@ -535,7 +771,7 @@ print(f"Total memories: {stats['total_memories']}")`}
       </section>
 
       {/* Comparison */}
-      <section className="relative py-24 bg-white dark:bg-slate-950">
+      <section className="relative py-24 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
@@ -617,7 +853,7 @@ print(f"Total memories: {stats['total_memories']}")`}
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">
-              Give Your Agents Memory
+              Give Your AI a Brain
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
               One-liner for Claude. Python SDK for custom agents. REST API for everything else.
