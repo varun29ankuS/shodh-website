@@ -2,6 +2,62 @@ import { BlogPost } from './blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'llms-are-stateless-problem',
+    title: 'LLMs Are Stateless: The Problem No One Talks About',
+    description: 'Why every conversation with Claude or GPT starts from scratch. Context windows aren\'t memory. RAG isn\'t memory. Here\'s what persistent memory actually means for AI.',
+    date: '2025-12-31',
+    author: {
+      name: 'Shodh Team',
+      role: 'AI Research',
+    },
+    category: 'AI',
+    tags: ['LLM', 'stateless', 'memory', 'context-window', 'persistent-memory', 'Claude', 'GPT'],
+    readingTime: '8 min read',
+    featured: true,
+  },
+  {
+    slug: '37-mcp-tools-cognitive-toolkit',
+    title: '37 Tools, One MCP Server: The Complete Cognitive Toolkit',
+    description: 'Shodh Memory isn\'t just storage—it\'s a full cognitive layer. Memory, todos, projects, reminders, and system introspection in 37 MCP tools.',
+    date: '2025-12-31',
+    author: {
+      name: 'Shodh Team',
+      role: 'Developer Experience',
+    },
+    category: 'Tutorial',
+    tags: ['MCP', 'tools', 'cognitive-architecture', 'GTD', 'todos', 'reminders', 'AI-agents'],
+    readingTime: '10 min read',
+    featured: true,
+  },
+  {
+    slug: 'proactive-context-automatic-memory',
+    title: 'Proactive Context: Memory That Surfaces When You Need It',
+    description: 'Stop searching for memories. Let them find you. How proactive_context mimics biological memory recall with entity matching, semantic similarity, and spreading activation.',
+    date: '2025-12-31',
+    author: {
+      name: 'Shodh Team',
+      role: 'AI Research',
+    },
+    category: 'AI',
+    tags: ['proactive-context', 'spreading-activation', 'memory-retrieval', 'cognitive-science', 'MCP'],
+    readingTime: '9 min read',
+    featured: true,
+  },
+  {
+    slug: 'tui-dashboard-watch-ai-brain',
+    title: 'The TUI Dashboard: Watch Your AI\'s Brain Form Memories',
+    description: 'Introspection for AI memory. A terminal UI that lets you see memories form, watch Hebbian strengthening in real-time, and debug retrieval issues visually.',
+    date: '2025-12-31',
+    author: {
+      name: 'Shodh Team',
+      role: 'Engineering',
+    },
+    category: 'Tutorial',
+    tags: ['TUI', 'dashboard', 'debugging', 'introspection', 'Hebbian-learning', 'visualization'],
+    readingTime: '8 min read',
+    featured: true,
+  },
+  {
     slug: 'add-memory-to-ai-agent-5-minutes',
     title: 'Add Persistent Memory to Any AI Agent in 5 Minutes',
     description: 'Stop your AI from forgetting everything. A quick guide to adding persistent memory to LLM applications, chatbots, and AI agents using Python. No cloud required.',
