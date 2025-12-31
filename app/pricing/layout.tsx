@@ -10,7 +10,25 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Shodh Pricing - Free Open Source + Enterprise Options',
     description: 'Shodh Memory: Free forever. Shodh RAG: Free pilot. Enterprise support available.',
+    type: 'website',
     url: 'https://shodh-rag.com/pricing',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Shodh Pricing - Free Open Source AI Memory',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Shodh Pricing - Free Open Source + Enterprise',
+    description: 'Shodh Memory: Free forever. Shodh RAG: Free pilot, enterprise pricing.',
+    images: ['/og-image.png'],
+  },
+  alternates: {
+    canonical: 'https://shodh-rag.com/pricing',
   },
 }
 

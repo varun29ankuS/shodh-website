@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     url: 'https://shodh-rag.com/memory',
     images: [
       {
-        url: '/og-memory.png',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Shodh Memory - Memory That Learns for Claude, GPT & Your Agents',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Shodh Memory - The Missing Brain for Stateless LLMs',
     description: '37 MCP tools: memory, todos, reminders, projects. Hebbian learning, knowledge graphs. Single ~18MB binary, 100% offline.',
-    images: ['/og-memory.png'],
+    images: ['/og-image.png'],
   },
   alternates: {
     canonical: 'https://shodh-rag.com/memory',

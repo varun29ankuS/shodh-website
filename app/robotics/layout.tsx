@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Edge AI Memory for Robots, Drones & IoT | Shodh Memory',
-  description: 'Give robots persistent memory that learns from experience. Hebbian learning, 100% offline, single ~15MB binary. Perfect for industrial robots, warehouse AGVs, drones, and agricultural automation.',
+  description: 'Give robots persistent memory that learns from experience. Hebbian learning, 100% offline, single ~18MB binary. Perfect for industrial robots, warehouse AGVs, drones, and agricultural automation.',
   keywords: [
     'robot memory', 'drone memory', 'IoT memory', 'edge AI',
     'offline robot AI', 'Hebbian learning robotics', 'experience-based learning',
@@ -14,12 +14,12 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'Edge AI Memory for Robots, Drones & IoT',
-    description: 'Robots that learn from experience. Hebbian learning on-device, 100% offline, single ~15MB binary. Built for industrial, warehouse, and agricultural automation.',
+    description: 'Robots that learn from experience. Hebbian learning on-device, 100% offline, single ~18MB binary. Built for industrial, warehouse, and agricultural automation.',
     type: 'website',
     url: 'https://shodh-rag.com/robotics',
     images: [
       {
-        url: '/og-robotics.png',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Shodh Memory - Edge AI Memory for Robots and Drones',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Edge AI Memory for Robots & Drones',
     description: 'Robots that learn from experience. Hebbian learning, 100% offline. Built for industrial, warehouse, and agricultural automation.',
-    images: ['/og-robotics.png'],
+    images: ['/og-image.png'],
   },
   alternates: {
     canonical: 'https://shodh-rag.com/robotics',
