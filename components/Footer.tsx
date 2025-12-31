@@ -20,10 +20,10 @@ export default function Footer() {
       { name: 'Getting Started', href: '/getting-started' },
     ],
     company: [
-      { name: 'About', href: '#' },
-      { name: 'Contact', href: '#' },
-      { name: 'Careers', href: '#' },
-      { name: 'Privacy', href: '#' },
+      { name: 'About', href: '/docs' },
+      { name: 'Contact', href: 'mailto:contact@shodh-rag.com' },
+      { name: 'GitHub', href: 'https://github.com/varun29ankuS/shodh-memory' },
+      { name: 'Twitter', href: 'https://twitter.com/shodhAI' },
     ],
   }
 
@@ -51,7 +51,7 @@ export default function Footer() {
               Enterprise RAG with 97% citation accuracy. Run on your infrastructure. No API lock-in.
             </p>
             <div className="flex gap-4">
-              <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+              <a href="https://github.com/varun29ankuS/shodh-memory" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                 <Github className="w-5 h-5" />
               </a>
               <a href="https://twitter.com/shodhAI" target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">

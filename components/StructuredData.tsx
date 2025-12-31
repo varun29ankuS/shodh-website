@@ -49,7 +49,7 @@ export default function StructuredData() {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'Shodh Memory',
-    description: 'Edge-native AI memory system for robots, drones, and IoT devices. 100% offline, 4MB binary, <100ms retrieval.',
+    description: 'Edge-native AI memory system for robots, drones, and IoT devices. 100% offline, ~18MB binary, <100ms retrieval.',
     image: 'https://shodh-rag.com/og-image.png',
     brand: {
       '@type': 'Brand',
